@@ -1,0 +1,15 @@
+{
+  "disk": {
+    "states": {
+      "c": 90,
+      "h": 60,
+      "m": 30
+    },
+	"path": "/",
+    "interval": 30,
+	"rotate": 0,
+    "format": "󰋊 {percentage_used}%",
+    "format-alt": "󰋊 {used}GB",
+    "max-length": 10
+  }
+}

@@ -25,18 +25,18 @@ qt5-graphicaleffects                                   # for sddm theme effects
 
 # --------------------------------------------------- // Window Manager
 hyprland                                               # wlroots-based wayland compositor
+hyprsunset                                             # blue light filter
+hyprpicker                                             # color picker
+hyprlock                                               # lock screen
 dunst                                                  # notification daemon
 rofi-wayland                                           # application launcher
 waybar                                                 # system bar
 swww                                                   # wallpaper
-hyprlock                                               # lock screen
 wlogout                                                # logout menu
 grim                                                   # screenshot tool
-hyprpicker                                             # color picker
 slurp                                                  # region select for screenshot/screenshare
 satty                                                  # Modern Screenshot Annotation
 cliphist                                               # clipboard manager
-hyprsunset                                             # blue light filter
 
 # --------------------------------------------------- // Dependencies
 polkit-gnome                                           # authentication agent
@@ -47,9 +47,6 @@ pacman-contrib                                         # for system update check
 parallel                                               # for parallel processing
 jq                                                     # for json processing
 imagemagick                                            # for image processing
-qt5-imageformats                                       # for dolphin image thumbnails
-ffmpegthumbs                                           # for dolphin video thumbnails
-kde-cli-tools                                          # for dolphin file type defaults
 libnotify                                              # for notifications
 noto-fonts-emoji                                       # emoji font
 
@@ -63,25 +60,17 @@ qt5-wayland                                            # wayland support in qt5
 qt6-wayland                                            # wayland support in qt6
 
 # --------------------------------------------------- // Applications
-firefox                                                # browser
+zen-browser                                            # browser
 kitty                                                  # terminal
-dolphin                                                # kde file manager
-ark                                                    # kde file archiver
+thunar                                                 # file manager
+thunar-archive-plugin                                  # thunar archive plugin
+engrampa                                               # file archiver
 unzip                                                  # extracting zip files
-vim                                                    # terminal text editor
-code                                                   # ide text editor
 nwg-displays                                           # monitor management utility
 fzf                                                    # Command-line fuzzy finder
 
 # --------------------------------------------------- // Shell
-eza|zsh                                                # file lister for zsh
-zsh-theme-powerlevel10k-git|zsh                        # Powerlevel10k is a theme for Zsh. It emphasizes speed, flexibility and out-of-the-box experience.
-starship|zsh                                           # customizable shell prompt written in Rust
-duf|zsh                                                # prettier version of df for zsh
-# starship-git                                         # The cross-shell prompt for astronauts  
-eza|fish                                               # file lister for fish
 starship|fish                                          # customizable shell prompt
-duf|fish                                               # prettier version of df for fish
 fastfetch                                              # system information fetch tool
 
 # --------------------------------------------------- // HyDE
