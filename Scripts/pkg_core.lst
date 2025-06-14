@@ -62,7 +62,7 @@ qt5-wayland                                            # wayland support in qt5
 qt6-wayland                                            # wayland support in qt6
 
 # --------------------------------------------------- // Applications
-firefox                                                # browser
+zen-browse                                             # browser
 kitty                                                  # terminal
 thunar                                                 # file manager
 thunar-archive-plugin                                  # thunar archive plugin
