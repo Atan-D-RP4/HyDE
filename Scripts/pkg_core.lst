@@ -24,6 +24,7 @@ qt5-quickcontrols2                                     # for sddm theme ui eleme
 qt5-graphicaleffects                                   # for sddm theme effects
 
 # --------------------------------------------------- // Window Manager
+uwsm                                                   # hyprland - systemd integration
 hyprland                                               # wlroots-based wayland compositor
 hyprsunset                                             # blue light filter
 hyprpicker                                             # color picker
@@ -37,6 +38,7 @@ grim                                                   # screenshot tool
 slurp                                                  # region select for screenshot/screenshare
 satty                                                  # Modern Screenshot Annotation
 cliphist                                               # clipboard manager
+wl-clip-persist                                        # Keep Wayland clipboard even after programs close (avoids crashes)
 
 # --------------------------------------------------- // Dependencies
 polkit-gnome                                           # authentication agent
@@ -60,7 +62,7 @@ qt5-wayland                                            # wayland support in qt5
 qt6-wayland                                            # wayland support in qt6
 
 # --------------------------------------------------- // Applications
-zen-browser                                            # browser
+firefox                                                # browser
 kitty                                                  # terminal
 thunar                                                 # file manager
 thunar-archive-plugin                                  # thunar archive plugin

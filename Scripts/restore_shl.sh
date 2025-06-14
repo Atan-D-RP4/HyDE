@@ -11,6 +11,8 @@ if ! source "${scrDir}/global_fn.sh"; then
     exit 1
 fi
 
+flg_DryRun=${flg_DryRun:-0}
+
 # shellcheck disable=SC2154
 if chk_list "myShell" "${shlList[@]}"; then
     print_log -sec "SHELL" -stat "detected" "${myShell}"
@@ -22,7 +24,7 @@ fi
 # set shell
 if [[ "$(grep "/${USER}:" /etc/passwd | awk -F '/' '{print $NF}')" != "${myShell}" ]]; then
     print_log -sec "SHELL" -stat "change" "shell to ${myShell}..."
-    chsh -s "$(which "${myShell}")"
+    [ ${flg_DryRun} -eq 1 ] || chsh -s "$(which "${myShell}")"
 else
     print_log -sec "SHELL" -stat "exist" "${myShell} is already set as shell..."
 fi

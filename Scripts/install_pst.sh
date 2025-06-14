@@ -12,12 +12,13 @@ if ! source "${scrDir}/global_fn.sh"; then
 fi
 
 cloneDir="${cloneDir:-$CLONE_DIR}"
+flg_DryRun=${flg_DryRun:-0}
 
 # sddm
 if pkg_installed sddm; then
     print_log -c "[DISPLAYMANAGER] " -b "detected :: " "sddm"
     if [ ! -d /etc/sddm.conf.d ]; then
-        sudo mkdir -p /etc/sddm.conf.d
+        [ ${flg_DryRun} -eq 1 ] || sudo mkdir -p /etc/sddm.conf.d
     fi
     if [ ! -f /etc/sddm.conf.d/backup_the_hyde_project.conf ] || [ "${HYDE_INSTALL_SDDM}" = true ]; then
         print_log -g "[DISPLAYMANAGER] " -b " :: " "configuring sddm..."
@@ -29,10 +30,14 @@ if pkg_installed sddm; then
         *) sddmtheme="Corners" ;;
         esac
 
-        sudo tar -xzf "${cloneDir}/Source/arcs/Sddm_${sddmtheme}.tar.gz" -C /usr/share/sddm/themes/
-        sudo touch /etc/sddm.conf.d/the_hyde_project.conf
-        sudo cp /etc/sddm.conf.d/the_hyde_project.conf /etc/sddm.conf.d/backup_the_hyde_project.conf
-        sudo cp /usr/share/sddm/themes/${sddmtheme}/the_hyde_project.conf /etc/sddm.conf.d/
+        if [[ ${flg_DryRun} -ne 1 ]]; then
+            sudo tar -xzf "${cloneDir}/Source/arcs/Sddm_${sddmtheme}.tar.gz" -C /usr/share/sddm/themes/
+            sudo touch /etc/sddm.conf.d/the_hyde_project.conf
+            sudo cp /etc/sddm.conf.d/the_hyde_project.conf /etc/sddm.conf.d/backup_the_hyde_project.conf
+            sudo cp /usr/share/sddm/themes/${sddmtheme}/the_hyde_project.conf /etc/sddm.conf.d/
+        fi
+
+        print_log -g "[DISPLAYMANAGER] " -b " :: " "sddm configured with ${sddmtheme} theme..."
     else
         print_log -y "[DISPLAYMANAGER] " -b " :: " "sddm is already configured..."
     fi
@@ -68,10 +73,10 @@ if ! pkg_installed flatpak; then
     fpkopt=${PROMPT_INPUT,,}
 
     if [ "${fpkopt}" = "y" ]; then
-        print_log -g "[FLATPAK]" -b "install :: " "flatpaks"
-        "${scrDir}/extra/install_fpk.sh"
+        print_log -g "[FLATPAK]" -b " install :: " "flatpaks"
+        [ ${flg_DryRun} -eq 1 ] || "${scrDir}/extra/install_fpk.sh"
     else
-        print_log -y "[FLATPAK]" -b "skip :: " "flatpak installation"
+        print_log -y "[FLATPAK]" -b " skip :: " "flatpak installation"
     fi
 
 else
