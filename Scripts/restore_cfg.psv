@@ -19,6 +19,10 @@ S = Sync - Copy the target to the specified path
             - Overwrite the target
               - Ignore other targets that is not from the list
               - Ignore other targets that is not from the ./Configs
+L = Link - Create symlinks to the target at the specified path
+           - Create symlinks only if the target does not exist
+           - Preserve existing files/symlinks (similar to P flag behavior)
+           - Backup existing targets before linking
 O = Overwrite - Copy the target to the specified path
                 - Overwrite the target target
                 - If Target is a directory, Overwrite EVERYTHING in the directory
