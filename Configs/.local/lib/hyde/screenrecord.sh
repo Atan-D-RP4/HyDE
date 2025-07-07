@@ -99,7 +99,7 @@ handle_recording() {
 		fi
 		# Start recording with the combined audio source
 		if [ "$RECORDER" = "wl-screenrec" ]; then
-			parameters+=("--audio-device" "all_sinks.monitor")
+			parameters+=("--audio --audio-device" "all_sinks.monitor")
 		elif [ "$RECORDER" = "wf-recorder" ]; then
 			parameters+=("--audio=all_sinks.monitor")
 		fi
