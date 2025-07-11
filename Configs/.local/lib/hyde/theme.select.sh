@@ -40,15 +40,15 @@ selector_menu() {
     max_avail=$((mon_x_res - (4 * font_scale)))
     col_count=$((max_avail / elm_width))
     [[ "${col_count}" -gt 5 ]] && col_count=5
-    r_override="window{width:100%;} 
-                listview{columns:${col_count};} 
-                element{orientation:vertical;border-radius:${elem_border}px;} 
-                element-icon{border-radius:${icon_border}px;size:20em;} 
+    r_override="window{width:100%;}
+                listview{columns:${col_count};}
+                element{orientation:vertical;border-radius:${elem_border}px;}
+                element-icon{border-radius:${icon_border}px;size:20em;}
                 element-text{enabled:false;}"
 
     #// launch rofi menu
     RofiSel=$(
-        find "${rofiAssetDir}" -name "theme_style_*" |
+        find -L "${rofiAssetDir}" -name "theme_style_*" |
             awk -F '[_.]' '{print $((NF - 1))}' |
             while read -r styleNum; do
                 echo -en "${styleNum}\x00icon\x1f${rofiAssetDir}/theme_style_${styleNum}.png\n"
@@ -82,7 +82,7 @@ menu style:
 
 selector style:
 quad|2      quad style
-square|1    square style 
+square|1    square style
 
 HELP
     exit 0
@@ -125,8 +125,8 @@ case "$1" in
         elm_width=$(((20 + 12) * font_scale * 2))
         max_avail=$((mon_x_res - (4 * font_scale)))
         col_count=$((max_avail / elm_width))
-        r_override="window{width:100%;background-color:#00000003;} 
-                            listview{columns:${col_count};} 
+        r_override="window{width:100%;background-color:#00000003;}
+                            listview{columns:${col_count};}
                             element{border-radius:${elem_border}px;background-color:@main-bg;}
                             element-icon{size:20em;border-radius:${icon_border}px 0px 0px ${icon_border}px;}"
         thmbExtn="quad"
@@ -136,9 +136,9 @@ case "$1" in
         elm_width=$(((23 + 12 + 1) * font_scale * 2))
         max_avail=$((mon_x_res - (4 * font_scale)))
         col_count=$((max_avail / elm_width))
-        r_override="window{width:100%;} 
-                            listview{columns:${col_count};} 
-                            element{border-radius:${elem_border}px;padding:0.5em;} 
+        r_override="window{width:100%;}
+                            listview{columns:${col_count};}
+                            element{border-radius:${elem_border}px;padding:0.5em;}
                             element-icon{size:23em;border-radius:${icon_border}px;}"
         thmbExtn="sqre"
         ROFI_THEME_STYLE="selector"

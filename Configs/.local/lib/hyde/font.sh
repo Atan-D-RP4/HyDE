@@ -25,7 +25,7 @@ download_and_extract() {
     else
         return 1
     fi
-    find "$temp_dir" -type f | while read -r file; do
+    find -L "$temp_dir" -type f | while read -r file; do
         case "$file" in
         *.tar.gz)
             if command -v tar >/dev/null; then

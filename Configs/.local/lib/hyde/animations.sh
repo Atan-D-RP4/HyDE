@@ -24,7 +24,7 @@ show_help() {
 Usage: $0 [OPTIONS]
 
 Options:
-    --select | -S       Select an animation from the available options  
+    --select | -S       Select an animation from the available options
     --help   | -h       Show this help message
 HELP
 }
@@ -53,7 +53,7 @@ fi
 
 # Functions
 fn_select() {
-    animation_items=$(find "$animations_dir" -name "*.conf" ! -name "disable.conf" ! -name "theme.conf" 2>/dev/null | sed 's/\.conf$//')
+    animation_items=$(find -L "$animations_dir" -name "*.conf" ! -name "disable.conf" ! -name "theme.conf" 2>/dev/null | sed 's/\.conf$//')
 
     if [ -z "$animation_items" ]; then
         notify-send -i "preferences-desktop-display" "Error" "No .conf files found in $animations_dir"

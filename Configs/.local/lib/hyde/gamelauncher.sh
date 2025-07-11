@@ -40,8 +40,8 @@ monitor_height=$((monitor_info[1] * 95 / monitor_scale))
     magick "${BG}" -resize ${monitor_width}x${monitor_height} -background none -gravity center -extent ${monitor_width}x${monitor_height} "$BGfx"
   fi
 
-  r_override="window {width: ${monitor_width}px; height: ${monitor_height}; background-image: url('${BGfx}',width);}  
-                element {border-radius:${elem_border}px;} 
+  r_override="window {width: ${monitor_width}px; height: ${monitor_height}; background-image: url('${BGfx}',width);}
+                element {border-radius:${elem_border}px;}
                 element-icon {border-radius:${icon_border}px;}
                 mainbox { padding: 25% 21% 25% 21%;}
                 "
@@ -62,7 +62,7 @@ fn_steam() {
   ManifestList=$(grep '"path"' $SteamLib | awk -F '"' '{print $4}' | while read sp; do
 
   #Manifests for current path
-  find "${sp}/steamapps" -type f -name "appmanifest_*.acf" 2>/dev/null 
+  find -L "${sp}/steamapps" -type f -name "appmanifest_*.acf" 2>/dev/null
   done)
 
   if [ -z "${ManifestList}" ]; then
@@ -88,7 +88,7 @@ fn_steam() {
       appid=$(echo "${acf}" | cut -d '|' -f 2)
       game=$(echo "${acf}" | cut -d '|' -f 1)
       # find the lib image
-      libImage=$(find "${SteamThumb}/${appid}/" -type f -name "${libraryThumbName}" | head  -1)
+      libImage=$(find -L "${SteamThumb}/${appid}/" -type f -name "${libraryThumbName}" | head  -1)
       printf "%s\x00icon\x1f${libImage}\n" "${game}" >&2
       printf "%s\x00icon\x1f${libImage}\n" "${game}"
     done | rofi -dmenu \
@@ -97,10 +97,10 @@ fn_steam() {
   )
 
   # launch game
-  if [ -n "$RofiSel" ]; then 
+  if [ -n "$RofiSel" ]; then
     launchid=$(echo "$GameList" | grep "$RofiSel" | cut -d '|' -f 2)
 
-    headerImage=$(find "${SteamThumb}/${launchid}/" -type f -name "*${libraryHeaderName}")
+    headerImage=$(find -L "${SteamThumb}/${launchid}/" -type f -name "*${libraryHeaderName}")
     ${steamlaunch} -applaunch "${launchid} [gamemoderun %command%]" &
     # dunstify "HyDE Alert" -a "Launching ${RofiSel}..." -i ${SteamThumb}/${launchid}_header.jpg -r 91190 -t 2200
     notify-send -a "HyDE Alert" -i "$headerImage" "Launching ${RofiSel}..."

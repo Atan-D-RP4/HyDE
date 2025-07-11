@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
 # shellcheck source=$HOME/.local/bin/hyde-shell
 # shellcheck disable=SC1091
 if ! source "$(command -v hyde-shell)"; then
