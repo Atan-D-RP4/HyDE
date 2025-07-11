@@ -49,6 +49,8 @@ pacman-contrib                                         # for system update check
 parallel                                               # for parallel processing
 jq                                                     # for json processing
 imagemagick                                            # for image processing
+qt5-imageformats                                       # for file explorer image thumbnails
+ffmpegthumbs                                           # for file explorer video thumbnails
 libnotify                                              # for notifications
 noto-fonts-emoji                                       # emoji font
 

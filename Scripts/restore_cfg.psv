@@ -70,6 +70,7 @@ L|${HOME}/.config/kitty|theme.conf|kitty
 
 # Shell 
 #P|${HOME}/.config|fish|fish
+P|${HOME}/.config/starship|starship.toml|starship
 
  Vim 
 P|${HOME}/.config/vim|vimrc|vim
@@ -78,12 +79,23 @@ S|${HOME}/.config/vim|hyde.vim|vim
 
  File Explorer 
  TODO: Add stuff for Thunar 
+P|${HOME}/.local/state|dolphinstaterc|dolphin
+P|${HOME}/.config|baloofilerc|dolphin
+S|${HOME}/.config/menus|applications.menu|dolphin
+S|${HOME}/.config|dolphinrc|dolphin
+S|${HOME}/.config|kdeglobals|dolphin
+S|${HOME}/.local/share/kio/servicemenus|hydewallpaper.desktop|dolphin
+S|${HOME}/.local/share/kxmlgui5|dolphin|dolphin
+S|${HOME}/.local/share|dolphin|dolphin
 
  Input 
 P|${HOME}/.config|libinput-gestures.conf|libinput-gestures
 
  Wayland 
 L|${HOME}/.config|spotify-flags.conf|spotify
+L|${HOME}/.config|electron-flags.conf|electron
+L|${HOME}/.config|code-flags.conf|visual-studio-code-bin
+L|${HOME}/.config|codium-flags.conf|vscodium
 L|${HOME}/.config|electron-flags.conf|electron
 
  Notifications 
