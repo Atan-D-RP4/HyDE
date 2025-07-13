@@ -93,9 +93,8 @@ P|${HOME}/.config|libinput-gestures.conf|libinput-gestures
 
  Wayland 
 L|${HOME}/.config|spotify-flags.conf|spotify
-L|${HOME}/.config|electron-flags.conf|electron
-L|${HOME}/.config|code-flags.conf|visual-studio-code-bin
-L|${HOME}/.config|codium-flags.conf|vscodium
+#L|${HOME}/.config|code-flags.conf|visual-studio-code-bin
+#L|${HOME}/.config|codium-flags.conf|vscodium
 L|${HOME}/.config|electron-flags.conf|electron
 
  Notifications 

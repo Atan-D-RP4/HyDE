@@ -37,8 +37,9 @@ wlogout                                                # logout menu
 grim                                                   # screenshot tool
 slurp                                                  # region select for screenshot/screenshare
 satty                                                  # Modern Screenshot Annotation
-cliphist                                               # clipboard manager
+wf-recorder                                            # screen recorder for wlroots-based compositors such as sway
 wl-clip-persist                                        # Keep Wayland clipboard even after programs close (avoids crashes)
+cliphist                                               # clipboard manager
 
 # --------------------------------------------------- // Dependencies
 polkit-gnome                                           # authentication agent
@@ -74,8 +75,10 @@ nwg-displays                                           # monitor management util
 fzf                                                    # Command-line fuzzy finder
 
 # --------------------------------------------------- // Shell
+duf|fish                                               # better disk usage utility
+dust|fish                                              # fast alternative to du
 starship|fish                                          # customizable shell prompt
-fastfetch                                              # system information fetch tool
+fastfetch|fish                                         # system information fetch tool
 
 # --------------------------------------------------- // HyDE
 hypridle                                               # idle daemon
