@@ -55,7 +55,7 @@ L|${HOME}/.local/lib|hyde|hyprland
 
  Bar 
 L|${HOME}/.config/waybar|user-style.css config.jsonc theme.css style.css|waybar
-L|${HOME}/.config/waybar|modules styles layouts menus|waybar
+L|${HOME}/.config/waybar|modules styles layouts/hyprdots menus|waybar
 L|${HOME}/.local/share|waybar|waybar
 
 # Terminal 

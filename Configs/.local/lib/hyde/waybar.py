@@ -944,7 +944,7 @@ def update_global_css():
  Dynamic Style Configuration *
  This is handled by HyDE
 
- To generate a dynamic configuration 
+ To generate a dynamic configuration
  base on theme and user settings
 
 */
