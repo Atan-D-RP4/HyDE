@@ -8,7 +8,7 @@ shaders_dir="$confDir/hypr/shaders"
 
 # Ensure the shaders directory exists
 if [ ! -d "$shaders_dir" ]; then
-    notify-send -i "preferences-desktop-display" "Error" "Shaders directory does not exist at $shaders_dir"
+    send_notifs -i "preferences-desktop-display" "Error" "Shaders directory does not exist at $shaders_dir"
     exit 1
 fi
 
@@ -56,7 +56,7 @@ fn_select() {
     fi
 
     if [ -z "$shader_items" ]; then
-        notify-send -i "preferences-desktop-display" "Error" "No .frag files found in $shaders_dir"
+        send_notifs -i "preferences-desktop-display" "Error" "No .frag files found in $shaders_dir"
         exit 1
     fi
 
@@ -96,7 +96,7 @@ fn_select() {
 
     set_conf "HYPR_SHADER" "$selected_shader"
     fn_update "$selected_shader"
-    notify-send -i "preferences-desktop-display" "Shader:" "$selected_shader"
+    send_notifs -i "preferences-desktop-display" "Shader:" "$selected_shader"
 }
 
 fn_reload() {
@@ -105,7 +105,7 @@ fn_reload() {
     fi
     set_conf "HYPR_SHADER" "$HYPR_SHADER"
     fn_update "$HYPR_SHADER"
-    notify-send -i "preferences-desktop-display" "Shader reloaded:" "$HYPR_SHADER"
+    send_notifs -i "preferences-desktop-display" "Shader reloaded:" "$HYPR_SHADER"
 }
 
 concat_shader_files() {
@@ -197,7 +197,7 @@ parse_includes_and_update() {
 # path to the shader
 \$SCREEN_SHADER_PATH = "$shaders_dir/${selected_shader}.frag"
 # path to the compiled shader // override this in '../hyde/config.toml'
-\$SCREEN_SHADER_COMPILED = ./shaders/.compiled.cache.glsl
+\$SCREEN_SHADER_COMPILED = ${XDG_CONFIG_HOME}/hypr/shaders/.compiled.cache.glsl
 
 
 EOF
