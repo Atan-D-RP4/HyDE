@@ -15,7 +15,7 @@ release-notes
 --list-script
 --list-script-path
 --completions"
-    
+
     # Get hyde scripts
     if command -v hyde-shell >/dev/null 2>&1
         hyde-shell --list-script 2>/dev/null | sed 's/\.[^.]*$//'
@@ -37,7 +37,7 @@ complete -c hyde-shell -n "not __fish_seen_subcommand_from (__hyde_shell_get_com
 complete -c hyde-shell -n "__fish_seen_subcommand_from wallbash" -a "(__hyde_shell_get_wallbash_scripts)" -d "Wallbash scripts"
 
 # Completions subcommand
-complete -c hyde-shell -n "__fish_seen_subcommand_from --completions" -a "bash zsh fish" -d "Shell completion types"
+complete -c hyde-shell -n "__fish_seen_subcommand_from --completions" -a "bash fish" -d "Shell completion types"
 
 # Option descriptions
 complete -c hyde-shell -s h -l help -d "Display help message"

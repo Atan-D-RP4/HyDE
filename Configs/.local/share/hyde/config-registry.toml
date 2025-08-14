@@ -32,21 +32,6 @@ path = "${XDG_CONFIG_HOME:-$HOME/.config}/kitty/kitty.conf"
 pre_hook = ["bash", "-c", "echo 'Editing Kitty main config...'"]
 post_hook = ["bash", "-c", "killall -SIGUSR1 kitty || true"]
 
-[zsh]
-description = "Z Shell Configuration"
-icon = "🐚"
-
-[zsh.files.zshrc]
-description = "Main Zsh Configuration"
-path = "$ZDOTDIR/.zshrc"
-pre_hook = ["bash", "-c", "echo 'Editing .zshrc...'"]
-post_hook = ["bash", "-c", "echo 'Zsh config updated. Restart shell to apply changes.'"]
-
-[zsh.files.user]
-description = "Zsh Aliases"
-path = "$ZDOTDIR/user.zsh"
-
-
 [dunst]
 description = "Dunst Notification Daemon"
 icon = "🔔"

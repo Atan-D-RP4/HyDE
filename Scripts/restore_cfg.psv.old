@@ -30,12 +30,11 @@ B = Backup - Backup the target
 
  Hyde core files 
 P|${HOME}/.config/hyde|config.toml|hyprland
-L|${HOME}/.config/hypr|hyprland.conf hyde.conf windowrules.conf keybindings.conf userprefs.conf monitors.conf|hyprland
-P|${HOME}/.config/hypr|shaders.conf workflows.conf animations.conf|hyprland
+P|${HOME}/.config/hypr|shaders.conf workflows.conf animations.conf windowrules.conf keybindings.conf userprefs.conf monitors.conf|hyprland
 P|${HOME}/.config/hypr|nvidia.conf|hyprland nvidia-utils
-L|${HOME}/.config/hypr/themes|theme.conf wallbash.conf colors.conf|hyprland
+P|${HOME}/.config/hypr/themes|theme.conf wallbash.conf colors.conf|hyprland
 S|${HOME}/.config/systemd|user|systemd
-L|${HOME}/.local/state/hyde|hyprland.conf|hyprland
+P|${HOME}/.local/state/hyde|hyprland.conf|hyprland
 
  Hyde core files -- uwsm 
 S|${HOME}/.config/uwsm|env env-hyprland env.d env-hyprland.d|systemd hyprland uwsm
@@ -43,7 +42,7 @@ S|${HOME}/.config/uwsm|env env-hyprland env.d env-hyprland.d|systemd hyprland uw
  Hyde core files -- xdg-terminal-exec 
 P|${HOME}/.config|xdg-terminals.list|xdg-utils
 
-L|${HOME}/.config/hypr|hyprland.conf|hyprland
+P|${HOME}/.config/hypr|hyprland.conf|hyprland
 S|${HOME}/.local/share|hypr|hyprland
 O|${HOME}/.local/bin|hyde-shell hydectl|hyprland
 S|${HOME}/.config|gtk-3.0|nwg-look
@@ -53,27 +52,34 @@ S|${HOME}|.gtkrc-2.0|nwg-look
 S|${HOME}/.config|Kvantum|kvantum
 S|${HOME}/.config|qt5ct|qt5ct
 S|${HOME}/.config|qt6ct|qt6ct
-L|${HOME}/.config/hyde|wallbash|hyprland
-L|${HOME}/.config/hypr|animations|hyprland
-L|${HOME}/.config/hypr|workflows|hyprland
-L|${HOME}/.config/hypr|shaders|hyprland
+S|${HOME}/.config/hyde|wallbash|hyprland
+S|${HOME}/.config/hypr|animations|hyprland
+S|${HOME}/.config/hypr|workflows|hyprland
+S|${HOME}/.config/hypr|shaders|hyprland
 
-L|${HOME}/.local/share|hyde|hyprland
-L|${HOME}/.local/lib|hyde|hyprland
+O|${HOME}/.local/share|hyde|hyprland
+O|${HOME}/.local/lib|hyde|hyprland
+
+ Editor 
+P|${HOME}/.config/Code - OSS/User|settings.json|code
+P|${HOME}/.config/Code/User|settings.json|visual-studio-code-bin
+P|${HOME}/.config/VSCodium/User|settings.json|vscodium
 
  Bar 
-L|${HOME}/.config/waybar|user-style.css theme.css |waybar
-P|${HOME}/.config/waybar|config.jsonc style.css|waybar
-L|${HOME}/.config/waybar|modules styles layouts/hyprdots menus|waybar
-L|${HOME}/.local/share|waybar|waybar
+P|${HOME}/.config/waybar|user-style.css config.jsonc theme.css style.css|waybar
+I|${HOME}/.config/waybar|modules styles layouts menus|waybar
+S|${HOME}/.local/share|waybar|waybar
 
-# Terminal 
-#P|${HOME}/.config|fastfetch|fastfetch
-#O|${HOME}/.local/share/fastfetch/presets|hyde|fastfetch
+ Terminal 
+P|${HOME}/.config|lsd|lsd
+P|${HOME}/.config|fastfetch|fastfetch
+O|${HOME}/.local/share/fastfetch/presets|hyde|fastfetch
 
-L|${HOME}/.config/kitty|theme.conf|kitty
+S|${HOME}/.config/kitty|hyde.conf theme.conf|kitty
+P|${HOME}/.config/kitty|kitty.conf|kitty
 
-# Shell 
+ Shell 
+P|${HOME}/.config|fish|fish
 P|${HOME}/.config/starship|starship.toml|starship
 
  Vim 
@@ -82,7 +88,6 @@ S|${HOME}/.config/vim/colors|wallbash.vim|vim
 S|${HOME}/.config/vim|hyde.vim|vim
 
  File Explorer 
- TODO: Add stuff for Thunar 
 P|${HOME}/.local/state|dolphinstaterc|dolphin
 P|${HOME}/.config|baloofilerc|dolphin
 S|${HOME}/.config/menus|applications.menu|dolphin
@@ -96,23 +101,26 @@ S|${HOME}/.local/share|dolphin|dolphin
 P|${HOME}/.config|libinput-gestures.conf|libinput-gestures
 
  Wayland 
-L|${HOME}/.config|spotify-flags.conf|spotify
-L|${HOME}/.config|electron-flags.conf|electron
+P|${HOME}/.config|spotify-flags.conf|spotify
+P|${HOME}/.config|code-flags.conf|code
+P|${HOME}/.config|code-flags.conf|visual-studio-code-bin
+P|${HOME}/.config|codium-flags.conf|vscodium
+P|${HOME}/.config|electron-flags.conf|electron
 
  Notifications 
-P|${HOME}/.config|dunst|dunst
+S|${HOME}/.config|dunst|dunst
 
  Gaming 
-L|${HOME}/.config|MangoHud|mangohud
+S|${HOME}/.config|MangoHud|mangohud
 
  Launcher 
 P|${HOME}/.config|rofi|rofi
-L|${HOME}/.config|wlogout|wlogout
+S|${HOME}/.config|wlogout|wlogout
 
  Lock Screen 
-L|${HOME}/.config|swaylock|swaylock-effects
-L|${HOME}/.config/hypr|hyprlock.conf|hyprlock
-L|${HOME}/.config/hypr|hyprlock|hyprlock
+S|${HOME}/.config|swaylock|swaylock-effects
+P|${HOME}/.config/hypr|hyprlock.conf|hyprlock
+S|${HOME}/.config/hypr|hyprlock|hyprlock
 
  Idle daemon 
-L|${HOME}/.config/hypr|hypridle.conf|hypridle
+P|${HOME}/.config/hypr|hypridle.conf|hypridle
