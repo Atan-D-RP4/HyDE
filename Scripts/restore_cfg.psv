@@ -30,13 +30,13 @@ B = Backup - Backup the target
 
  Hyde core files 
 P|${HOME}/.config/hyde|config.toml|hyprland
-L|${HOME}/.config/hypr|hyde.conf shaders.conf workflows.conf animations.conf windowrules.conf keybindings.conf userprefs.conf monitors.conf|hyprland
+L|${HOME}/.config/hypr|hyprland.conf hyde.conf windowrules.conf keybindings.conf userprefs.conf monitors.conf|hyprland
+P|${HOME}/.config/hypr|shaders.conf workflows.conf animations.conf|hyprland
 P|${HOME}/.config/hypr|nvidia.conf|hyprland nvidia-utils
 L|${HOME}/.config/hypr/themes|theme.conf wallbash.conf colors.conf|hyprland
 S|${HOME}/.config/systemd|user|systemd
 L|${HOME}/.local/state/hyde|hyprland.conf|hyprland
 
-L|${HOME}/.config/hypr|hyprland.conf|hyprland
 O|${HOME}/.local/bin|hyde-shell hydectl|hyprland
 S|${HOME}/.config|gtk-3.0|nwg-look
 S|${HOME}/.config|nwg-look|nwg-look
@@ -54,7 +54,8 @@ L|${HOME}/.local/share|hyde|hyprland
 L|${HOME}/.local/lib|hyde|hyprland
 
  Bar 
-L|${HOME}/.config/waybar|user-style.css config.jsonc theme.css style.css|waybar
+L|${HOME}/.config/waybar|user-style.css theme.css |waybar
+P|${HOME}/.config/waybar|config.jsonc style.css|waybar
 L|${HOME}/.config/waybar|modules styles layouts/hyprdots menus|waybar
 L|${HOME}/.local/share|waybar|waybar
 
@@ -91,13 +92,13 @@ L|${HOME}/.config|spotify-flags.conf|spotify
 L|${HOME}/.config|electron-flags.conf|electron
 
  Notifications 
-L|${HOME}/.config|dunst|dunst
+P|${HOME}/.config|dunst|dunst
 
  Gaming 
 L|${HOME}/.config|MangoHud|mangohud
 
  Launcher 
-L|${HOME}/.config|rofi|rofi
+P|${HOME}/.config|rofi|rofi
 L|${HOME}/.config|wlogout|wlogout
 
  Lock Screen 
