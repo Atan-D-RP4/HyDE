@@ -324,7 +324,8 @@ confDir=${XDG_CONFIG_HOME:-"$HOME/.config"}
 Fav_Theme_Walls="${confDir}/hyde/themes/${Fav_Theme}/wallpapers"
 [ ! -d "${Fav_Theme_Walls}" ] && mkdir -p "${Fav_Theme_Walls}"
 while IFS= read -r walls; do
-    cp -f "${walls}" "${Fav_Theme_Walls}"
+    # cp -f "${walls}" "${Fav_Theme_Walls}"
+    ln -s "${walls}" "${Fav_Theme_Walls}/$(basename "${walls}")"
 done <<<"${wallpapers}"
 
 # populate logos
@@ -333,7 +334,8 @@ if [ -n "${logos}" ]; then
     [ ! -d "${Fav_Theme_Logos}" ] && mkdir -p "${Fav_Theme_Logos}"
     while IFS= read -r logo; do
         if [ -f "${logo}" ]; then
-            cp -f "${logo}" "${Fav_Theme_Logos}"
+            # cp -f "${logo}" "${Fav_Theme_Logos}"
+            ln -s "${logo}" "${Fav_Theme_Logos}/$(basename "${logo}")"
         else
             print_prompt -y "[warn] " "${logo} --> do not exist"
         fi

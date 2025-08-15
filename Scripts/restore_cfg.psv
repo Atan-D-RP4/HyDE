@@ -15,14 +15,22 @@ Flags:
 P = Populate/Preserved - Copy the target to the specified path
                           - ONLY if the target do not exist
                           - Preserved the target
+
+L = Link - Create symlinks to the target at the specified path
+           - Create symlinks only if the target does not exist
+           - Preserve existing files/symlinks \(similar to P flag behavior\)
+           - Backup existing targets before linking
+
 S = Sync - Copy the target to the specified path
             - Overwrite the target
               - Ignore other targets that is not from the list
               - Ignore other targets that is not from the ./Configs
+
 O = Overwrite - Copy the target to the specified path
                 - Overwrite the target target
                 - If Target is a directory, Overwrite EVERYTHING in the directory
                 - If Target is a file, Overwrite the file
+
 B = Backup - Backup the target
               - All P,S,O flags will also backup the target file/directory
 
@@ -32,8 +40,8 @@ B = Backup - Backup the target
 P|${HOME}/.config/hyde|config.toml|hyprland
 L|${HOME}/.config/hypr|hyprland.conf hyde.conf windowrules.conf keybindings.conf userprefs.conf monitors.conf|hyprland
 P|${HOME}/.config/hypr|shaders.conf workflows.conf animations.conf|hyprland
-P|${HOME}/.config/hypr|nvidia.conf|hyprland nvidia-utils
-L|${HOME}/.config/hypr/themes|theme.conf wallbash.conf colors.conf|hyprland
+L|${HOME}/.config/hypr|nvidia.conf|hyprland nvidia-utils
+P|${HOME}/.config/hypr/themes|theme.conf wallbash.conf colors.conf|hyprland
 S|${HOME}/.config/systemd|user|systemd
 L|${HOME}/.local/state/hyde|hyprland.conf|hyprland
 
@@ -44,8 +52,8 @@ S|${HOME}/.config/uwsm|env env-hyprland env.d env-hyprland.d|systemd hyprland uw
 P|${HOME}/.config|xdg-terminals.list|xdg-utils
 
 L|${HOME}/.config/hypr|hyprland.conf|hyprland
-S|${HOME}/.local/share|hypr|hyprland
-O|${HOME}/.local/bin|hyde-shell hydectl|hyprland
+L|${HOME}/.local/share|hypr|hyprland
+L|${HOME}/.local/bin|hyde-shell hydectl|hyprland
 S|${HOME}/.config|gtk-3.0|nwg-look
 S|${HOME}/.config|nwg-look|nwg-look
 S|${HOME}/.config|xsettingsd|nwg-look
@@ -62,9 +70,8 @@ L|${HOME}/.local/share|hyde|hyprland
 L|${HOME}/.local/lib|hyde|hyprland
 
  Bar 
-L|${HOME}/.config/waybar|user-style.css theme.css |waybar
-P|${HOME}/.config/waybar|config.jsonc style.css|waybar
-L|${HOME}/.config/waybar|modules styles layouts/hyprdots menus|waybar
+P|${HOME}/.config/waybar|config.jsonc style.css theme.css|waybar
+L|${HOME}/.config/waybar|modules styles layouts/hyprdots menus user-style.css|waybar
 L|${HOME}/.local/share|waybar|waybar
 
 # Terminal 
@@ -74,26 +81,26 @@ L|${HOME}/.local/share|waybar|waybar
 L|${HOME}/.config/kitty|theme.conf|kitty
 
 # Shell 
-P|${HOME}/.config/starship|starship.toml|starship
+L|${HOME}/.config/starship|starship.toml|starship
 
- Vim 
-P|${HOME}/.config/vim|vimrc|vim
-S|${HOME}/.config/vim/colors|wallbash.vim|vim
-S|${HOME}/.config/vim|hyde.vim|vim
+#  Vim 
+# P|${HOME}/.config/vim|vimrc|vim
+# S|${HOME}/.config/vim/colors|wallbash.vim|vim
+# S|${HOME}/.config/vim|hyde.vim|vim
 
  File Explorer 
  TODO: Add stuff for Thunar 
-P|${HOME}/.local/state|dolphinstaterc|dolphin
-P|${HOME}/.config|baloofilerc|dolphin
-S|${HOME}/.config/menus|applications.menu|dolphin
-S|${HOME}/.config|dolphinrc|dolphin
-S|${HOME}/.config|kdeglobals|dolphin
-S|${HOME}/.local/share/kio/servicemenus|hydewallpaper.desktop|dolphin
-S|${HOME}/.local/share/kxmlgui5|dolphin|dolphin
-S|${HOME}/.local/share|dolphin|dolphin
+# P|${HOME}/.local/state|dolphinstaterc|dolphin
+# P|${HOME}/.config|baloofilerc|dolphin
+# S|${HOME}/.config/menus|applications.menu|dolphin
+# S|${HOME}/.config|dolphinrc|dolphin
+# S|${HOME}/.config|kdeglobals|dolphin
+# S|${HOME}/.local/share/kio/servicemenus|hydewallpaper.desktop|dolphin
+# S|${HOME}/.local/share/kxmlgui5|dolphin|dolphin
+# S|${HOME}/.local/share|dolphin|dolphin
 
  Input 
-P|${HOME}/.config|libinput-gestures.conf|libinput-gestures
+L|${HOME}/.config|libinput-gestures.conf|libinput-gestures
 
  Wayland 
 L|${HOME}/.config|spotify-flags.conf|spotify
