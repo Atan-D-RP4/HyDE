@@ -22,7 +22,7 @@ toggle_dropdown_terminal() {
     # If it is not open, start it
     if [ -n "$TERMINAL" ]; then
       echo "Opening dropdown terminal..."
-      eval "$TERMINAL --class $TERMINAL_CLASS"
+      eval "$TERMINAL --class $TERMINAL_CLASS" &
     fi
   fi
 }
