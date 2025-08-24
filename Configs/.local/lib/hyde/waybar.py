@@ -11,7 +11,6 @@ import time
 import sys
 import hashlib
 import signal
-import atexit
 
 from pathlib import Path
 
@@ -61,6 +60,7 @@ INCLUDES_DIRS = [
 CONFIG_JSONC = Path(os.path.join(str(xdg_config_home()), "waybar", "config.jsonc"))
 STATE_FILE = Path(os.path.join(str(xdg_state_home()), "hyde", "staterc"))
 HYDE_CONFIG = Path(os.path.join(str(xdg_state_home()), "hyde", "config"))
+UNIT_NAME = f"hyde-{os.environ.get('XDG_SESSION_DESKTOP', 'unknown')}-bar.service"
 
 
 def source_env_file(filepath):
@@ -170,22 +170,22 @@ def get_current_layout_from_config():
 
     logger.debug("Fallback to legacy hash comparison method")
     logger.debug(f"Checking config: {CONFIG_JSONC}")
-    
+
     layouts = find_layout_files()
     if not layouts:
         logger.error("No layout files found")
         return None
-    
+
     # If config.jsonc doesn't exist, just use the first available layout
     if not CONFIG_JSONC.exists():
         logger.debug("Config file not found, using first available layout")
         CONFIG_JSONC.parent.mkdir(parents=True, exist_ok=True)
-        
+
         layout = layouts[0]
         layout_name = os.path.basename(layout).replace(".jsonc", "")
         set_state_value("WAYBAR_LAYOUT_PATH", layout)
         set_state_value("WAYBAR_LAYOUT_NAME", layout_name)
-        
+
         shutil.copyfile(layout, CONFIG_JSONC)
         logger.debug(f"Created config.jsonc with first layout: {layout}")
         return layout
@@ -340,7 +340,7 @@ def set_layout(layout):
     generate_includes()
     update_global_css()
     notify.send("Waybar", f"Layout changed to {layout}", replace_id=9)
-    run_waybar_command("killall waybar; waybar & disown")
+    restart_waybar()
 
 
 def handle_layout_navigation(option):
@@ -499,54 +499,67 @@ def write_style_file(style_filepath, source_filepath):
 
 
 def signal_handler(sig, frame):
-    subprocess.run(["killall", "waybar"])
+    kill_waybar()
     sys.exit(0)
 
 
-def run_waybar_command(command):
-    """Run a Waybar command and redirect its output to the Waybar log file."""
-    log_dir = os.path.join(str(xdg_runtime_dir()), "hyde")
-    os.makedirs(log_dir, exist_ok=True)
-    log_file = os.path.join(log_dir, "waybar.log")
-    with open(log_file, "a") as file:
-        file.write(
-            f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Running command: {command}\n"
-        )
-        subprocess.run(command, shell=True, stdout=file, stderr=file)
-    logger.debug(f"Waybar log written to '{log_file}'")
+def is_waybar_running_for_current_user():
+    """Check if Waybar or Waybar-wrapped is running for the current user only."""
+    check_cmd = ["systemctl", "--user", "is-active", UNIT_NAME]
+    try:
+        result = subprocess.run(check_cmd, capture_output=True, text=True)
+        if result.returncode == 0 and "active" in result.stdout:
+            logger.debug("Waybar is running for the current user.")
+            return True
+    except Exception as e:
+        logger.error(f"Error checking Waybar status: {e}")
+
+    return False
+
+
+def run_waybar():
+    """Run Waybar using hyde-shell app with systemd unit, let systemd handle logging."""
+    # check_cmd = ["systemctl", "--user", "is-active", "--quiet", UNIT_NAME]
+    run_cmd = ["hyde-shell", "app", "-u", UNIT_NAME, "-t", "service", "--", "waybar"]
+    # Check if the unit is active
+    # result = subprocess.run(check_cmd)
+    if is_waybar_running_for_current_user():
+        logger.debug(f"Waybar launched via systemd unit: {UNIT_NAME}")
+    else:
+        subprocess.run(run_cmd)
+        logger.debug(f"Waybar systemd unit already active: {UNIT_NAME}")
 
 
 def kill_waybar():
     """Kill only the current user's Waybar process."""
-    user = os.getenv("USER")
-    subprocess.run(["pkill", "-u", user, "-x", "waybar"])
-    logger.debug("Killed Waybar processes for current user.")
+    """Stop Waybar systemd unit for current session desktop."""
+    subprocess.run(["systemctl", "--user", "stop", UNIT_NAME])
+    logger.debug(f"Stopped Waybar systemd unit: {UNIT_NAME}")
+
+
+def restart_waybar():
+    """Restart Waybar systemd unit for current session desktop."""
+    kill_waybar()
+    run_waybar()
+    logger.debug(f"Restarted Waybar systemd unit: {UNIT_NAME}")
 
 
 def kill_waybar_and_watcher():
     """Kill all Waybar instances and watcher scripts for the current user."""
     user = os.getenv("USER")
-    subprocess.run(["pkill", "-u", user, "-x", "waybar"])
+    kill_waybar()
     logger.debug("Killed Waybar processes for current user.")
 
     try:
-        current_pid = os.getpid()
+        watcher_unit = f"hyde-{user}-waybar-watcher.service"
         result = subprocess.run(
-            ["pgrep", "-u", user, "-f", "waybar.py"], capture_output=True, text=True
+            ["systemctl", "--user", "is-active", watcher_unit],
+            capture_output=True,
+            text=True,
         )
 
         if result.returncode == 0:
-            pids = result.stdout.strip().split("\n")
-            for pid in pids:
-                if pid.strip() and int(pid.strip()) != current_pid:
-                    try:
-                        subprocess.run(["kill", pid.strip()])
-                        logger.debug(
-                            f"Killed waybar.py process with PID: {pid.strip()} for user {user}"
-                        )
-                    except Exception as e:
-                        logger.debug(f"Failed to kill PID {pid.strip()}: {e}")
-
+            kill_waybar()
         logger.debug("Killed all waybar.py watcher scripts for current user.")
     except Exception as e:
         logger.error(f"Error killing waybar.py processes: {e}")
@@ -667,7 +680,7 @@ def rofi_file_selector(
     return None
 
 
-def rofi_style_selector(current_layout=None):
+def style_selector(current_layout=None):
     """Show all styles in rofi and apply the selected one."""
     current_style_path = get_state_value("WAYBAR_STYLE_PATH")
     selected_style = rofi_file_selector(
@@ -686,11 +699,11 @@ def rofi_style_selector(current_layout=None):
             f"Style changed to {os.path.basename(selected_style)}",
             replace_id=9,
         )
-        run_waybar_command("killall waybar; waybar & disown")
+        restart_waybar()
     sys.exit(0)
 
 
-def rofi_selector():
+def layout_selector():
     """Show all layouts in rofi and apply the selected one."""
     layouts_data = list_layouts()
     layout_files = [pair["layout"] for pair in layouts_data["layouts"]]
@@ -744,85 +757,16 @@ def rofi_selector():
             f"Layout changed to {display_func(selected_layout, os.path.dirname(selected_layout))}",
             replace_id=9,
         )
-        run_waybar_command("killall waybar; waybar & disown")
-    ensure_state_file()
-    sys.exit(0)
-
-
-def rofi_selector_no_exit():
-    """List all layout names in a rofi selector, but do not exit after selection."""
-    layouts_data = list_layouts()
-    layout_names = [pair["name"] for pair in layouts_data["layouts"]]
-    current_layout_name = get_state_value("WAYBAR_LAYOUT_NAME")
-    if not current_layout_name:
-        current_layout_path = get_state_value("WAYBAR_LAYOUT_PATH")
-        if current_layout_path:
-            current_layout_name = os.path.basename(current_layout_path).replace(
-                ".jsonc", ""
-            )
-    logger.debug(f"Current layout from state: {current_layout_name}")
-    hyprland = HYPRLAND.HyprctlWrapper()
-    try:
-        override_string = hyprland.get_rofi_override_string()
-        rofi_pos_string = hyprland.get_rofi_pos()
-    except (OSError, EnvironmentError):
-        override_string = ""
-        rofi_pos_string = ""
-    rofi_flags = [
-        "-p",
-        "Select layout:",
-        "-select",
-        current_layout_name,
-        "-theme",
-        "clipboard",
-    ]
-    if override_string:
-        rofi_flags += ["-theme-str", override_string]
-    if rofi_pos_string:
-        rofi_flags += ["-theme-str", rofi_pos_string]
-    selected_layout = rofi_dmenu(
-        layout_names,
-        rofi_flags,
-    )
-    logger.debug(f"Selected layout: {selected_layout}")
-    if selected_layout:
-        selected_layout_path = None
-        style_path = None
-        for pair in layouts_data["layouts"]:
-            if pair["name"] == selected_layout:
-                if pair.get("is_backup_entry", False):
-                    handle_backup_display()
-                    return None
-                selected_layout_path = pair["layout"]
-                style_path = pair["style"]
-                break
-        if selected_layout_path:
-            logger.debug(f"Updating config with layout: {selected_layout_path}")
-            shutil.copyfile(selected_layout_path, CONFIG_JSONC)
-            set_state_value("WAYBAR_LAYOUT_PATH", selected_layout_path)
-            set_state_value("WAYBAR_LAYOUT_NAME", selected_layout)
-            set_state_value("WAYBAR_STYLE_PATH", style_path)
-            style_filepath = os.path.join(str(xdg_config_home()), "waybar", "style.css")
-            write_style_file(style_filepath, style_path)
-            update_icon_size()
-            update_border_radius()
-            generate_includes()
-            update_global_css()
-            notify.send("Waybar", f"Layout changed to {selected_layout}", replace_id=9)
-            run_waybar_command("killall waybar; waybar & disown")
-            ensure_state_file()
-            return selected_layout_path
-        else:
-            logger.error(f"Could not find layout path for {selected_layout}")
+        restart_waybar()
     ensure_state_file()
     return None
 
 
 def select_layout_and_style():
     """Select layout, then style."""
-    selected_layout = rofi_selector_no_exit()
+    selected_layout = layout_selector()
     if selected_layout:
-        rofi_style_selector(selected_layout)
+        style_selector(selected_layout)
     else:
         sys.exit(0)
 
@@ -889,58 +833,6 @@ def handle_backup_display():
         rofi_flags,
     )
     sys.exit(0)
-
-
-def manage_waybar_lock(action="toggle"):
-    """Manage the waybar hide lock file.
-
-    Args:
-        action: "toggle", "hide", or "show"
-    Returns:
-        bool: True if waybar should be hidden, False otherwise
-    """
-    lock_file = os.path.join(str(xdg_runtime_dir()), "hyde", "waybar_hide.lock")
-    lock_file_path = Path(lock_file)
-    lock_file_path.parent.mkdir(parents=True, exist_ok=True)
-
-    if action == "toggle":
-        if lock_file_path.exists():
-            lock_file_path.unlink()
-            logger.debug("Removed waybar hide lock file")
-            return False
-        else:
-            lock_file_path.touch()
-            logger.debug("Created waybar hide lock file")
-            return True
-    elif action == "hide":
-        lock_file_path.touch()
-        logger.debug("Created waybar hide lock file")
-        return True
-    elif action == "show":
-        if lock_file_path.exists():
-            lock_file_path.unlink()
-            logger.debug("Removed waybar hide lock file")
-        return False
-
-
-def cleanup():
-    """Clean up resources and lock files."""
-    lock_file = os.path.join(str(xdg_runtime_dir()), "hyde", "waybar_hide.lock")
-    lock_file_path = Path(lock_file)
-
-    if lock_file_path.exists():
-        try:
-            result = subprocess.run(
-                ["pgrep", "-c", "waybar.py"], capture_output=True, text=True
-            )
-            if result.returncode == 0 and int(result.stdout.strip()) <= 1:
-                lock_file_path.unlink()
-                logger.debug("Removed waybar hide lock file during cleanup")
-        except Exception as e:
-            logger.error(f"Failed to remove lock file during cleanup: {e}")
-
-
-atexit.register(cleanup)
 
 
 def update_icon_size():
@@ -1406,33 +1298,25 @@ def update_style(style_path):
     write_style_file(style_filepath, style_path)
 
 
-def is_waybar_running_for_current_user():
-    """Check if Waybar or Waybar-wrapped is running for the current user only."""
-    user = os.getenv("USER")
-    for proc_name in ["waybar", "waybar-wrapped"]:
-        result = subprocess.run(
-            ["pgrep", "-u", user, "-x", proc_name], capture_output=True
-        )
-        if result.returncode == 0:
-            return True
-    return False
-
-
 def watch_waybar():
+    def handle_usr1(sig, frame):
+        # Implement your hide/toggle logic here
+        notify.send(
+            "Waybar",
+            "Toggling Waybar hidden state",
+            replace_id=9,
+        )
+        logger.info("Received SIGUSR1, toggled Waybar hidden state")
+
+    signal.signal(signal.SIGUSR1, handle_usr1)
     signal.signal(signal.SIGTERM, signal_handler)
     signal.signal(signal.SIGINT, signal_handler)
-    lock_file = os.path.join(str(xdg_runtime_dir()), "hyde", "waybar_hide.lock")
-    lock_file_path = Path(lock_file)
 
     while True:
         try:
-            if lock_file_path.exists():
-                time.sleep(2)
-                continue
-
             # Only check for current user's Waybar
             if not is_waybar_running_for_current_user():
-                run_waybar_command("killall waybar; waybar & disown")
+                run_waybar()
                 logger.debug("Waybar restarted for current user")
         except Exception as e:
             logger.error(f"Error monitoring Waybar: {e}")
@@ -1441,13 +1325,6 @@ def watch_waybar():
 
 def main():
     logger.debug("Starting waybar.py")
-
-    # Check for lock file early and inform user on any invocation
-    lock_file = os.path.join(str(xdg_runtime_dir()), "hyde", "waybar_hide.lock")
-    if os.path.exists(lock_file):
-        print(
-            "Waybar is currently hidden due to lock file. Use 'waybar.py --hide 0' to show waybar."
-        )
 
     logger.debug(f"Looking for state file at: {STATE_FILE}")
 
@@ -1470,7 +1347,9 @@ def main():
                 layout_hash = get_file_hash(layout_path)
 
                 if config_hash != layout_hash:
-                    logger.debug("Config hash differs from layout hash, creating backup")
+                    logger.debug(
+                        "Config hash differs from layout hash, creating backup"
+                    )
                     layout_name = os.path.basename(layout_path).replace(".jsonc", "")
                     backup_layout(layout_name)
 
@@ -1492,18 +1371,18 @@ def main():
                         logger.debug(f"Found layout by name: {layout}")
                         found_layout = layout
                         break
-                
+
                 if found_layout:
                     # Update state and create/update config
                     set_state_value("WAYBAR_LAYOUT_PATH", found_layout)
                     CONFIG_JSONC.parent.mkdir(parents=True, exist_ok=True)
-                    
+
                     if CONFIG_JSONC.exists():
                         config_hash = get_file_hash(CONFIG_JSONC)
                         layout_hash = get_file_hash(found_layout)
                         if config_hash != layout_hash:
                             backup_layout(layout_name)
-                    
+
                     shutil.copyfile(found_layout, CONFIG_JSONC)
                     logger.debug("Updated config.jsonc with layout by name")
                 else:
@@ -1512,7 +1391,9 @@ def main():
                     layouts = find_layout_files()
                     if layouts:
                         first_layout = layouts[0]
-                        first_layout_name = os.path.basename(first_layout).replace(".jsonc", "")
+                        first_layout_name = os.path.basename(first_layout).replace(
+                            ".jsonc", ""
+                        )
                         set_state_value("WAYBAR_LAYOUT_PATH", first_layout)
                         set_state_value("WAYBAR_LAYOUT_NAME", first_layout_name)
                         CONFIG_JSONC.parent.mkdir(parents=True, exist_ok=True)
@@ -1520,89 +1401,38 @@ def main():
                         logger.debug(f"Used first available layout: {first_layout}")
         else:
             # No layout path in state file or layout path is empty
-            logger.debug("No valid layout path in state file, determining current layout")
+            logger.debug(
+                "No valid layout path in state file, determining current layout"
+            )
             current_layout = get_current_layout_from_config()
             if current_layout:
                 CONFIG_JSONC.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(current_layout, CONFIG_JSONC)
-                logger.debug(f"Created config.jsonc from determined layout: {current_layout}")
+                logger.debug(
+                    f"Created config.jsonc from determined layout: {current_layout}"
+                )
     else:
         logger.debug("State file not found, creating it")
         ensure_state_file()
 
     parser = argparse.ArgumentParser(description="Waybar configuration management")
     parser.add_argument("--set", type=str, help="Set a specific layout")
-    parser.add_argument(
-        "-n", "--next", action="store_true", help="Switch to the next layout"
-    )
-    parser.add_argument(
-        "-p", "--prev", action="store_true", help="Switch to the previous layout"
-    )
-    parser.add_argument(
-        "-u",
-        "--update",
-        action="store_true",
-        help="Update all (icon size, border radius, includes, config, style)",
-    )
-    parser.add_argument(
-        "-g",
-        "--update-global-css",
-        action="store_true",
-        help="Update global.css file",
-    )
-    parser.add_argument(
-        "-i",
-        "--update-icon-size",
-        action="store_true",
-        help="Update icon size in JSON files",
-    )
-    parser.add_argument(
-        "-b",
-        "--update-border-radius",
-        action="store_true",
-        help="Update border radius in CSS file",
-    )
-    parser.add_argument(
-        "-G",
-        "--generate-includes",
-        action="store_true",
-        help="Generate includes.json file",
-    )
-    parser.add_argument(
-        "-c", "--config", type=str, help="Path to the source config.jsonc file"
-    )
-    parser.add_argument(
-        "-s", "--style", type=str, help="Path to the source style.css file"
-    )
-    parser.add_argument(
-        "-w", "--watch", action="store_true", help="Watch and restart Waybar if it dies"
-    )
-    parser.add_argument(
-        "--json", "-j", action="store_true", help="List all layouts in JSON format"
-    )
-    parser.add_argument(
-        "--select-layout", "-L", action="store_true", help="Select a layout using rofi"
-    )
-    parser.add_argument(
-        "--select-style", "-Y", action="store_true", help="Select a style using rofi"
-    )
-    parser.add_argument(
-        "--select", "-S", action="store_true", help="Select layout and then style"
-    )
-    parser.add_argument(
-        "--kill",
-        "-k",
-        action="store_true",
-        help="Kill all Waybar instances and watcher script",
-    )
-    parser.add_argument(
-        "--hide",
-        nargs="?",
-        const="toggle",
-        type=str,
-        choices=["0", "1", "toggle"],
-        help="Hide waybar (1), show waybar (0), or toggle hide state (no argument)",
-    )
+    parser.add_argument("-n", "--next", action="store_true", help="Switch to the next layout")
+    parser.add_argument("-p", "--prev", action="store_true", help="Switch to the previous layout")
+    parser.add_argument("-u", "--update", action="store_true", help="Update all (icon size, border radius, includes, config, style)")
+    parser.add_argument("-g", "--update-global-css", action="store_true", help="Update global.css file")
+    parser.add_argument("-i", "--update-icon-size", action="store_true", help="Update icon size in JSON files")
+    parser.add_argument("-b", "--update-border-radius", action="store_true", help="Update border radius in CSS file")
+    parser.add_argument("-G", "--generate-includes", action="store_true", help="Generate includes.json file")
+    parser.add_argument("-c", "--config", type=str, help="Path to the source config.jsonc file")
+    parser.add_argument("-s", "--style", type=str, help="Path to the source style.css file")
+    parser.add_argument("-w", "--watch", action="store_true", help="Watch and restart Waybar if it dies")
+    parser.add_argument("--json", "-j", action="store_true", help="List all layouts in JSON format")
+    parser.add_argument("--select-layout", "-L", action="store_true", help="Select a layout using rofi")
+    parser.add_argument("--select-style", "-Y", action="store_true", help="Select a style using rofi")
+    parser.add_argument("--select", "-S", action="store_true", help="Select layout and then style")
+    parser.add_argument("--kill", "-k", action="store_true", help="Kill all Waybar instances and watcher script")
+    parser.add_argument("--hide", action="store_true", help="Send SIGUSR1 to Waybar systemd unit to toggle hide")
 
     if not STATE_FILE.exists() or STATE_FILE.stat().st_size == 0:
         logger.debug("State file doesn't exist or is empty, creating it")
@@ -1616,6 +1446,13 @@ def main():
     args = parser.parse_args()
 
     ensure_state_file()
+
+    if args.hide:
+        # Send SIGUSR1 to Waybar systemd unit
+        cmd = ["systemctl", "--user", "kill", "-s", "SIGUSR1", UNIT_NAME]
+        logger.info(f"Sending SIGUSR1 to {UNIT_NAME} via systemctl")
+        subprocess.run(cmd)
+        sys.exit(0)
 
     if args.update:
         update_icon_size()
@@ -1642,59 +1479,25 @@ def main():
     if args.json:
         list_layouts_json()
     if args.select_layout:
-        rofi_selector()
+        layout_selector()
     if args.select_style:
-        rofi_style_selector()
+        style_selector()
     if args.select:
         select_layout_and_style()
-
-    if args.hide is not None:
-        if args.hide == "1":
-            if manage_waybar_lock("hide"):
-                kill_waybar()
-                sys.exit(0)
-        elif args.hide == "0":
-            manage_waybar_lock("show")
-            run_waybar_command("killall waybar; waybar & disown")
-            sys.exit(0)
-        else:  # args.hide == "toggle"
-            if manage_waybar_lock("toggle"):
-                kill_waybar()
-            else:
-                run_waybar_command("killall waybar; waybar & disown")
-            sys.exit(0)
 
     if args.kill:
         kill_waybar_and_watcher()
         sys.exit(0)
 
     if args.watch:
-        # Remove hide lock file when starting watch mode to avoid confusion
-        lock_file = os.path.join(str(xdg_runtime_dir()), "hyde", "waybar_hide.lock")
-        if os.path.exists(lock_file):
-            logger.warning(
-                f"Found waybar hide lock file at {lock_file}, removing it to start watch mode"
-            )
-            logger.info(
-                "Waybar is currently hidden due to lock file. Use 'waybar.py --hide 0' to show waybar."
-            )
-            os.remove(lock_file)
         watch_waybar()
     else:
-        # Check if waybar should be hidden before starting
-        lock_file = os.path.join(str(xdg_runtime_dir()), "hyde", "waybar_hide.lock")
-        if os.path.exists(lock_file):
-            logger.warning(
-                f"Waybar hide lock file exists at {lock_file}, not starting waybar. Use --hide 0 to show waybar or remove the lock file manually."
-            )
-            return
-
         update_icon_size()
         update_border_radius()
         generate_includes()
         update_global_css()
         update_style(args.style)
-        run_waybar_command("killall waybar; waybar & disown")
+        restart_waybar()
         return
 
     if not any(vars(args).values()):

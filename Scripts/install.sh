@@ -254,9 +254,10 @@ EOF
     "${scrDir}/restore_thm.sh"
     print_log -g "[generate] " "cache ::" "Wallpapers..."
     if [ "${flg_DryRun}" -ne 1 ]; then
-        export PATH="$HOME/.local/lib/hyde:${PATH}"
+        export PATH="$HOME/.local/lib/hyde:$HOME/.local/bin:${PATH}"
         "$HOME/.local/lib/hyde/swwwallcache.sh" -t ""
         "$HOME/.local/lib/hyde/theme.switch.sh" -q || true
+        "$HOME/.local/lib/hyde/waybar.py" --update || true
         echo "[install] reload :: Hyprland"
     fi
 

@@ -55,6 +55,8 @@ fi
 WALLBASH_DIRS=(
     "${XDG_CONFIG_HOME:-$HOME.config}/hyde/wallbash"
     "${XDG_DATA_HOME:-$HOME/.local/share}/hyde/wallbash"
+    "${XDG_DATA_HOME}/wallbash"
+    "${XDG_DATA_HOME}/hyde/wallbash"
     "/usr/local/share/hyde/wallbash"
     "/usr/share/hyde/wallbash"
 )
@@ -120,6 +122,7 @@ config=$(find -L "${WALLBASH_DIRS[@]}" -type f -path "*/theme*" -name "*.dcol" 2
 restore_list=""
 
 while IFS= read -r fileCheck; do
+    [[ "${LOG_LEVEL}" == "debug" ]] && print_log -n "[debug] " "fileCheck: ${fileCheck}"
     if [[ -e "${THEME_DIR}/Configs/${fileCheck}" ]]; then
         print_log -g "[pass]  " "${fileCheck}"
         file_base=$(basename "${fileCheck}")
@@ -133,6 +136,9 @@ if [ -f "${FAV_THEME_DIR}/theme.dcol" ]; then
     print_log -n "[note] " "found theme.dcol to override wallpaper dominant colors"
     restore_list+="Y|Y|\${HOME}/.config/hyde/themes/${THEME_NAME}|theme.dcol|hyprland\n"
 fi
+
+[[ "${LOG_LEVEL}" == "debug" ]] && print_log -n "[debug] " "restore_list: ${restore_list}"
+
 readonly restore_list
 
 # Get Wallpapers
