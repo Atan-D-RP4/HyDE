@@ -258,10 +258,10 @@ fi
 if pkg_installed flatpak; then
   flatpak \
     --user override \
-    --filesystem="${themesDir}":ro \
-    --filesystem="$HOME/.themes":ro \
-    --filesystem="$HOME/.icons":ro \
-    --filesystem="$HOME/.local/share/icons":ro \
+    --filesystem="${themesDir}" \
+    --filesystem="$HOME/.themes" \
+    --filesystem="$HOME/.icons" \
+    --filesystem="$HOME/.local/share/icons" \
     --env=GTK_THEME="${gtk4Theme}" \
     --env=ICON_THEME="${ICON_THEME}"
 
