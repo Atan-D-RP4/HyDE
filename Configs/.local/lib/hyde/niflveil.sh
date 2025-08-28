@@ -183,11 +183,15 @@ restore_specific_window() {
 	focus_result=$(hyprctl dispatch focuswindow "address:${window_id}" 2>&1)
 	echo "Focus command result: $focus_result" >&2
 
+	# Get active window info
+	local window_info
 	window_info=$(hyprctl activewindow -j 2>/dev/null)
 	if [[ $? -ne 0 ]]; then
 		echo "Failed to get active window info" >&2
 		return 1
 	fi
+
+	local pid
 	pid=$(parse_window_info "$window_info" "pid")
 	if [[ -z "$pid" || ! "$pid" =~ ^[0-9]+$ ]]; then
 		echo "No valid PID found for the window" >&2
@@ -202,6 +206,9 @@ restore_specific_window() {
 		echo "Failed to resume process with PID $pid" >&2
 		return 1
 	fi
+	# Or
+	# local sigcont_result
+	# sigcont_result=$(hyprctl dispatch signalwindow 18 "address:${window_id}" 2>&1)
 
 	# Update cache file - remove the restored window
 	if [[ -f "$CACHE_FILE" ]]; then
@@ -399,6 +406,9 @@ minimize_window() {
 
 	# Send SIGSTOP to the process
 	notify-send -i "$icon" "Window Minimized: $display_title :: PID: $pid"
+	# One way to do it
+	# local sigstop_result
+	# sigstop_result=$(hyprctl dispatch signal 19 2>&1)
 	if [[ -n "$pid" && "$pid" =~ ^[0-9]+$ ]]; then
 		# kill -s STOP "$pid" 2>/dev/null
 		signal_process_tree "$pid" "STOP"
