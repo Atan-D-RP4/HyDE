@@ -4,7 +4,7 @@
 
 [[ "${HYDE_SHELL_INIT}" -ne 1 ]] && eval "$(hyde-shell init)"
 
-wallbashModes=("theme" "auto" "dark" "light")
+wallbashModes=("dark" "auto" "theme" "light")
 
 #// rofi select mode
 

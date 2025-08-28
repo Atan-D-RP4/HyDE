@@ -37,8 +37,8 @@ B = Backup - Backup the target
 
 
  Hyde core files 
-P|${HOME}/.config/hyde|config.toml themes|hyprland
-P|${HOME}/.config/hypr|pyprland.toml shaders.conf workflows.conf animations.conf windowrules.conf keybindings.conf userprefs.conf monitors.conf|hyprland
+P|${HOME}/.config/hyde|config.toml|hyprland
+L|${HOME}/.config/hypr|pyprland.toml windowrules.conf keybindings.conf userprefs.conf monitors.conf|hyprland
 P|${HOME}/.config/hypr|shaders.conf workflows.conf animations.conf|hyprland
 L|${HOME}/.config/hypr|nvidia.conf|hyprland nvidia-utils
 P|${HOME}/.config/hypr/themes|theme.conf wallbash.conf colors.conf|hyprland
@@ -61,10 +61,10 @@ S|${HOME}|.gtkrc-2.0|nwg-look
 S|${HOME}/.config|Kvantum|kvantum
 S|${HOME}/.config|qt5ct|qt5ct
 S|${HOME}/.config|qt6ct|qt6ct
-S|${HOME}/.config/hyde|wallbash|hyprland bash imagemagick
-S|${HOME}/.config/hypr|animations|hyprland
-S|${HOME}/.config/hypr|workflows|hyprland
-S|${HOME}/.config/hypr|shaders|hyprland
+L|${HOME}/.config/hyde|wallbash|hyprland bash imagemagick
+L|${HOME}/.config/hypr|animations|hyprland
+L|${HOME}/.config/hypr|workflows|hyprland
+L|${HOME}/.config/hypr|shaders|hyprland
 
 L|${HOME}/.local/share|hyde|hyprland
 L|${HOME}/.local/lib|hyde|hyprland
@@ -73,7 +73,7 @@ O|${HOME}/.local/share|wallbash|bash imagemagick
 
  Bar 
 P|${HOME}/.config/waybar|config.jsonc style.css theme.css|waybar
-L|${HOME}/.config/waybar|modules styles layouts/hyprdots menus user-style.css|waybar
+L|${HOME}/.config/waybar|modules styles layouts menus user-style.css|waybar
 L|${HOME}/.local/share|waybar|waybar
 
 # Terminal 
