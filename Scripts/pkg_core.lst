@@ -31,7 +31,7 @@ hyprsunset                                             # blue light filter
 hyprpicker                                             # color picker
 hyprlock                                               # lock screen
 dunst                                                  # notification daemon
-rofi-wayland                                           # application launcher
+rofi                                                   # application launcher
 waybar                                                 # system bar
 swww                                                   # wallpaper
 wlogout                                                # logout menu
