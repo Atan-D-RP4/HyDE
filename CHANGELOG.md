@@ -4,14 +4,28 @@ All notable changes to `HyDE` will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to _Modified_ [CalVer](https://calver.org/). See [Versioning](https://github.com/HyDE-Project/HyDE/blob/master/RELEASE_POLICY.md#versioning-yymq) For more info
 
-## v25.9.1 (Unreleased)
+## v25.9.1
+
+This release delivers a new gesture syntax for hyprland v0.51.0. This is a breaking change for users of the previous gesture syntax. Please update HyDE before opening an issue.
+
+For contributors, if you need to make the workspace animation vertical, example the `vertical.conf` animation, please **explicitly** add the following line to file.
+
+
+```
+gesture = 3, horizontal, unset # unsets the default horizontal gesture
+gesture = 3, vertical, workspace
+```
 
 ### Changed
 
 - Waybar: Make temperature background transparent
 - hyde-shell: silent pyinit command
 - Binds: Use `hyde-shell logout` for cleaner session logout
+- Gestures: Chase hyprland v0.51.0 gesture syntax
 
+### Added
+
+- pinch gesture to toggle tile and floating
 
 ## v25.8.3
 
