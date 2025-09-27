@@ -92,7 +92,7 @@ deploy_psv() {
         cfg=$(awk -F '|' '{print $3}' <<<"${lst}")
         pkg=$(awk -F '|' '{print $4}' <<<"${lst}")
 
-        # Check if ctlFlag is not one of the values 'O', 'R', 'B', 'S', or 'P'
+        # Check if ctlFlag is not one of the values 'O', 'R', 'B', 'S', 'L', or 'P'
         if [[ "${ctlFlag}" = "I" ]]; then
             print_log -r "[ignore] :: " "${pth}/${cfg}"
             continue 2
@@ -147,6 +147,16 @@ deploy_psv() {
                     [ "${flg_DryRun}" -ne 1 ] && cp -r "${pth}/${cfg_chk}" "${BkpDir}${tgt}"
                     [ "${flg_DryRun}" -ne 1 ] && cp -rf "${CfgDir}${tgt}/${cfg_chk}" "${pth}"
                     print_log -g "[copy to backup]" " > " -y "[sync]" -b " :: " "${pth}" -r " <--  " "${CfgDir}${tgt}/${cfg_chk}"
+                    ;;
+                "L")
+                    [ "${flg_DryRun}" -ne 1 ] && mv "${pth}/${cfg_chk}" "${BkpDir}${tgt}"
+                    [ "${flg_DryRun}" -ne 1 ] && ln -sf "${CfgDir}${tgt}/${cfg_chk}" "${pth}/${cfg_chk}"
+                    if [ ! -e "${pth}/${cfg_chk}" ]; then
+                        [ "${flg_DryRun}" -ne 1 ] && ln -sf "${CfgDir}${tgt}/${cfg_chk}" "${pth}/${cfg_chk}"
+                        print_log -g "[copy to backup]" " > " -b "[link]" -b " :: " "${pth}" -r " <--  " "${CfgDir}${tgt}/${cfg_chk}"
+                    else
+                        print_log -g "[copy to backup]" " > " -g "[link-preserved]" -b " :: " "${pth}" -r " <--  " "${CfgDir}${tgt}/${cfg_chk}"
+                    fi
                     ;;
                 "P")
                     [ "${flg_DryRun}" -ne 1 ] && cp -r "${pth}/${cfg_chk}" "${BkpDir}${tgt}"

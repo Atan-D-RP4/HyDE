@@ -43,7 +43,7 @@ Commands:
   -r, reload                    : Reload HyDE
   wallbash                      : Execute a wallbash script
   release-notes                 : Show release notes
-  completions [bash|zsh|fish]   : Generate shell completions
+  completions [bash|fish]       : Generate shell completions
   validate [args]               : Validate HyDE configuration
   pyinit                        : Initialize python virtual environment
   version                       : Show version information
@@ -215,18 +215,18 @@ _hyde_shell_completion() {
         cur="${COMP_WORDS[COMP_CWORD]}"
         prev="${COMP_WORDS[COMP_CWORD-1]}"
     }
-    
+
     local built_in_commands hyde_scripts wallbash_scripts
     built_in_commands="--help help -h -r reload wallbash --version version -v --release-notes release-notes --list-script --list-script-path --completions"
-    
+
     # Get dynamic completions from hyde-shell
     if command -v hyde-shell >/dev/null 2>&1; then
         hyde_scripts=$(hyde-shell --list-script 2>/dev/null | sed 's/\.[^.]*$//' | tr '\n' ' ')
-        
+
         # Get wallbash scripts - just --help for now
         wallbash_scripts="--help"
     fi
-    
+
     # Only provide completions for the first argument
     if [[ $COMP_CWORD -eq 1 ]]; then
         # First argument: complete with all available commands
@@ -240,7 +240,7 @@ _hyde_shell_completion() {
                 return 0
                 ;;
             --completions)
-                COMPREPLY=($(compgen -W "bash zsh fish" -- "$cur"))
+                COMPREPLY=($(compgen -W "bash fish" -- "$cur"))
                 return 0
                 ;;
             *)
@@ -258,61 +258,6 @@ _hyde_shell_completion() {
 
 complete -F _hyde_shell_completion hyde-shell
 BASH_COMPLETION
-}
-
-gen_zsh_completion() {
-    get_completion_data
-
-    cat <<'ZSH_COMPLETION'
-#compdef hyde-shell
-
-_hyde_shell() {
-    local cur prev words
-    cur="${words[CURRENT]}"
-    prev="${words[CURRENT-1]}"
-    
-    local built_in_commands hyde_scripts wallbash_scripts
-    built_in_commands=("--help" "help" "-h" "-r" "reload" "wallbash" "--version" "version" "-v" "--release-notes" "release-notes" "--list-script" "--list-script-path" "--completions")
-    
-    # Get dynamic completions
-    if (( $+commands[hyde-shell] )); then
-        local scripts_raw
-        scripts_raw=(${(f)"$(hyde-shell --list-script 2>/dev/null)"})
-        hyde_scripts=(${scripts_raw[@]%.*})  # Remove extensions
-        
-        # Get wallbash scripts - just --help for now
-        wallbash_scripts=("--help")
-    fi
-    
-    # Only complete for first two arguments max
-    if [[ $CURRENT -eq 2 ]]; then
-        # First argument: all commands
-        local all_commands=($built_in_commands $hyde_scripts)
-        compadd -a all_commands
-    elif [[ $CURRENT -eq 3 ]]; then
-        # Second argument: only for specific commands
-        case $words[2] in
-            wallbash)
-                compadd -a wallbash_scripts
-                return 0
-                ;;
-            --completions)
-                compadd "bash" "zsh" "fish"
-                return 0
-                ;;
-            *)
-                # No completion for other commands
-                return 0
-                ;;
-        esac
-    else
-        # No completion for 3rd argument and beyond
-        return 0
-    fi
-}
-
-compdef _hyde_shell hyde-shell
-ZSH_COMPLETION
 }
 
 gen_fish_completion() {
@@ -336,7 +281,7 @@ release-notes
 --list-script
 --list-script-path
 --completions"
-    
+
     # Get hyde scripts
     if command -v hyde-shell >/dev/null 2>&1
         hyde-shell --list-script 2>/dev/null | sed 's/\.[^.]*$//'
@@ -358,7 +303,7 @@ complete -c hyde-shell -n "not __fish_seen_subcommand_from (__hyde_shell_get_com
 complete -c hyde-shell -n "__fish_seen_subcommand_from wallbash" -a "(__hyde_shell_get_wallbash_scripts)" -d "Wallbash scripts"
 
 # Completions subcommand
-complete -c hyde-shell -n "__fish_seen_subcommand_from --completions" -a "bash zsh fish" -d "Shell completion types"
+complete -c hyde-shell -n "__fish_seen_subcommand_from --completions" -a "bash fish" -d "Shell completion types"
 
 # Option descriptions
 complete -c hyde-shell -s h -l help -d "Display help message"
@@ -378,14 +323,11 @@ generate_completions() {
     bash)
         gen_bash_completion
         ;;
-    zsh)
-        gen_zsh_completion
-        ;;
     fish)
         gen_fish_completion
         ;;
     *)
-        echo "Usage: hyde-shell --completions [bash|zsh|fish]"
+        echo "Usage: hyde-shell --completions [bash|fish]"
         echo "Generate shell completions for the specified shell"
         return 1
         ;;
@@ -468,7 +410,7 @@ run_pypr() {
             message="${*:-"help"}"
             # Send the message to the socket and print the response
             if ! printf "%s" "${message[@]}" | nc -N -U "$socket_path" 2>/dev/null; then #! openbsd netcat only
-                if ! printf "%s" "${message[@]}" | socat - UNIX-CONNECT:"$socket_path" 2>/dev/null; then 
+                if ! printf "%s" "${message[@]}" | socat - UNIX-CONNECT:"$socket_path" 2>/dev/null; then
                     if ! printf "%s" "${message[@]}" | ncat -U "$socket_path" 2>/dev/null; then
                         if ! pypr "${message[@]}"; then
                             print_log -sec "pypr" "Error communicating with socket: $socket_path"

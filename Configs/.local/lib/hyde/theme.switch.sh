@@ -197,7 +197,7 @@ fi
 
 toml_write "${confDir}/qt5ct/qt5ct.conf" "Appearance" "icon_theme" "${ICON_THEME}"
 toml_write "${confDir}/qt5ct/qt5ct.conf" "Fonts" "general" "\"${FONT},${FONT_SIZE},-1,5,400,0,0,0,0,0,0,0,0,0,0,1,${FONT_STYLE}\""
-toml_write "${confDir}/qt5ct/qt5ct.conf" "Fonts" "fixed" "\"${MONOSPACE_FONT},${MONOSPACE_FONT_SIZE:-9},-1,5,400,0,0,0,0,0,0,0,0,0,0,1\""
+toml_write "${confDir}/qt5ct/qt5ct.conf" "Fonts" "fixed" "\"${MONOSPACE_FONT},9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1\""
 
 # toml_write "${confDir}/qt5ct/qt5ct.conf" "Appearance" "color_scheme_path" "${confDir}/qt5ct/colors/colors.conf"
 # toml_write "${confDir}/qt5ct/qt5ct.conf" "Appearance" "custom_palette" "true"
@@ -206,7 +206,7 @@ toml_write "${confDir}/qt5ct/qt5ct.conf" "Fonts" "fixed" "\"${MONOSPACE_FONT},${
 
 toml_write "${confDir}/qt6ct/qt6ct.conf" "Appearance" "icon_theme" "${ICON_THEME}"
 toml_write "${confDir}/qt6ct/qt6ct.conf" "Fonts" "general" "\"${FONT},${FONT_SIZE},-1,5,400,0,0,0,0,0,0,0,0,0,0,1,${FONT_STYLE}\""
-toml_write "${confDir}/qt6ct/qt6ct.conf" "Fonts" "fixed" "\"${MONOSPACE_FONT},${MONOSPACE_FONT_SIZE:-9},-1,5,400,0,0,0,0,0,0,0,0,0,0,1\""
+toml_write "${confDir}/qt6ct/qt6ct.conf" "Fonts" "fixed" "\"${MONOSPACE_FONT},9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1\""
 # toml_write "${confDir}/qt6ct/qt6ct.conf" "Appearance" "color_scheme_path" "${confDir}/qt6ct/colors/colors.conf"
 # toml_write "${confDir}/qt6ct/qt6ct.conf" "Appearance" "custom_palette" "true"
 
@@ -320,7 +320,7 @@ fi
 #// wallpaper
 export -f pkg_installed
 
-[[ -d "$HYDE_CACHE_HOME/wallpapers/" ]] && find -H "$HYDE_CACHE_HOME/wallpapers" -name "*.png" -exec sh -c '
+[[ -d "$HYDE_CACHE_HOME/wallpapers/" ]] && find -L "$HYDE_CACHE_HOME/wallpapers" -name "*.png" -exec sh -c '
     for file; do
         base=$(basename "$file" .png)
         if pkg_installed ${base}; then

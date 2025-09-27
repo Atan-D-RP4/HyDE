@@ -24,7 +24,7 @@ show_help() {
 Usage: $0 [OPTIONS]
 
 Options:
-    --select | -S       Select an animation from the available options  
+    --select | -S       Select an animation from the available options
     --help   | -h       Show this help message
 HELP
 }

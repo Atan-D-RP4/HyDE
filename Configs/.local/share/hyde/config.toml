@@ -117,10 +117,6 @@ annotation_tool = "satty"  # Annotation tool for screenshots.
 annotation_pre_command = []  # Pre command for annotation tool.
 annotation_post_command = [""]  # Post command for annotation tool.
 
-# OCR configuration.
-[screenshot.ocr]
-tesseract_languages = ["eng"]  # Place desired languages to use for text recognition. To see installed languages run `tesseract --list-langs`.
-
 # Bookmark configuration.
 [rofi.bookmark]
 
@@ -136,7 +132,7 @@ skip_template = [""]  # Templates to skip when using wallbash.
 font = "JetBrainsMono Nerd Font"  # Font for waybar.
 scale = 10  # Total scaling for waybar.
 icon_size = 10  # Icon size for waybar.
-position = "top"  # A fallback position of the waybar.
+position = "top"  # A fallback position of the waybar.  
 
 # Weather configuration.
 [weather]
@@ -181,6 +177,7 @@ range = "8"  # Bar sensitivity
 
 # Hypr configuration.
 [hypr.config]
+sanitize = [".*rgba\(.*,.*,.*,.*\)"]  # List of regex to sanitize in the theme.config.
 
 # volumecontrol.sh configuration.
 [volume]
@@ -230,7 +227,7 @@ monospace_font_size = 9  # Monospace font size.
 background_path = ""  # LockScreen's Background path.
 
 # Hyprland start configuration.
-[hyprland-start]
+[hyprland_start]
 apptray_bluetooth = "blueman-applet"  # Bluetooth applet.
 auth_dialogue = "polkitkdeauth.sh"  # Authentication dialogue.
 bar = "hyde-shell waybar --watch"  # Bar.

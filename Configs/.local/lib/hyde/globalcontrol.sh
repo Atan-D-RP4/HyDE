@@ -149,7 +149,7 @@ get_hashmap() {
         fi
 
         local find_command
-        find_command="find -H \"${wallSource}\" -type f \\( $(list_extensions) \\) $(list_skipped_path) -exec \"${hashMech}\" {} +"
+        find_command="find -L \"${wallSource}\" -type f \\( $(list_extensions) \\) $(list_skipped_path) -exec \"${hashMech}\" {} +"
 
         [ "${LOG_LEVEL}" == "debug" ] && print_log -g "DEBUG:" -b "Running command:" "${find_command}"
 
@@ -240,7 +240,7 @@ get_themes() {
         [ -f "${thmDir}/.sort" ] && thmSortS+=("$(head -1 "${thmDir}/.sort")") || thmSortS+=("0")
         thmWallS+=("${realWallPath}")
         thmListS+=("${thmDir##*/}") # Use this instead of basename
-    done < <(find -H "${HYDE_CONFIG_HOME}/themes" -mindepth 1 -maxdepth 1 -type d)
+    done < <(find -L "${HYDE_CONFIG_HOME}/themes" -mindepth 1 -maxdepth 1 -type d)
 
     while IFS='|' read -r sort theme wall; do
         thmSort+=("${sort}")
@@ -267,7 +267,7 @@ export_hyde_config() {
     #?    Example: You start a new shell session and want to ensure the latest config is loaded; call export_hyde_config at the start.
     #? 3. If you need arrays from the config to be available in the current shell session (since bash does not export arrays).
     #?    Example: You want to use theme or wall arrays in your shell; call export_hyde_config to populate them.
-    #? 
+    #?
     #? Usage: Call export_hyde_config whenever you need to ensure the current shell has up-to-date config and arrays.
     #? Typically called after config changes, at shell startup, or before using config-dependent arrays.
 

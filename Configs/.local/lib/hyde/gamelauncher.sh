@@ -41,7 +41,7 @@ case ${MODE:-5} in
     magick "${BG}" -resize ${monitor_width}x${monitor_height} -background none -gravity center -extent ${monitor_width}x${monitor_height} "$BGfx"
   fi
 
-  r_override="window {width: ${monitor_width}px; height: ${monitor_height}; background-image: url('${BGfx}',width);}  
+  r_override="window {width: ${monitor_width}px; height: ${monitor_height}; background-image: url('${BGfx}',width);}
                 element-icon {border-radius:0px;}
                 mainbox { padding: 17% 18%; }
                 "

@@ -12,7 +12,7 @@ cloneDir="${CLONE_DIR:-${cloneDir}}"
 confDir="${XDG_CONFIG_HOME:-$HOME/.config}"
 cacheDir="${XDG_CACHE_HOME:-$HOME/.cache}/hyde"
 aurList=("yay" "paru")
-shlList=("zsh" "fish")
+shlList=("fish", "bash")
 
 export cloneDir
 export confDir
