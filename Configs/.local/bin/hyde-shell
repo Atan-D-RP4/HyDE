@@ -43,7 +43,7 @@ Commands:
   -r, reload                    : Reload HyDE
   wallbash                      : Execute a wallbash script
   release-notes                 : Show release notes
-  completions [bash|fish]   : Generate shell completions
+  completions [bash|fish]       : Generate shell completions
   validate [args]               : Validate HyDE configuration
   pyinit                        : Initialize python virtual environment
   version                       : Show version information
@@ -410,7 +410,7 @@ run_pypr() {
             message="${*:-"help"}"
             # Send the message to the socket and print the response
             if ! printf "%s" "${message[@]}" | nc -N -U "$socket_path" 2>/dev/null; then #! openbsd netcat only
-                if ! printf "%s" "${message[@]}" | socat - UNIX-CONNECT:"$socket_path" 2>/dev/null; then 
+                if ! printf "%s" "${message[@]}" | socat - UNIX-CONNECT:"$socket_path" 2>/dev/null; then
                     if ! printf "%s" "${message[@]}" | ncat -U "$socket_path" 2>/dev/null; then
                         if ! pypr "${message[@]}"; then
                             print_log -sec "pypr" "Error communicating with socket: $socket_path"

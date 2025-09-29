@@ -58,14 +58,14 @@ load_hypr_variables() {
       -Q "\$GTK_THEME[string]" \
       -Q "\$ICON_THEME[string]" \
       -Q "\$CURSOR_THEME[string]" \
-      -Q "\$CURSOR_SIZE[int]" \
+      -Q "\$CURSOR_SIZE" \
       -Q "\$FONT[string]" \
-      -Q "\$FONT_SIZE[int]" \
+      -Q "\$FONT_SIZE" \
       -Q "\$FONT_STYLE[string]" \
       -Q "\$DOCUMENT_FONT[string]" \
-      -Q "\$DOCUMENT_FONT_SIZE[int]" \
+      -Q "\$DOCUMENT_FONT_SIZE" \
       -Q "\$MONOSPACE_FONT[string]" \
-      -Q "\$MONOSPACE_FONT_SIZE[int]"
+      -Q "\$MONOSPACE_FONT_SIZE"
   )"
 
   GTK_THEME=${__GTK_THEME:-$GTK_THEME}

@@ -1,39 +1,35 @@
 <div align = center>
-
-<a href="https://discord.gg/AYbJ9MJez7">
+  <a href="https://discord.gg/AYbJ9MJez7">
     <img alt="Dynamic JSON Badge" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdiscordapp.com%2Fapi%2Finvites%2FmT5YqjaJFh%3Fwith_counts%3Dtrue&query=%24.approximate_member_count&suffix=%20members&style=for-the-badge&logo=discord&logoSize=auto&label=The%20HyDe%20Project&labelColor=ebbcba&color=c79bf0">
   </a>
 </div>
 
 ###### _<div align="right"><a id=-design-by-t2></a><sub>// design by t2</sub></div>_
 
-![hyde_banner](Source/assets/hyde_banner.png)
+![hyde_banner](../assets/hyde_banner.png)
 
 <!--
 Multi-language README support
 -->
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-[![es](https://img.shields.io/badge/lang-es-yellow.svg)](Source/docs/README.es.md)
-[![de](https://img.shields.io/badge/lang-de-black.svg)](Source/docs/README.de.md)
-[![nl](https://img.shields.io/badge/lang-nl-green.svg)](Source/docs/README.nl.md)
-[![中文](https://img.shields.io/badge/lang-中文-orange.svg)](Source/docs/README.zh.md)
-[![fr](https://img.shields.io/badge/lang-fr-blue.svg)](Source/docs/README.fr.md)
-[![ar](https://img.shields.io/badge/lang-AR-orange.svg)](Source/docs/README.ar.md)
-[![pt-br](https://img.shields.io/badge/lang-pt--br-006400.svg)](Source/docs/README.pt-br.md)
-[![tr](https://img.shields.io/badge/lang-tr-e30a17.svg)](Source/docs/README.tr.md)
+
+[![es](https://img.shields.io/badge/lang-es-yellow.svg)](../docs/README.es.md)
+[![de](https://img.shields.io/badge/lang-de-black.svg)](../docs/README.de.md)
+[![nl](https://img.shields.io/badge/lang-nl-green.svg)](../docs/README.nl.md)
+[![中文](https://img.shields.io/badge/lang-中文-orange.svg)](../docs/README.zh.md)
+[![fr](https://img.shields.io/badge/lang-fr-blue.svg)](../docs/README.fr.md)
+[![ar](https://img.shields.io/badge/lang-AR-orange.svg)](../docs/README.ar.md)
+[![pt-br](https://img.shields.io/badge/lang-pt--br-006400.svg)](../docs/README.pt-br.md)
+[![tr](https://img.shields.io/badge/lang-tr-e30a17.svg)](../docs/README.tr.md)
 
 <div align="center">
 
 <br>
 
-<a href="#installation"><kbd> <br> Installation <br> </kbd></a>&ensp;&ensp;
-<a href="#updating"><kbd> <br> Updating <br> </kbd></a>&ensp;&ensp;
-<a href="#themes"><kbd> <br> Themes <br> </kbd></a>&ensp;&ensp;
-<a href="#styles"><kbd> <br> Styles <br> </kbd></a>&ensp;&ensp;
-<a href="CONTRIBUTING.md"><kbd> <br> Contributing <br> </kbd></a>&ensp;&ensp;
-<a href="KEYBINDINGS.md"><kbd> <br> Keybindings <br> </kbd></a>&ensp;&ensp;
+<a href="#installation"><kbd> <br> Kurulum <br> </kbd></a>&ensp;&ensp;
+<a href="#updating"><kbd> <br> Güncelleme <br> </kbd></a>&ensp;&ensp;
+<a href="#themes"><kbd> <br> Temalar <br> </kbd></a>&ensp;&ensp;
+<a href="#styles"><kbd> <br> Stiller <br> </kbd></a>&ensp;&ensp;
+<a href="KEYBINDINGS.md"><kbd> <br> Tuş atamaları <br> </kbd></a>&ensp;&ensp;
 <a href="https://www.youtube.com/watch?v=2rWqdKU1vu8&list=PLt8rU_ebLsc5yEHUVsAQTqokIBMtx3RFY&index=1"><kbd> <br> Youtube <br> </kbd></a>&ensp;&ensp;
 <a href="https://hydeproject.pages.dev/"><kbd> <br> Wiki <br> </kbd></a>&ensp;&ensp;
 <a href="https://discord.gg/qWehcFJxPa"><kbd> <br> Discord <br> </kbd></a>
@@ -42,16 +38,16 @@ Multi-language README support
 
 <div align="center">
   <div style="display: flex; flex-wrap: nowrap; justify-content: center;">
-    <img src="Source/assets/archlinux.png" alt="Arch Linux" style="width: 10%; margin: 10px;"/>
-    <img src="Source/assets/cachyos.png" alt="CachyOS" style="width: 10%; margin: 10px;"/>
-    <img src="Source/assets/endeavouros.png" alt="EndeavourOS" style="width: 10%; margin: 10px;"/>
-    <img src="Source/assets/garuda.png" alt="Garuda" style="width: 10%; margin: 10px;"/>
-    <img src="Source/assets/nixos.png" alt="NixOS" style="width: 10%; margin: 10px;"/>
+    <img src="../assets/archlinux.png" alt="Arch Linux" style="width: 10%; margin: 10px;"/>
+    <img src="../assets/cachyos.png" alt="CachyOS" style="width: 10%; margin: 10px;"/>
+    <img src="../assets/endeavouros.png" alt="EndeavourOS" style="width: 10%; margin: 10px;"/>
+    <img src="../assets/garuda.png" alt="Garuda" style="width: 10%; margin: 10px;"/>
+    <img src="../assets/nixos.png" alt="NixOS" style="width: 10%; margin: 10px;"/>
   </div>
 </div>
 
-Check this out for the full note:
-[Journey to HyDE and beyond](./Hyprdots-to-HyDE.md)
+Tam not için bu bağlantıya göz atın:
+[HyDE ve ötesine yolculuk](../../Hyprdots-to-HyDE.md)
 
 <!--
 <img alt="Dynamic JSON Badge" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdiscordapp.com%2Fapi%2Finvites%2FmT5YqjaJFh%3Fwith_counts%3Dtrue&query=%24.approximate_member_count&suffix=%20members&style=for-the-badge&logo=discord&logoSize=auto&label=The%20HyDe%20Project&labelColor=ebbcba&color=c79bf0">
@@ -64,23 +60,22 @@ Check this out for the full note:
 <br>
 
 <a id="installation"></a>
-<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=CCA9DD&vCenter=true&width=435&height=25&lines=INSTALLATION" width="450"/>
+<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=CCA9DD&vCenter=true&width=435&height=25&lines=KURULUM" width="450"/>
 
 ---
 
-The installation script is designed for a minimal [Arch Linux](https://wiki.archlinux.org/title/Arch_Linux) install, but **may** work on some [Arch-based distros](https://wiki.archlinux.org/title/Arch-based_distributions).
-While installing HyDE alongside another [DE](https://wiki.archlinux.org/title/Desktop_environment)/[WM](https://wiki.archlinux.org/title/Window_manager) should work, due to it being a heavily customized setup, it **will** conflict with your [GTK](https://wiki.archlinux.org/title/GTK)/[Qt](https://wiki.archlinux.org/title/Qt) theming, [Shell](https://wiki.archlinux.org/title/Command-line_shell), [SDDM](https://wiki.archlinux.org/title/SDDM), [GRUB](https://wiki.archlinux.org/title/GRUB), etc. and is at your own risk.
+Kurulum betiği (script), minimal [Arch Linux](https://wiki.archlinux.org/title/Arch_Linux) kurulumu için tasarlanmıştır, ancak **bazı** [Arch tabanlı dağıtımlarda](https://wiki.archlinux.org/title/Arch-based_distributions) da çalışabilir. HyDE'yi başka bir [DE](https://wiki.archlinux.org/title/Desktop_environment)/[WM](https://wiki.archlinux.org/title/Window_manager) ile birlikte kurmak mümkün olsa da, bu kurulumun büyük ölçüde özelleştirilmiş olması nedeniyle [GTK](https://wiki.archlinux.org/title/GTK)/[Qt](https://wiki.archlinux.org/title/Qt) temalarınız, [Shell](https://wiki.archlinux.org/title/Command-line_shell), [SDDM](https://wiki.archlinux.org/title/SDDM), [GRUB](https://wiki.archlinux.org/title/GRUB) vb. ile **çakışabilir** ve riski size aittir.
 
-For NixOS support there is a separate project being maintained @ [Hydenix](https://github.com/richen604/hydenix/tree/main)
+NixOS desteği için ayrı bir proje yürütülmektedir @ [Hydenix](https://github.com/richen604/hydenix/tree/main)
 
 > [!IMPORTANT]
-> The install script will auto-detect an NVIDIA card and install nvidia-dkms drivers for your kernel.
-> Please ensure that your NVIDIA card supports dkms drivers in the list provided [here](https://wiki.archlinux.org/title/NVIDIA).
+> Kurulum komut dosyası NVIDIA kartını otomatik olarak algılar ve çekirdeğiniz için nvidia-dkms sürücülerini yükler.
+> Lütfen NVIDIA kartınızın sağlanan listede yer alan dkms sürücülerini desteklediğinden emin olun. [here](https://wiki.archlinux.org/title/NVIDIA).
 
 > [!CAUTION]
-> The script modifies your `grub` or `systemd-boot` config to enable NVIDIA DRM.
+> Bu komut dosyası, NVIDIA DRM'yi etkinleştirmek için `grub` veya `systemd-boot` yapılandırmanızı değiştirir.
 
-To install, execute the following commands:
+Kurulum için aşağıdaki komutları çalıştırın:
 
 ```shell
 pacman -S --needed git base-devel
@@ -90,15 +85,15 @@ cd ~/HyDE/Scripts
 ```
 
 > [!TIP]
-> You can also add any other apps you wish to install alongside HyDE to `Scripts/pkg_user.lst` and pass the file as a parameter to install it like so:
+> HyDE ile birlikte yüklemek istediğiniz diğer uygulamaları `Scripts/pkg_user.lst` dosyasına ekleyebilir ve dosyayı bir parametre olarak geçirerek şu şekilde yükleyebilirsiniz:
 >
 > ```shell
 > ./install.sh pkg_user.lst
 > ```
 
 > [!IMPORTANT]
-> Refer your list from `Scripts/pkg_extra.lst`
-> or you can `cp Scripts/pkg_extra.lst Scripts/pkg_user.lst` if you wish to install all extra packages.
+> `Scripts/pkg_extra.lst` dosyasındaki listenizi referans alın
+> veya tüm ekstra paketleri yüklemek istiyorsanız `cp Scripts/pkg_extra.lst Scripts/pkg_user.lst` komutunu kullanabilirsiniz.
 
 <!--
 
@@ -106,32 +101,8 @@ As a second install option, you can also use `Hyde-install`, which might be easi
 View installation instructions for HyDE in [Hyde-cli - Usage](https://github.com/kRHYME7/Hyde-cli?tab=readme-ov-file#usage).
 -->
 
-Please reboot after the install script completes and takes you to the SDDM login screen (or black screen) for the first time.
-For more details, please refer to the [installation wiki](https://github.com/HyDE-Project/HyDE/wiki/installation).
-
-<div align="right">
-  <br>
-  <a href="#-design-by-t2"><kbd> <br> 🡅 <br> </kbd></a>
-</div>
-
-<div align="right">
-  <br>
-  <a href="#-design-by-t2"><kbd> <br> 🡅 <br> </kbd></a>
-</div>
-
-<a id="contributing"></a>
-<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=CCA9DD&vCenter=true&width=435&height=25&lines=CONTRIBUTING" width="450"/>
-
----
-
-We welcome contributions from the community! To get started:
-
-- Check our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines
-- Read about team roles in [TEAM_ROLES.md](TEAM_ROLES.md)
-- Review our release process in [RELEASE_POLICY.md](RELEASE_POLICY.md)
-- Add yourself to [CONTRIBUTORS.md](CONTRIBUTORS.md) when making your first PR
-
-Whether you're helping with code, testing, or documentation, we appreciate your support in making HyDE better for everyone. Thank you!
+Kurulum betiği (script) tamamlandıktan ve sizi ilk kez SDDM oturum açma ekranına (veya siyah ekrana) yönlendirdikten sonra lütfen yeniden başlatın.
+Daha fazla ayrıntı için lütfen [kurulum wiki](https://github.com/HyDE-Project/HyDE/wiki/installation) sayfasına bakın.
 
 <div align="right">
   <br>
@@ -139,11 +110,11 @@ Whether you're helping with code, testing, or documentation, we appreciate your 
 </div>
 
 <a id="updating"></a>
-<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=CCA9DD&vCenter=true&width=435&height=25&lines=UPDATING" width="450"/>
+<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=CCA9DD&vCenter=true&width=435&height=25&lines=GÜNCELLEME" width="450"/>
 
 ---
 
-To update HyDE, you will need to pull the latest changes from GitHub and restore the configs by running the following commands:
+HyDE'yi güncellemek için GitHub'dan en son değişiklikleri almanız ve aşağıdaki komutları çalıştırarak yapılandırmaları geri yüklemeniz gerekir:
 
 ```shell
 cd ~/HyDE/Scripts
@@ -152,8 +123,8 @@ git pull origin master
 ```
 
 > [!IMPORTANT]
-> Please note that any configurations you made will be overwritten if listed to be done so as listed by `Scripts/restore_cfg.psv`.
-> However, all replaced configs are backed up and may be recovered from in `~/.config/cfg_backups`.
+> `Scripts/restore_cfg.psv` dosyasında belirtildiği şekilde, yaptığınız tüm yapılandırmaların üzerine yazılacağını lütfen unutmayın.
+> Ancak, değiştirilen tüm yapılandırmalar yedeklenir ve `~/.config/cfg_backups` dizininden geri yüklenebilir.
 
 <!--
 As a second update option, you can use `Hyde restore ...`, which does have a better way of managing restore and backup options.
@@ -170,30 +141,30 @@ For more details, you can refer to [Hyde-cli - dots management wiki](https://git
 
 ---
 
-HyDEVM is a script that allows you to run HyDE in a virtual machine for testing and development.
+HyDEVM, test ve geliştirme amacıyla HyDE'yi sanal makinede çalıştırmanıza olanak tanıyan bir komut dosyasıdır.
 
-## Quick Start
+## Hızlı Başlangıç
 
 ### Arch Linux
 
 ```bash
-# Download and run (will auto-detect missing packages)
+# İndirin ve çalıştırın (eksik paketleri otomatik olarak algılar)
 curl -L https://raw.githubusercontent.com/HyDE-Project/HyDE/main/Scripts/hydevm/hydevm.sh -o hydevm
 chmod +x hydevm
 ./hydevm
 ```
 
-### NixOS (or Nix)
+### NixOS (veya Nix)
 
 ```bash
-# Using flakes from HyDE repository
+# HyDE deposundan flake kullanımı
 nix run github:HyDE-Project/HyDE
 
-# Or if you have the repository cloned locally
+# Veya depoyu yerel olarak klonladıysanız
 nix run .
 ```
 
-For more details, please refer to the [HyDEVM README](Scripts/hydevm/README.md).
+Daha fazla ayrıntı için lütfen [HyDEVM README](Scripts/hydevm/README.md) dosyasına bakın.
 
 <div align="right">
   <br>
@@ -201,12 +172,12 @@ For more details, please refer to the [HyDEVM README](Scripts/hydevm/README.md).
 </div>
 
 <a id="themes"></a>
-<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=CCA9DD&vCenter=true&width=435&height=25&lines=THEMES" width="450"/>
+<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=CCA9DD&vCenter=true&width=435&height=25&lines=TEMALAR" width="450"/>
 
 ---
 
-All our official themes are stored in a separate repository, allowing users to install them using themepatcher.
-For more information, visit [HyDE-Project/hyde-themes](https://github.com/HyDE-Project/hyde-themes).
+Tüm resmi temalarımız ayrı bir depoda saklanır ve kullanıcılar bunları themepatcher ile yükleyebilir.
+Daha fazla bilgi için [HyDE-Project/hyde-themes](https://github.com/HyDE-Project/hyde-themes) adresini ziyaret edin.
 
 <div align="center">
   <table><tr><td>
@@ -228,9 +199,9 @@ For more information, visit [HyDE-Project/hyde-themes](https://github.com/HyDE-P
 </div>
 
 > [!TIP]
-> Everyone, including you can create, maintain, and share additional themes, all of which can be installed using themepatcher!
-> To create your own custom theme, please refer to the [theming wiki](https://github.com/prasanthrangan/hyprdots/wiki/Theming).
-> If you wish to have your hyde theme showcased, or you want to find some non-official themes, visit [kRHYME7/hyde-gallery](https://github.com/kRHYME7/hyde-gallery)!
+> Herkes, siz dahil, ek temalar oluşturabilir, sürdürebilir ve paylaşabilir; bunların hepsi themepatcher ile kurulabilir!
+> Kendi özel temanızı oluşturmak için lütfen [theming wiki](https://github.com/prasanthrangan/hyprdots/wiki/Theming) sayfasına bakın.
+> Hyde temanızın sergilenmesini istiyorsanız veya resmi olmayan temaları bulmak istiyorsanız [kRHYME7/hyde-gallery](https://github.com/kRHYME7/hyde-gallery) adresini ziyaret edin!
 
 <div align="right">
   <br>
@@ -238,23 +209,23 @@ For more information, visit [HyDE-Project/hyde-themes](https://github.com/HyDE-P
 </div>
 
 <a id="styles"></a>
-<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=CCA9DD&vCenter=true&width=435&height=25&lines=STYLES" width="450"/>
+<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=CCA9DD&vCenter=true&width=435&height=25&lines=STİLLER" width="450"/>
 
 ---
 
-<div align="center"><table><tr>Theme Select</tr><tr><td>
+<div align="center"><table><tr>Tema Seçimi</tr><tr><td>
 <img src="https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_select_1.png"/></td><td>
 <img src="https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/theme_select_2.png"/></td></tr></table></div>
 
-<div align="center"><table><tr><td>Wallpaper Select</td><td>Launcher Select</td></tr><tr><td>
+<div align="center"><table><tr><td>Duvar Kağıdı Seçimi</td><td>Başlatıcı Seçimi</td></tr><tr><td>
 <img src="https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/walls_select.png"/></td><td>
 <img src="https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/rofi_style_sel.png"/></td></tr>
-<tr><td>Wallbash Modes</td><td>Notification Action</td></tr><tr><td>
+<tr><td>Wallbash Modları</td><td>Bildirim Eylemi</td></tr><tr><td>
 <img src="https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/wb_mode_sel.png"/></td><td>
 <img src="https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/notif_action_sel.png"/></td></tr>
 </table></div>
 
-<div align="center"><table><tr>Rofi Launcher</tr><tr><td>
+<div align="center"><table><tr>Rofi Başlatıcısı</tr><tr><td>
 <img src="https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/rofi_style_1.png"/></td><td>
 <img src="https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/rofi_style_2.png"/></td><td>
 <img src="https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/rofi_style_3.png"/></td></tr><tr><td>
@@ -269,11 +240,11 @@ For more information, visit [HyDE-Project/hyde-themes](https://github.com/HyDE-P
 <img src="https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/rofi_style_12.png"/></td></tr>
 </table></div>
 
-<div align="center"><table><tr>Wlogout Menu</tr><tr><td>
+<div align="center"><table><tr>Wlogout Menüsü</tr><tr><td>
 <img src="https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/wlog_style_1.png"/></td><td>
 <img src="https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/wlog_style_2.png"/></td></tr></table></div>
 
-<div align="center"><table><tr>Game Launcher</tr><tr><td>
+<div align="center"><table><tr>Oyun Başlatıcısı</tr><tr><td>
 <img src="https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/game_launch_1.png"/></td><td>
 <img src="https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/game_launch_2.png"/></td><td>
 <img src="https://raw.githubusercontent.com/prasanthrangan/hyprdots/main/Source/assets/game_launch_3.png"/></td></tr></table></div>
@@ -284,7 +255,7 @@ For more information, visit [HyDE-Project/hyde-themes](https://github.com/HyDE-P
 
 
 <a id="star_history"></a>
-<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=CCA9DD&vCenter=true&width=435&height=25&lines=STARS" width="450"/>
+<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=CCA9DD&vCenter=true&width=435&height=25&lines=YILDIZLAR" width="450"/>
 
 ---
 
@@ -295,48 +266,3 @@ For more information, visit [HyDE-Project/hyde-themes](https://github.com/HyDE-P
    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=hyde-project/hyde&type=Timeline" />
  </picture>
 </a>
-
----
-
-<a id="credits"></a>
-<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=CCA9DD&vCenter=true&width=435&height=25&lines=THANK YOU!" width="450"/>
-
-
-- [See the full Credits page here](./CREDITS.md).
-
-
-
----
-
-<div align="right">
-  <br>
-  <a href="#-design-by-t2"><kbd> <br> 🡅 <br> </kbd></a>
-</div>
-
-<div align="right">
-  <sub>Last edited on: 27/02/2025<span id="last-edited"></span></sub>
-</div>
-
-
-## Contributors ✨
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tbody>
-    <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://rubiin.is-a.dev"><img src="https://avatars.githubusercontent.com/u/8222059?v=4?s=100" width="100px;" alt="Rubin Bhandari"/><br /><sub><b>Rubin Bhandari</b></sub></a><br /><a href="https://github.com/HyDE-Project/HyDE/commits?author=rubiin" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/kRHYME7"><img src="https://avatars.githubusercontent.com/u/53417443?v=4?s=100" width="100px;" alt="Khing"/><br /><sub><b>Khing</b></sub></a><br /><a href="https://github.com/HyDE-Project/HyDE/commits?author=kRHYME7" title="Code">💻</a> <a href="https://github.com/HyDE-Project/HyDE/commits?author=kRHYME7" title="Documentation">📖</a></td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
