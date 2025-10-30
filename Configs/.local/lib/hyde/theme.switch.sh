@@ -195,18 +195,29 @@ fi
 
 #// qt5ct
 
+QT5_FONT="${QT5_FONT:-${FONT}}"
+QT5_FONT_SIZE="${QT5_FONT_SIZE:-${FONT_SIZE}}"
+QT5_MONOSPACE_FONT="${QT5_MONOSPACE_FONT:-${MONOSPACE_FONT}}"
+QT5_MONOSPACE_FONT_SIZE="${QT5_MONOSPACE_FONT_SIZE:-${MONOSPACE_FONT_SIZE:-9}}"
+
+
 toml_write "${confDir}/qt5ct/qt5ct.conf" "Appearance" "icon_theme" "${ICON_THEME}"
-toml_write "${confDir}/qt5ct/qt5ct.conf" "Fonts" "general" "\"${FONT},${FONT_SIZE},-1,5,400,0,0,0,0,0,0,0,0,0,0,1,${FONT_STYLE}\""
-toml_write "${confDir}/qt5ct/qt5ct.conf" "Fonts" "fixed" "\"${MONOSPACE_FONT},9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1\""
+toml_write "${confDir}/qt5ct/qt5ct.conf" "Fonts" "general" "\"${QT5_FONT},${QT5_FONT_SIZE},-1,5,400,0,0,0,0,0,0,0,0,0,0,1,${FONT_STYLE}\""
+toml_write "${confDir}/qt5ct/qt5ct.conf" "Fonts" "fixed" "\"${QT5_MONOSPACE_FONT},${QT5_MONOSPACE_FONT_SIZE},-1,5,400,0,0,0,0,0,0,0,0,0,0,1\""
 
 # toml_write "${confDir}/qt5ct/qt5ct.conf" "Appearance" "color_scheme_path" "${confDir}/qt5ct/colors/colors.conf"
 # toml_write "${confDir}/qt5ct/qt5ct.conf" "Appearance" "custom_palette" "true"
 
 # // qt6ct
 
+QT6_FONT="${QT6_FONT:-${FONT}}"
+QT6_FONT_SIZE="${QT6_FONT_SIZE:-${FONT_SIZE}}"
+QT6_MONOSPACE_FONT="${QT6_MONOSPACE_FONT:-${MONOSPACE_FONT}}"
+QT6_MONOSPACE_FONT_SIZE="${QT6_MONOSPACE_FONT_SIZE:-${MONOSPACE_FONT_SIZE:-9}}"
+
 toml_write "${confDir}/qt6ct/qt6ct.conf" "Appearance" "icon_theme" "${ICON_THEME}"
-toml_write "${confDir}/qt6ct/qt6ct.conf" "Fonts" "general" "\"${FONT},${FONT_SIZE},-1,5,400,0,0,0,0,0,0,0,0,0,0,1,${FONT_STYLE}\""
-toml_write "${confDir}/qt6ct/qt6ct.conf" "Fonts" "fixed" "\"${MONOSPACE_FONT},9,-1,5,400,0,0,0,0,0,0,0,0,0,0,1\""
+toml_write "${confDir}/qt6ct/qt6ct.conf" "Fonts" "general" "\"${QT6_FONT},${QT6_FONT_SIZE},-1,5,400,0,0,0,0,0,0,0,0,0,0,1,${FONT_STYLE}\""
+toml_write "${confDir}/qt6ct/qt6ct.conf" "Fonts" "fixed" "\"${QT6_MONOSPACE_FONT},${QT6_MONOSPACE_FONT_SIZE:-9},-1,5,400,0,0,0,0,0,0,0,0,0,0,1\""
 # toml_write "${confDir}/qt6ct/qt6ct.conf" "Appearance" "color_scheme_path" "${confDir}/qt6ct/colors/colors.conf"
 # toml_write "${confDir}/qt6ct/qt6ct.conf" "Appearance" "custom_palette" "true"
 
@@ -233,11 +244,14 @@ sed -i -e "/^gtk-theme-name=/c\gtk-theme-name=\"${GTK_THEME}\"" \
 
 #// gtk3
 
+GTK3_FONT="${GTK3_FONT:-${FONT}}"
+GTK3_FONT_SIZE="${GTK3_FONT_SIZE:-${FONT_SIZE}}"
+
 toml_write "${confDir}/gtk-3.0/settings.ini" "Settings" "gtk-theme-name" "${GTK_THEME}"
 toml_write "${confDir}/gtk-3.0/settings.ini" "Settings" "gtk-icon-theme-name" "${ICON_THEME}"
 toml_write "${confDir}/gtk-3.0/settings.ini" "Settings" "gtk-cursor-theme-name" "${CURSOR_THEME}"
 toml_write "${confDir}/gtk-3.0/settings.ini" "Settings" "gtk-cursor-theme-size" "${CURSOR_SIZE}"
-toml_write "${confDir}/gtk-3.0/settings.ini" "Settings" "gtk-font-name" "${FONT} ${FONT_SIZE}"
+toml_write "${confDir}/gtk-3.0/settings.ini" "Settings" "gtk-font-name" "${GTK3_FONT} ${GTK3_FONT_SIZE}"
 
 #// gtk4
 if [ -d "${themesDir}/${GTK_THEME}/gtk-4.0" ]; then

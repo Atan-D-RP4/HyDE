@@ -13,7 +13,13 @@
 # ? This file is a reference for:
 # * wiki table
 # * --json to generate the JSON schema
-# TODO --config to generate a copy of config.toml // ! Not implemented yet
+# * --config to generate a copy of config.toml
+
+# Run commands to generate:
+# ./gen-config.py > ./config.toml
+# ./gen-table.py > config.md
+# ./gen-json.py > ./config.toml.json
+
 
 "$schema" = "http://json-schema.org/draft-07/schema#"
 type      = "object"
@@ -834,6 +840,68 @@ type      = "object"
     default     = ""
     description = "LockScreen's Background path."
     type        = "string"
+
+[properties.qt5]
+    description = "Qt5 configuration."
+    type        = "object"
+
+[properties.qt5.properties.font]
+    default     = "Canterell"
+    description = "Qt5 font."
+    type        = "string"
+
+[properties.qt5.properties.font_size]
+    default     = 10
+    description = "Qt5 font size."
+    type        = "integer"
+
+[properties.qt5.properties.monospace_font]
+    default     = "CaskaydiaCove Nerd Font Mono"
+    description = "Qt5 monospace font."
+    type        = "string"
+
+[properties.qt5.properties.monospace_font_size]
+    default     = 9
+    description = "Qt5 monospace font size."
+    type        = "integer"
+
+[properties.qt6]
+    description = "Qt6 configuration."
+    type        = "object"
+
+[properties.qt6.properties.font]
+    default     = "Canterell"
+    description = "Qt6 font."
+    type        = "string"
+
+[properties.qt6.properties.font_size]
+    default     = 10
+    description = "Qt6 font size."
+    type        = "integer"
+
+[properties.qt6.properties.monospace_font]
+    default     = "CaskaydiaCove Nerd Font Mono"
+    description = "Qt6 monospace font."
+    type        = "string"
+
+[properties.qt6.properties.monospace_font_size]
+    default     = 9
+    description = "Qt6 monospace font size."
+    type        = "integer"
+
+[properties.gtk3]
+    description = "GTK3 configuration."
+    type        = "object"
+
+[properties.gtk3.properties.font]
+    default     = "Canterell"
+    description = "GTK3 font."
+    type        = "string"
+
+[properties.gtk3.properties.font_size]
+    default     = 10
+    description = "GTK3 font size."
+    type        = "integer"
 
 [properties.hyprland-start]
     description = "Hyprland start configuration."

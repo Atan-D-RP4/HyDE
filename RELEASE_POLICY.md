@@ -52,6 +52,10 @@ We use **year.month.week** format (`YY.M.W`) instead of traditional semantic ver
 - **Predictable progression:** Always `.1` then `.3` each month
 - **No arbitrary numbers:** No confusion about what constitutes "major" vs "minor"
 - **User-friendly:** Easy to understand - `25.7.1` = "1st Week of July 2025"
+remote: Counting objects: 100% (1/1), done.
+remote: Total 1 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+Unpacking objects: 100% (1/1), 869 bytes | 869.00 KiB/s, done.
+From https://github.com/HyDE-Project/HyDE
 
 ---
 

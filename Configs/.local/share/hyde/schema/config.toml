@@ -229,6 +229,25 @@ monospace_font = "CaskaydiaCove Nerd Font Mono"  # Monospace font.
 monospace_font_size = 9  # Monospace font size.
 background_path = ""  # LockScreen's Background path.
 
+# Qt5 configuration.
+[qt5]
+font = "Canterell"  # Qt5 font.
+font_size = 10  # Qt5 font size.
+monospace_font = "CaskaydiaCove Nerd Font Mono"  # Qt5 monospace font.
+monospace_font_size = 9  # Qt5 monospace font size.
+
+# Qt6 configuration.
+[qt6]
+font = "Canterell"  # Qt6 font.
+font_size = 10  # Qt6 font size.
+monospace_font = "CaskaydiaCove Nerd Font Mono"  # Qt6 monospace font.
+monospace_font_size = 9  # Qt6 monospace font size.
+
+# GTK3 configuration.
+[gtk3]
+font = "Canterell"  # GTK3 font.
+font_size = 10  # GTK3 font size.
+
 # Hyprland start configuration.
 [hyprland-start]
 apptray_bluetooth = "blueman-applet"  # Bluetooth applet.

@@ -95,6 +95,15 @@ Cava visualizer configuration.
 | standby | Standby character for cava. | 🎶 |
 | width | Width of the cava output. | 20 |
 
+### [gtk3]
+
+GTK3 configuration.
+
+| Key | Description | Default |
+| --- | ----------- | ------- |
+| font | GTK3 font. | Canterell |
+| font_size | GTK3 font size. | 10 |
+
 ### [hyprland]
 
 Hyprland configuration.
@@ -165,6 +174,28 @@ Notification script configuration.
 | --- | ----------- | ------- |
 | font | Font for notifications. | mononoki Nerd Font |
 | font_size | Font size for notifications. | 10 |
+
+### [qt5]
+
+Qt5 configuration.
+
+| Key | Description | Default |
+| --- | ----------- | ------- |
+| font | Qt5 font. | Canterell |
+| font_size | Qt5 font size. | 10 |
+| monospace_font | Qt5 monospace font. | CaskaydiaCove Nerd Font Mono |
+| monospace_font_size | Qt5 monospace font size. | 9 |
+
+### [qt6]
+
+Qt6 configuration.
+
+| Key | Description | Default |
+| --- | ----------- | ------- |
+| font | Qt6 font. | Canterell |
+| font_size | Qt6 font size. | 10 |
+| monospace_font | Qt6 monospace font. | CaskaydiaCove Nerd Font Mono |
+| monospace_font_size | Qt6 monospace font size. | 9 |
 
 ### [rofi]
 

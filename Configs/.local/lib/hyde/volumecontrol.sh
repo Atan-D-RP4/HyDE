@@ -79,14 +79,29 @@ change_volume() {
     [ "${srce}" = "--default-source" ] && mode="--input-volume"
     case $device in
     "pamixer")
-        if [ "${isVolumeBoost}" = true ]; then
-            $use_swayosd && swayosd-client ${mode} "${delta}${step}" --max-volume "${VOLUME_BOOST_LIMIT:-150}" && exit 0
-            pamixer "$srce" "${allow_boost:-}" --allow-boost --set-limit "${VOLUME_BOOST_LIMIT:-150}" -"${action}" "$step"
+        if [[ "${use_pipewire}" == true ]]; then
+            [ "${srce}" = "--default-source" ] && srce="@DEFAULT_AUDIO_SOURCE@"
+            [ "${srce}" = "" ]                 && srce="@DEFAULT_AUDIO_SINK@"
+            if [ "${isVolumeBoost}" = true ]; then
+                $use_swayosd && swayosd-client ${mode} "${delta}${step}" --max-volume "${VOLUME_BOOST_LIMIT:-150}" && exit 0
+                # Convert percentage limit to decimal (150% -> 1.5)
+                boost_limit_decimal=$(awk -v limit="${VOLUME_BOOST_LIMIT:-150}" 'BEGIN {print limit/100}')
+                wpctl set-volume -l "${boost_limit_decimal}" "${srce}" "${step}%${delta}"
+            else
+                $use_swayosd && swayosd-client ${mode} "${delta}${step}" && exit 0
+                wpctl set-volume -l 1.0 "${srce}" "${step}%${delta}"
+            fi
+            vol=$(wpctl get-volume "${srce}" | awk '{print $2 * 100}')
         else
-            $use_swayosd && swayosd-client ${mode} "${delta}${step}" && exit 0
-            pamixer "$srce" -"${action}" "$step"
+            if [ "${isVolumeBoost}" = true ]; then
+                $use_swayosd && swayosd-client ${mode} "${delta}${step}" --max-volume "${VOLUME_BOOST_LIMIT:-150}" && exit 0
+                pamixer "$srce" "${allow_boost:-}" --allow-boost --set-limit "${VOLUME_BOOST_LIMIT:-150}" -"${action}" "$step"
+            else
+                $use_swayosd && swayosd-client ${mode} "${delta}${step}" && exit 0
+                pamixer "$srce" -"${action}" "$step"
+            fi
+            vol=$(pamixer "$srce" --get-volume)
         fi
-        vol=$(pamixer "$srce" --get-volume)
         ;;
     "playerctl")
         playerctl --player="$srce" volume "$(awk -v step="$step" 'BEGIN {print step/100}')${delta}"
@@ -104,7 +119,13 @@ toggle_mute() {
     case $device in
     "pamixer")
         $use_swayosd && swayosd-client "${mode}" mute-toggle && exit 0
-        pamixer "$srce" -t
+        if [[ "${use_pipewire}" == true ]]; then
+            [ "${srce}" = "--default-source" ] && srce="@DEFAULT_AUDIO_SOURCE@"
+            [ "${srce}" = "" ]                 && srce="@DEFAULT_AUDIO_SINK@"
+            wpctl set-mute "${srce}" toggle
+        else
+            pamixer "$srce" -t
+        fi
         notify_mute
         ;;
     "playerctl")
@@ -128,22 +149,63 @@ toggle_mute() {
 
 select_output() {
     local selection=$1
-    if [ -n "$selection" ]; then
-        device=$(pactl list sinks | grep -C2 -F "Description: $selection" | grep Name | cut -d: -f2 | xargs)
-        if pactl set-default-sink "$device"; then
-            notify-send -t 2000 -i "${icodir}/unmuted-speaker.svg" -r 8 -u low "Activated: $selection"
+    if [[ "${use_pipewire}" == true ]]; then
+        if [ -n "$selection" ]; then
+            device=$(pw-dump | sel=${selection} jq -r '.[] | select(.info?.props?."media.class" == "Audio/Sink" and .info?.props?."node.description" == env.sel) | .info?.props?."object.id"' | xargs)
+            if wpctl set-default "$device"; then
+                notify-send -t 2000 -i "${icodir}/unmuted-speaker.svg" -r 8 -u low "Activated: $selection"
+            else
+                notify-send -t 2000 -r 8 -u critical "Error activating $selection"
+            fi
         else
-            notify-send -t 2000 -r 8 -u critical "Error activating $selection"
+            pw-dump | jq -r '.[] | select(.info?.props?."media.class" == "Audio/Sink") | .info?.props?."node.description"' | sort
         fi
     else
-        pactl list sinks | grep -ie "Description:" | awk -F ': ' '{print $2}' | sort
+        if [ -n "$selection" ]; then
+            device=$(pactl list sinks | grep -C2 -F "Description: $selection" | grep Name | cut -d: -f2 | xargs)
+            if pactl set-default-sink "$device"; then
+                notify-send -t 2000 -i "${icodir}/unmuted-speaker.svg" -r 8 -u low "Activated: $selection"
+            else
+                notify-send -t 2000 -r 8 -u critical "Error activating $selection"
+            fi
+        else
+            pactl list sinks | grep -ie "Description:" | awk -F ': ' '{print $2}' | sort
+        fi
     fi
+}
+
+get_default_sink() {
+    local default_sink
+    if [[ "${use_pipewire}" == true ]]; then
+        # More reliable method to get the actual default sink
+        default_sink=$(wpctl inspect @DEFAULT_AUDIO_SINK@ | grep -oP 'node.description = "\K[^"]+' | head -1)
+        # Fallback method if above fails
+        if [ -z "$default_sink" ]; then
+            default_sink=$(pw-dump | jq -r '[.[] | select(.info?.props?."media.class" == "Audio/Sink")] | min_by(.info.props."priority.session" // 9999) | .info.props."node.description"')
+        fi
+    else
+        default_sink=$(pamixer --get-default-sink | awk -F '"' 'END{print $(NF - 1)}')
+    fi
+    echo "${default_sink}"
+}
+
+get_default_source() {
+    local default_source
+    if [[ "${use_pipewire}" == true ]]; then
+        default_source=$(wpctl inspect @DEFAULT_AUDIO_SOURCE@ | grep -oP 'node.description = "\K[^"]+' | head -1)
+        if [ -z "$default_source" ]; then
+            default_source=$(pw-dump | jq -r '[.[] | select(.info?.props?."media.class" == "Audio/Source")] | min_by(.info.props."priority.session" // 9999) | .info.props."node.description"')
+        fi
+    else
+        default_source=$(pamixer --list-sources | awk -F '"' 'END {print $(NF - 1)}')
+    fi
+    echo "${default_source}"
 }
 
 toggle_output() {
     local default_sink
     local current_index
-    default_sink=$(pamixer --get-default-sink | awk -F '"' 'END{print $(NF - 1)}')
+    default_sink=$(get_default_sink)
     mapfile -t sink_array < <(select_output)
     current_index=$(printf '%s\n' "${sink_array[@]}" | grep -n "$default_sink" | cut -d: -f1)
     local next_index=$(((current_index % ${#sink_array[@]}) + 1))
@@ -158,17 +220,24 @@ iconsDir="${iconsDir:-$XDG_DATA_HOME/icons}"
 icodir="${iconsDir}/Wallbash-Icon/media"
 step=${VOLUME_STEPS:-5}
 
+# Detect pipewire
+if pactl info | grep -q "PipeWire" || ${VOLUME_PIPEWIRE_ENABLE} == true ; then
+    use_pipewire=true
+else
+    use_pipewire=false
+fi
+
 while getopts "iop:stq" opt; do
     case $opt in
     i)
         device="pamixer"
         srce="--default-source"
-        nsink=$(pamixer --list-sources | awk -F '"' 'END {print $(NF - 1)}')
+        nsink=$(get_default_source)
         ;;
     o)
         device="pamixer"
         srce=""
-        nsink=$(pamixer --get-default-sink | awk -F '"' 'END{print $(NF - 1)}')
+        nsink=$(get_default_sink)
         ;;
     p)
         device="playerctl"

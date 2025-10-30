@@ -4,6 +4,31 @@ All notable changes to `HyDE` will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to _Modified_ [CalVer](https://calver.org/). See [Versioning](https://github.com/HyDE-Project/HyDE/blob/master/RELEASE_POLICY.md#versioning-yymq) For more info
 
+## v25.10.1
+
+### Fixed
+- Hyprland: Fix errors when `HYPRLAND_CONFIG` is not set yet
+- Fish: Please Move you configs to `~/.config/fish/conf.d`
+
+
+### Added
+
+- QT6CT: Added explicit font configuration for QT6 Applications see [#1309](https://github.com/HyDE-Project/HyDE/issues/1309)
+- QT5CT: Added explicit font configuration for QT5 Applications see [#1309](https://github.com/HyDE-Project/HyDE/issues/1309)
+- GTK3: Added explicit font configuration for GTK3 Applications see [#1309](https://github.com/HyDE-Project/HyDE/issues/1309)
+
+### Changed
+
+- Audio volume control: use `wpctl` instead of `pamixer` for managing audio volume when PipeWire server is running.
+- Fish: `config.fish` is now user defined config
+- Fish: `confi.d/hyde.fish` is used for HyDE only stuff. To override this create a separate file or use `config.fish` 
+
+
+### Migration
+
+For fish shell users: 
+Please empty your `~/.config/fish/config.fish` and use it to modify fish configurations.
+
 ## v25.9.3
 
 ### Changed
