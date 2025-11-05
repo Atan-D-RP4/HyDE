@@ -39,7 +39,7 @@ COMMENT
 
  Hyde core files 
 P|${HOME}/.config/hyde|config.toml|hyprland
-L|${HOME}/.config/hypr|pyprland.toml windowrules.conf keybindings.conf userprefs.conf monitors.conf|hyprland
+L|${HOME}/.config/hypr|pyprland.toml base.conf windowrules.conf keybindings.conf userprefs.conf monitors.conf|hyprland
 P|${HOME}/.config/hypr|shaders.conf workflows.conf animations.conf|hyprland
 L|${HOME}/.config/hypr|nvidia.conf|hyprland nvidia-utils
 P|${HOME}/.config/hypr/themes|theme.conf wallbash.conf colors.conf|hyprland
