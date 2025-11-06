@@ -30,6 +30,7 @@ if [ -f "$LOCK_FILE" ]; then
         if pgrep -x "slurp" >/dev/null; then
             pkill -x "slurp"
         fi
+
         rm -f "$LOCK_FILE"
         exit 1
     else

@@ -149,12 +149,13 @@ deploy_psv() {
                     print_log -g "[copy to backup]" " > " -y "[sync]" -b " :: " "${pth}" -r " <--  " "${CfgDir}${tgt}/${cfg_chk}"
                     ;;
                 "L")
-                    [ "${flg_DryRun}" -ne 1 ] && cp -r "${pth}/${cfg_chk}" "${BkpDir}${tgt}"
+                    [ "${flg_DryRun}" -ne 1 ] && mv "${pth}/${cfg_chk}" "${BkpDir}${tgt}"
+                    [ "${flg_DryRun}" -ne 1 ] && ln -sf "${CfgDir}${tgt}/${cfg_chk}" "${pth}/${cfg_chk}"
                     if [ ! -e "${pth}/${cfg_chk}" ]; then
                         [ "${flg_DryRun}" -ne 1 ] && ln -sf "${CfgDir}${tgt}/${cfg_chk}" "${pth}/${cfg_chk}"
                         print_log -g "[copy to backup]" " > " -b "[link]" -b " :: " "${pth}" -r " <--  " "${CfgDir}${tgt}/${cfg_chk}"
                     else
-                        print_log -g "[copy to backup]" " > " -g "[preserved]" -b " :: " "${pth}" -r " <--  " "${CfgDir}${tgt}/${cfg_chk}"
+                        print_log -g "[copy to backup]" " > " -g "[link-preserved]" -b " :: " "${pth}" -r " <--  " "${CfgDir}${tgt}/${cfg_chk}"
                     fi
                     ;;
                 "P")
