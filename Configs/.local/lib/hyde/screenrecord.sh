@@ -2,7 +2,13 @@
 
 set -eo pipefail
 
-[[ "${HYDE_SHELL_INIT}" -ne 1 ]] && eval "$(hyde-shell init)"
+# shellcheck source=$HOME/.local/bin/hyde-shell
+# shellcheck disable=SC1091
+if ! source "$(command -v hyde-shell)"; then
+    echo "[wf-recorder] code :: Error: hyde-shell not found."
+    echo "[wf-recorder] code :: Is HyDE installed?"
+    exit 1
+fi
 
 RECORDER="wl-screenrec"
 command -v "$RECORDER" &>/dev/null || RECORDER="wf-recorder"
@@ -12,16 +18,16 @@ if ! command -v "$RECORDER" &>/dev/null; then
     exit 1
 fi
 
-LOCK_FILE="$HOME/.hypr_screenrecord_lock"
+LOCK_FILE="$XDG_RUNTIME_DIR/hypr_screenrecord_lock"
 
 # Check for existing script instance
 if [ -f "$LOCK_FILE" ]; then
     lock_pid=$(cat "$LOCK_FILE")
-    if ps -p "$lock_pid" > /dev/null 2>&1; then
+    if ps -p "$lock_pid" >/dev/null 2>&1; then
         # Kill the existing process and remove lock file
         kill "$lock_pid" 2>/dev/null || true
         # Find slupr process and kill it if exists
-        if pgrep -x "slurp" > /dev/null; then
+        if pgrep -x "slurp" >/dev/null; then
             pkill -x "slurp"
         fi
         rm -f "$LOCK_FILE"
@@ -32,7 +38,7 @@ if [ -f "$LOCK_FILE" ]; then
 fi
 
 # Create lock file with current PID
-echo $$ > "$LOCK_FILE"
+echo $$ >"$LOCK_FILE"
 # Ensure lock file is removed on exit
 trap 'rm -f "$LOCK_FILE"' EXIT
 
@@ -48,6 +54,7 @@ USAGE() {
         --start         Start screen recording (stops any existing recording first)
         --toggle        Toggle screen recording (start if stopped, stop if running)
         --backend       Use 'wl-screenrec' or 'wf-recorder' as the backend
+	--audio         Enable audio recording (if supported by the backend)
         --file          Specify the output file
         --quit          Stop the recording
         --help          Show this help message
@@ -71,7 +78,7 @@ USAGE
 
 handle_recording() {
     # Stop any existing recording
-    if pgrep -x "$RECORDER" > /dev/null; then
+    if pgrep -x "$RECORDER" >/dev/null; then
         pkill -INT "$RECORDER"
         sleep 1
         notify-send -a "HyDE Alert" "Stopped existing recording" -i video
@@ -83,6 +90,20 @@ handle_recording() {
     mkdir -p "$save_dir"
 
     parameters=()
+
+    if [ $AUDIO_ENABLED = true ]; then
+        if ! systemctl --user is-active --quiet pipewire; then
+            notify-send -a "HyDE Alert" "Audio recording failed: PipeWire not running" "Try to record without audio" -i video
+            rm -f "$LOCK_FILE"
+            exit 1
+        fi
+        # Start recording with the combined audio source
+        if [ "$RECORDER" = "wl-screenrec" ]; then
+            parameters+=("--audio-device" "all_sinks.monitor")
+        elif [ "$RECORDER" = "wf-recorder" ]; then
+            parameters+=("--audio=all_sinks.monitor")
+        fi
+    fi
 
     # Process additional arguments after --
     while [[ $# -gt 0 ]]; do
@@ -114,9 +135,11 @@ handle_recording() {
 
     if [[ -z "$GEOM" ]]; then
         echo "Using whole screen for recording"
-        [[ -n "$OUTPUT" ]] && parameters+=(--output "$OUTPUT")
-    else
-        parameters+=("--geometry" "$GEOM")
+    fi
+    parameters+=("--geometry '$GEOM'")
+
+    if [ $RECORDER = "wl-screenrec" ]; then
+        parameters+=("--low-power=off")
     fi
 
     tmp_thumbnail=$(mktemp -t thumbnail_XXXXXX.png)
@@ -126,10 +149,47 @@ handle_recording() {
         grim -g "$GEOM" "$tmp_thumbnail"
     fi
 
+    # Audio capture setup
+    # collect all sinks
+    sinks=$(pactl list short sinks | awk '{print $2}')
+    # Create null sink
+    pactl load-module module-null-sink sink_name=all_sinks sink_properties=device.description="All Sinks"
+    # Route each sink's monitor to the null sink
+    for sink in $sinks; do
+        if [[ "$sink" != "all_sinks.monitor" ]]; then
+            echo "Loading loopback for sink: $sink"
+            cmd="pactl load-module module-loopback source=$sink.monitor sink=all_sinks"
+            printf "Command" "Executing: $cmd"
+            eval "$cmd"
+        fi
+    done
+
     # Start recording in the background
-    "${RECORDER}" "${parameters[@]}" -f "${save_file_path}" &
+    cmd="${RECORDER} ${parameters[@]} -f ${save_file_path} &"
+    notify-send -a "Command" "Executing: $cmd" -i video
+    echo "$cmd"
+    eval "$cmd"
+    if [[ $? -ne 0 ]]; then
+        notify-send -a "HyDE Alert" "Failed to start recording" -i video
+        end_recording
+        rm -f "$LOCK_FILE"
+        exit 1
+    fi
     notify-send -a "HyDE Alert" "${RECORDER}: Recording started" -i "${tmp_thumbnail}"
 }
+
+end_recording() {
+    # handle cleanup for screen recording
+    pkill -INT "$RECORDER"
+    # handle cleanup for audio recording
+    if pactl list short sinks | grep "all_sinks"; then
+        pactl unload-module module-null-sink
+        pactl unload-module module-loopback
+    fi
+}
+
+# Initialize audio flag
+AUDIO_ENABLED="false"
 
 # Process arguments with while loop
 while [[ $# -gt 0 ]]; do
@@ -142,15 +202,18 @@ while [[ $# -gt 0 ]]; do
         shift
         RECORDER="$1"
         ;;
+    --audio)
+        AUDIO_ENABLED="true"
+        ;;
     --start)
         handle_recording "$@"
         exit 0
         ;;
     --toggle)
         # Check if recording is already running
-        if pgrep -x "$RECORDER" > /dev/null; then
+        if pgrep -x "$RECORDER" >/dev/null; then
             # Recording is active, stop it
-            pkill -INT "$RECORDER"
+            end_recording
             notify-send -a "HyDE Alert" "Recording stopped" -i video
         else
             # No recording active, start one
@@ -159,9 +222,8 @@ while [[ $# -gt 0 ]]; do
         exit 0
         ;;
     --quit)
-        if pgrep -x "$RECORDER" > /dev/null; then
-            pkill -INT "$RECORDER"
-            notify-send -a "HyDE Alert" "Recording stopped" -i video
+        if pgrep -x "$RECORDER" >/dev/null; then
+            end_recording
         else
             notify-send -a "HyDE Alert" "No recording in progress" -i video
         fi
