@@ -73,7 +73,6 @@ S|${HOME}/.config/waybar|modules styles layouts menus config.jsonc theme.css sty
 S|${HOME}/.local/share|waybar|waybar
 
  Terminal 
-P|${HOME}/.config|lsd|lsd
 P|${HOME}/.config|fastfetch|fastfetch
 O|${HOME}/.local/share/fastfetch/presets|hyde|fastfetch
 
@@ -91,23 +90,13 @@ S|${HOME}/.config/vim/colors|wallbash.vim|vim
 S|${HOME}/.config/vim|hyde.vim|vim
 
  File Explorer 
-P|${HOME}/.local/state|dolphinstaterc|dolphin
-P|${HOME}/.config|baloofilerc|dolphin
-S|${HOME}/.config/menus|applications.menu|dolphin
-S|${HOME}/.config|dolphinrc|dolphin
-S|${HOME}/.config|kdeglobals|dolphin
-S|${HOME}/.local/share/kio/servicemenus|hydewallpaper.desktop|dolphin
-S|${HOME}/.local/share/kxmlgui5|dolphin|dolphin
-S|${HOME}/.local/share|dolphin|dolphin
+ TODO: Add stuff for Thunar 
 
  Input 
 P|${HOME}/.config|libinput-gestures.conf|libinput-gestures
 
  Wayland 
 P|${HOME}/.config|spotify-flags.conf|spotify
-P|${HOME}/.config|code-flags.conf|code
-P|${HOME}/.config|code-flags.conf|visual-studio-code-bin
-P|${HOME}/.config|codium-flags.conf|vscodium
 P|${HOME}/.config|electron-flags.conf|electron
 
  Notifications 
