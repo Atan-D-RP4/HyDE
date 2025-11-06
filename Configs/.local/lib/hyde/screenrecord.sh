@@ -12,40 +12,70 @@ if ! command -v "$RECORDER" &>/dev/null; then
     exit 1
 fi
 
+LOCK_FILE="$HOME/.hypr_screenrecord_lock"
+
+# Check for existing script instance
+if [ -f "$LOCK_FILE" ]; then
+    lock_pid=$(cat "$LOCK_FILE")
+    if ps -p "$lock_pid" > /dev/null 2>&1; then
+        # Kill the existing process and remove lock file
+        kill "$lock_pid" 2>/dev/null || true
+        # Find slupr process and kill it if exists
+        if pgrep -x "slurp" > /dev/null; then
+            pkill -x "slurp"
+        fi
+        rm -f "$LOCK_FILE"
+        exit 1
+    else
+        rm -f "$LOCK_FILE"
+    fi
+fi
+
+# Create lock file with current PID
+echo $$ > "$LOCK_FILE"
+# Ensure lock file is removed on exit
+trap 'rm -f "$LOCK_FILE"' EXIT
+
 USAGE() {
     cat <<USAGE
 
-Usage: 'hyde-shell screenrecord' [option]
-    
-    Using ${RECORDER} to record the screen.
+    Usage: 'hyde-shell screenrecord' [option]
 
-Options:
+        Using ${RECORDER} to record the screen.
 
-    --start    Screen record
-    --backend       Use 'wl-screenrec' or 'wf-recorder' as the backend 
-    --file          Specify the output file
-    --quit     Stop the recording
-    --help          Show this help message
-    --              Pass additional arguments to '${RECORDER}'
+    Options:
 
-Note: 
+        --start         Start screen recording (stops any existing recording first)
+        --toggle        Toggle screen recording (start if stopped, stop if running)
+        --backend       Use 'wl-screenrec' or 'wf-recorder' as the backend
+        --file          Specify the output file
+        --quit          Stop the recording
+        --help          Show this help message
+        --              Pass additional arguments to '${RECORDER}'
 
-    Click and drag on the screen to select a region to record.
-    To record the whole screen, simply click without dragging.
+    Note:
 
-    Additional arguments are passed to '${RECORDER}'.
+        Click and drag on the screen to select a region to record.
+        To record the whole screen, simply click without dragging.
 
-Example:
+        Additional arguments are passed to '${RECORDER}'.
+
+    Example:
         'hyde-shell screenrecord' --start -- --audio --codec libx264
 
-
-    To see all available options for '${RECORDER}', run:
-        ${RECORDER} --help    
+        To see all available options for '${RECORDER}', run:
+            ${RECORDER} --help
 
 USAGE
 }
 
 handle_recording() {
+    # Stop any existing recording
+    if pgrep -x "$RECORDER" > /dev/null; then
+        pkill -INT "$RECORDER"
+        sleep 1
+        notify-send -a "HyDE Alert" "Stopped existing recording" -i video
+    fi
 
     save_dir="${XDG_VIDEOS_DIR:-$HOME/Videos}/Recordings"
     save_file=$(date +'%y%m%d_%Hh%Mm%Ss_recording.mp4')
@@ -58,7 +88,6 @@ handle_recording() {
     while [[ $# -gt 0 ]]; do
         if [[ "$1" == "--" ]]; then
             shift
-            # Add all remaining arguments to parameters array
             while [[ $# -gt 0 ]]; do
                 parameters+=("$1")
                 shift
@@ -70,29 +99,24 @@ handle_recording() {
 
     OUTPUT="$(hyprctl -j monitors | jq -r '.[] | select(.focused==true) | .name')"
     GEOM="$(
-        # Only accept selections at least 16x16 pixels in size
         slurp -w 0 -b "#00000000" -c "#FFFFFF" -s "#00000055" -B "#00000000" -o | awk '{
-        # slurp outputs format: x,y WxH
-        split($1, pos, ",");  # Split x,y
-        x = pos[1];
-        y = pos[2];
-        split($2, size, "x");  # Split WxH
-        width = size[1];
-        height = size[2];
-        
-        # Check if selection meets minimum size
-        if (width >= 16 && height >= 16) {
-            print x","y" "width"x"height;  # Output in the same format
-        }
-    }'
-
+            split($1, pos, ",");
+            x = pos[1];
+            y = pos[2];
+            split($2, size, "x");
+            width = size[1];
+            height = size[2];
+            if (width >= 16 && height >= 16) {
+                print x","y" "width"x"height;
+            }
+        }'
     )"
 
-    if [[ -n "$GEOM" ]]; then
-        parameters+=("--geometry" "$GEOM")
-    else
+    if [[ -z "$GEOM" ]]; then
         echo "Using whole screen for recording"
         [[ -n "$OUTPUT" ]] && parameters+=(--output "$OUTPUT")
+    else
+        parameters+=("--geometry" "$GEOM")
     fi
 
     tmp_thumbnail=$(mktemp -t thumbnail_XXXXXX.png)
@@ -102,8 +126,9 @@ handle_recording() {
         grim -g "$GEOM" "$tmp_thumbnail"
     fi
 
-    "${RECORDER}" "${parameters[@]}" -f "${save_file_path}"
-    notify-send -a "HyDE Alert" "${RECORDER}: Recording saved at ${save_file_path}" -i "${tmp_thumbnail}"
+    # Start recording in the background
+    "${RECORDER}" "${parameters[@]}" -f "${save_file_path}" &
+    notify-send -a "HyDE Alert" "${RECORDER}: Recording started" -i "${tmp_thumbnail}"
 }
 
 # Process arguments with while loop
@@ -121,9 +146,25 @@ while [[ $# -gt 0 ]]; do
         handle_recording "$@"
         exit 0
         ;;
+    --toggle)
+        # Check if recording is already running
+        if pgrep -x "$RECORDER" > /dev/null; then
+            # Recording is active, stop it
+            pkill -INT "$RECORDER"
+            notify-send -a "HyDE Alert" "Recording stopped" -i video
+        else
+            # No recording active, start one
+            handle_recording "$@"
+        fi
+        exit 0
+        ;;
     --quit)
-        killall "${RECORDER}"
-        notify-send -a "HyDE Alert" "Recording stopped"
+        if pgrep -x "$RECORDER" > /dev/null; then
+            pkill -INT "$RECORDER"
+            notify-send -a "HyDE Alert" "Recording stopped" -i video
+        else
+            notify-send -a "HyDE Alert" "No recording in progress" -i video
+        fi
         exit 0
         ;;
     --help)
@@ -131,7 +172,6 @@ while [[ $# -gt 0 ]]; do
         exit 0
         ;;
     *)
-        # Unknown option
         USAGE
         exit 1
         ;;

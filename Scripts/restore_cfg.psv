@@ -19,6 +19,10 @@ S = Sync - Copy the target to the specified path
             - Overwrite the target
               - Ignore other targets that is not from the list
               - Ignore other targets that is not from the ./Configs
+L = Link - Create symlinks to the target at the specified path
+           - Create symlinks only if the target does not exist
+           - Preserve existing files/symlinks (similar to P flag behavior)
+           - Backup existing targets before linking
 O = Overwrite - Copy the target to the specified path
                 - Overwrite the target target
                 - If Target is a directory, Overwrite EVERYTHING in the directory
@@ -30,20 +34,20 @@ B = Backup - Backup the target
 
  Hyde core files 
 P|${HOME}/.config/hyde|config.toml|hyprland
-P|${HOME}/.config/hypr|pyprland.toml shaders.conf workflows.conf animations.conf windowrules.conf keybindings.conf userprefs.conf monitors.conf|hyprland
+L|${HOME}/.config/hypr|pyprland.toml shaders.conf workflows.conf animations.conf windowrules.conf keybindings.conf userprefs.conf monitors.conf|hyprland
 P|${HOME}/.config/hypr|nvidia.conf|hyprland nvidia-utils
-P|${HOME}/.config/hypr/themes|theme.conf wallbash.conf colors.conf|hyprland
+L|${HOME}/.config/hypr/themes|theme.conf wallbash.conf colors.conf|hyprland
 S|${HOME}/.config/systemd|user|systemd
-P|${HOME}/.local/state/hyde|hyprland.conf|hyprland
+L|${HOME}/.local/state/hyde|hyprland.conf|hyprland
 
  Hyde core files -- uwsm 
-S|${HOME}/.config/uwsm|env env-hyprland env.d env-hyprland.d|systemd hyprland uwsm
+P|${HOME}/.config/uwsm|env env-hyprland env.d env-hyprland.d|systemd hyprland uwsm
 
  Hyde core files -- xdg-terminal-exec 
 P|${HOME}/.config|xdg-terminals.list|xdg-utils
 
-P|${HOME}/.config/hypr|hyprland.conf|hyprland
-S|${HOME}/.local/share|hypr|hyprland
+L|${HOME}/.config/hypr|hyprland.conf|hyprland
+L|${HOME}/.local/share|hypr|hyprland
 O|${HOME}/.local/bin|hyde-shell hydectl|hyprland
 S|${HOME}/.config|gtk-3.0|nwg-look
 S|${HOME}/.config|nwg-look|nwg-look
@@ -52,42 +56,35 @@ S|${HOME}|.gtkrc-2.0|nwg-look
 S|${HOME}/.config|Kvantum|kvantum
 S|${HOME}/.config|qt5ct|qt5ct
 S|${HOME}/.config|qt6ct|qt6ct
-S|${HOME}/.config/hyde|wallbash|hyprland bash imagemagick
-S|${HOME}/.config/hypr|animations|hyprland
-S|${HOME}/.config/hypr|workflows|hyprland
-S|${HOME}/.config/hypr|shaders|hyprland
+L|${HOME}/.config/hyde|wallbash|hyprland bash imagemagick
+L|${HOME}/.config/hypr|animations|hyprland
+L|${HOME}/.config/hypr|workflows|hyprland
+L|${HOME}/.config/hypr|shaders|hyprland
 
-O|${HOME}/.local/share|hyde|hyprland
-O|${HOME}/.local/lib|hyde|hyprland
-O|${HOME}/.local/share|wallbash|bash imagemagick
-
-
- Editor 
-P|${HOME}/.config/Code - OSS/User|settings.json|code
-P|${HOME}/.config/Code/User|settings.json|visual-studio-code-bin
-P|${HOME}/.config/VSCodium/User|settings.json|vscodium
+L|${HOME}/.local/share|hyde|hyprland
+L|${HOME}/.local/lib|hyde|hyprland
+L|${HOME}/.local/share|wallbash|bash imagemagick
 
  Bar 
-P|${HOME}/.config/waybar|user-style.css|waybar
-S|${HOME}/.config/waybar|modules styles layouts menus config.jsonc theme.css style.css|waybar
-S|${HOME}/.local/share|waybar|waybar
+L|${HOME}/.config/waybar|user-style.css config.jsonc theme.css style.css|waybar
+L|${HOME}/.config/waybar|modules styles layouts menus|waybar
+L|${HOME}/.local/share|waybar|waybar
 
  Terminal 
-P|${HOME}/.config|fastfetch|fastfetch
-O|${HOME}/.local/share/fastfetch/presets|hyde|fastfetch
+# P|${HOME}/.config|fastfetch|fastfetch
+# O|${HOME}/.local/share/fastfetch/presets|hyde|fastfetch
 
-S|${HOME}/.config/kitty|hyde.conf theme.conf|kitty
-P|${HOME}/.config/kitty|kitty.conf|kitty
+L|${HOME}/.config/kitty|hyde.conf theme.conf|kitty
 
  Shell 
-S|${HOME}/.config/fish|conf.d functions completions|fish
-P|${HOME}/.config/fish|config.fish|fish
-P|${HOME}/.config/starship|starship.toml|starship
+# S|${HOME}/.config/fish|conf.d functions completions|fish
+# P|${HOME}/.config/fish|config.fish|fish
+# P|${HOME}/.config/starship|starship.toml|starship
 
  Vim 
-P|${HOME}/.config/vim|vimrc|vim
-S|${HOME}/.config/vim/colors|wallbash.vim|vim
-S|${HOME}/.config/vim|hyde.vim|vim
+# P|${HOME}/.config/vim|vimrc|vim
+# S|${HOME}/.config/vim/colors|wallbash.vim|vim
+# S|${HOME}/.config/vim|hyde.vim|vim
 
  File Explorer 
  TODO: Add stuff for Thunar 
@@ -96,23 +93,23 @@ S|${HOME}/.config/vim|hyde.vim|vim
 P|${HOME}/.config|libinput-gestures.conf|libinput-gestures
 
  Wayland 
-P|${HOME}/.config|spotify-flags.conf|spotify
-P|${HOME}/.config|electron-flags.conf|electron
+L|${HOME}/.config|spotify-flags.conf|spotify
+L|${HOME}/.config|electron-flags.conf|electron
 
  Notifications 
-S|${HOME}/.config|dunst|dunst
+L|${HOME}/.config|dunst|dunst
 
  Gaming 
-S|${HOME}/.config|MangoHud|mangohud
+L|${HOME}/.config|MangoHud|mangohud
 
  Launcher 
-P|${HOME}/.config|rofi|rofi
-S|${HOME}/.config|wlogout|wlogout
+L|${HOME}/.config|rofi|rofi
+L|${HOME}/.config|wlogout|wlogout
 
  Lock Screen 
-S|${HOME}/.config|swaylock|swaylock-effects
-P|${HOME}/.config/hypr|hyprlock.conf|hyprlock
-S|${HOME}/.config/hypr|hyprlock|hyprlock
+L|${HOME}/.config|swaylock|swaylock-effects
+L|${HOME}/.config/hypr|hyprlock.conf|hyprlock
+L|${HOME}/.config/hypr|hyprlock|hyprlock
 
  Idle daemon 
-P|${HOME}/.config/hypr|hypridle.conf|hypridle
+L|${HOME}/.config/hypr|hypridle.conf|hypridle
