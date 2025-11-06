@@ -27,7 +27,7 @@ Options:
     --set               Set the given workflow
     --waybar            Get workflow info for Waybar
     --help   | -h       Show this help message
-    
+
 HELP
 }
 

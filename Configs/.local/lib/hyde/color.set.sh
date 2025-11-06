@@ -116,8 +116,7 @@ fn_wallbash() {
         local template_name
         template_name="${template##*/}"
         template_name="${template_name%.*}"
-        dcolTemplate=$(find -H "${wallbash_dirs_array[@]}" -type f -path "*/theme*" -name "${template_name}.dcol" 2>/dev/null | awk '!seen[substr($0, match($0, /[^/]+$/))]++')
-        # dcolTemplate="$(find "${wallbash_dirs_array[@]}" -H -type f -path "*/theme*" -name "${template_name}.dcol" -print -quit)"
+        dcolTemplate=$(find -L "${wallbashDirs[@]}" -type f -path "*/theme*" -name "${template_name}.dcol" 2>/dev/null | awk '!seen[substr($0, match($0, /[^/]+$/))]++')
         if [[ -n "${dcolTemplate}" ]]; then
             eval target_file="$(head -1 "${dcolTemplate}" | awk -F '|' '{print $1}')"
             exec_command="$(head -1 "${dcolTemplate}" | awk -F '|' '{print $2}')"
@@ -169,7 +168,6 @@ fn_wallbash() {
         mv "${temp_target_file}" "${target_file}"
     fi
     [ -z "${exec_command}" ] || {
-        [[ "${LOG_LEVEL}" == "debug" ]] && print_log -sec "wallbash" -stat "Exec command:" " ${exec_command} from ${WALLBASH_SCRIPTS}"
         bash -c "${exec_command}" &
         disown
     }
@@ -194,7 +192,7 @@ while [[ $# -gt 0 ]]; do
             source "${dcol_colors}"
             shift 2
         else
-            dcol_colors="$(find -H "${dcolDir}" -type f -name "*.dcol" | shuf -n 1)"
+            dcol_colors="$(find -L "${dcolDir}" -type f -name "*.dcol" | shuf -n 1)"
             printf "[Dcol Colors] %s\n" "${dcol_colors}"
             shift
         fi
@@ -302,12 +300,12 @@ print_log -sec "wallbash" -stat "wallbash directories" " $WALLBASH_DIRS"
 if [ "${enableWallDcol}" -eq 0 ] && [[ "${reload_flag}" -eq 1 ]]; then
 
     print_log -sec "wallbash" -stat "apply ${dcol_mode} colors" "${HYDE_THEME} theme"
-    mapfile -d '' -t deployList < <(find -H "${HYDE_THEME_DIR}" -type f -name "*.theme" -print0)
+    mapfile -d '' -t deployList < <(find -L "${HYDE_THEME_DIR}" -type f -name "*.theme" -print0)
 
     while read -r pKey; do
-        fKey="$(find -H "${HYDE_THEME_DIR}" -type f -name "$(basename "${pKey%.dcol}.theme")")"
+        fKey="$(find -L "${HYDE_THEME_DIR}" -type f -name "$(basename "${pKey%.dcol}.theme")")"
         [ -z "${fKey}" ] && deployList+=("${pKey}")
-    done < <(find -H "${wallbashDirs[@]}" -type f -path "*/theme*" -name "*.dcol" 2>/dev/null | awk '!seen[substr($0, match($0, /[^/]+$/))]++')
+    done < <(find -L "${wallbashDirs[@]}" -type f -path "*/theme*" -name "*.dcol" 2>/dev/null | awk '!seen[substr($0, match($0, /[^/]+$/))]++')
 
     # Process templates in parallel
     parallel fn_wallbash {} "${wallbashDirs[@]}" ::: "${deployList[@]}" || true
@@ -318,5 +316,10 @@ elif [ "${enableWallDcol}" -gt 0 ]; then
     find -H "${wallbashDirs[@]}" -type f -path "*/theme*" -name "*.dcol" 2>/dev/null | awk '!seen[substr($0, match($0, /[^/]+$/))]++' | parallel fn_wallbash {} "${wallbashDirs[@]}" || true
 fi
 
+#  Theme mode: detects the color-scheme set in hypr.theme and falls back if nothing is parsed.
+revert_colors=0
+[ "${enableWallDcol}" -eq 0 ] && { grep -q "${dcol_mode}" <<<"$(get_hyprConf "COLOR_SCHEME")" || revert_colors=1; }
+export revert_colors
+
 # Process "always" templates in parallel
-find -H "${wallbashDirs[@]}" -type f -path "*/always*" -name "*.dcol" 2>/dev/null | awk '!seen[substr($0, match($0, /[^/]+$/))]++' | parallel fn_wallbash {} "${wallbashDirs[@]}" || true
+find -L "${wallbashDirs[@]}" -type f -path "*/always*" -name "*.dcol" 2>/dev/null | sort | awk '!seen[substr($0, match($0, /[^/]+$/))]++' | parallel fn_wallbash {} || true

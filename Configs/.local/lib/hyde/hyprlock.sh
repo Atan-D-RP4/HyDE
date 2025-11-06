@@ -358,7 +358,7 @@ source = ${hyde_hyprlock_conf}
 #│ - Alternatively, you can statically source the layout in                   │
 #│          '~/.config/hypr/hyde.conf'.                                       │
 #│ - This will take precedence over the variable in                           │
-#│            '~/.config/hypr/hyprlock.conf'.                                 │ 
+#│            '~/.config/hypr/hyprlock.conf'.                                 │
 #│                                                                            │
 #└────────────────────────────────────────────────────────────────────────────┘
 
