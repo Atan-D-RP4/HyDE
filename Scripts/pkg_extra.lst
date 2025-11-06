@@ -12,7 +12,6 @@ ddcui                                                  # GUI to control brightne
 
 
 # --------------------------------------------------- // Misc
-wf-recorder                                          # Screen recorder for wlroots-based compositors such as sway
 # emote                                                # emoji picker gtk3
 # wl-screenrec                                         # High performance hardware accelerated wlroots screen recorder // NO support for NVIDIA
 
@@ -38,10 +37,10 @@ spicetify-cli                                          # cli to customize spotif
 # visual-studio-code-bin                                # MS text editor
 
 # --------------------------------------------------- // Backends
-#electron                                              # electron backend
+# electron                                              # electron backend
 
 # --------------------------------------------------- // Lockscreen
-#swaylock-effects-git                                   # swaylock with effects // very minimal lockscreen
+# swaylock-effects-git                                   # swaylock with effects // very minimal lockscreen
 
 # --------------------------------------------------- // OSD
 swayosd-git                                             #A GTK based on screen display for keyboard shortcuts like caps-lock and volume
