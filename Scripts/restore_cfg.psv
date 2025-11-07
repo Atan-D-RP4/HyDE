@@ -1,3 +1,4 @@
+: << 'COMMENT'
 This is a pipe separated value file.
 It contains the paths of the dotfiles and
 their respective package dependency.
@@ -33,7 +34,7 @@ O = Overwrite - Copy the target to the specified path
 
 B = Backup - Backup the target
               - All P,S,O flags will also backup the target file/directory
-
+COMMENT
 
 
  Hyde core files 
@@ -78,6 +79,7 @@ L|${HOME}/.local/share|waybar|waybar
 # P|${HOME}/.config|fastfetch|fastfetch
 # O|${HOME}/.local/share/fastfetch/presets|hyde|fastfetch
 
+
 L|${HOME}/.config/kitty|hyde.conf theme.conf|kitty
 
  Shell 
@@ -118,3 +120,5 @@ L|${HOME}/.config/hypr|hyprlock|hyprlock
 
  Idle daemon 
 L|${HOME}/.config/hypr|hypridle.conf|hypridle
+
+# vim: set ft=bash
