@@ -79,44 +79,44 @@ pkgChk+=("${SYSMONITOR_COMMANDS[@]}")                                           
 [ -n "${SYSMONITOR_EXECUTE}" ] && pkgChk=("${SYSMONITOR_EXECUTE}" "${pkgChk[@]}") # Add the user defined executable
 
 for sysMon in "${!pkgChk[@]}"; do
-  # If that fails, try launching in terminal
+  # First try launching in terminal
   if pkg_installed "${pkgChk[sysMon]}"; then
     # Get terminal from config, environment, or default
     term=$(grep -E '^\s*'"terminal" "$HOME/.config/hypr/keybindings.conf" 2>/dev/null | cut -d '=' -f2 | xargs) # search the config
-    term=${TERMINAL:-$term}                                                                      # Use env var
-    term=${SYSMONITOR_TERMINAL:-$term}                                                          # Use config override
-    term=${term:-"kitty"}                                                                       # Final fallback
+    term=${TERMINAL:-$term}                                                                                     # Use env var
+    term=${SYSMONITOR_TERMINAL:-$term}                                                                          # Use config override
+    term=${term:-"kitty"}                                                                                       # Final fallback
 
     # Launch with appropriate terminal command
     case "$term" in
-      *kitty*)
-        # Use kitty with single-instance flag
-        if (kitty --single-instance "${pkgChk[sysMon]}" &); then
-          # Wait a moment for the process to start, then find the actual monitor process
-          sleep 0.5
-          pid=$(pgrep -n -f "${pkgChk[sysMon]}")
-          if [ -n "$pid" ]; then
-            echo "${pid}:::${pkgChk[sysMon]}" >"$pidFile" # Save the monitor process PID
-          else
-            # Fallback: save kitty PID with special marker
-            echo "$!:::kitty-${pkgChk[sysMon]}" >"$pidFile"
-          fi
-          disown
-          break
+    *kitty*)
+      # Use kitty with single-instance flag
+      if (uwsm app -- kitty --single-instance "${pkgChk[sysMon]}" &); then
+        # Wait a moment for the process to start, then find the actual monitor process
+        sleep 0.5
+        pid=$(pgrep -n -f "${pkgChk[sysMon]}")
+        if [ -n "$pid" ]; then
+          echo "${pid}:::${pkgChk[sysMon]}" >"$pidFile" # Save the monitor process PID
+        else
+          # Fallback: save kitty PID with special marker
+          echo "$!:::kitty-${pkgChk[sysMon]}" >"$pidFile"
         fi
-        ;;
-      *)
-        # Use standard terminal execution for other terminals
-        if ("$term" "${pkgChk[sysMon]}" &); then
-          pid=$!
-          echo "${pid}:::${pkgChk[sysMon]}" >"$pidFile" # Save the PID to the file
-          disown
-          break
-        fi
-        ;;
+        disown
+        break
+      fi
+      ;;
+    *)
+      # Use standard terminal execution for other terminals
+      if (uwsm app -- "$term" "${pkgChk[sysMon]}" &); then
+        pid=$!
+        echo "${pid}:::${pkgChk[sysMon]}" >"$pidFile" # Save the PID to the file
+        disown
+        break
+      fi
+      ;;
     esac
   fi
-  # First try to launch as desktop application
+  # If that fails, try to launch as desktop application
   if gtk-launch "${pkgChk[sysMon]}" 2>/dev/null; then
     pid=$(pgrep -n -f "${pkgChk[sysMon]}")
     echo "${pid}:::${pkgChk[sysMon]}" >"$pidFile" # Save the PID to the file
