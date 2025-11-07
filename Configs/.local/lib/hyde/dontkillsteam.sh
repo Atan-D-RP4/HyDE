@@ -1,11 +1,10 @@
 if [[ $(hyprctl activewindow -j | jq -r ".class") == "Steam" ]]; then
-    xdotool windowunmap $(xdotool getactivewindow)
-else
-    # check if active window is fullscreen
-    IS_FULLSCREEN=$(hyprctl activewindow -j | jq -r ".fullscreen")
-    hyprctl dispatch killactive ""
-    # If $IS_FULLSCREEN is not 0 or "false", toggle fullscreen
-    if [[ "$IS_FULLSCREEN" != 0 ]]; then
-        hyprctl dispatch fullscreen
+    # if xdotool is installed, use it to minimize the window instead of killing it
+    if command -v xdotool &>/dev/null; then
+        xdotool windowunmap "$(xdotool getactivewindow)"
+    elif command -v niflveil.sh &>/dev/null; then
+        niflveil.sh minimize
     fi
+else
+    hyprctl dispatch killactive
 fi
