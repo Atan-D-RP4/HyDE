@@ -52,7 +52,7 @@ Please empty your `~/.config/fish/config.fish` and use it to modify fish configu
 ### Fixed
 
 - Hyprlock: fix hyprlock crashing by handling it as a systemd scope unit
-- Hyprland: Backport Fix installation/update errors 
+- Hyprland: Backport Fix installation/update errors
 
 ## v25.9.1
 
@@ -144,8 +144,8 @@ In SDDM, please choose `Hyprland (UWSM Managed)` as your session. Or else you wi
 
 We use a dedicated Python environment to keep HyDE clean and dependency-free. Just run your scripts with `hyde-shell`— this handles the environment for you.
 
-Examples:  
- `hyde-shell mediaplayer.py`  
+Examples:
+ `hyde-shell mediaplayer.py`
  `hyde-shell waybar`
 
 ### Added

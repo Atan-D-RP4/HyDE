@@ -51,9 +51,9 @@ else
     print_log -y "[DISPLAYMANAGER] " -b " :: " "sddm is not installed..."
 fi
 
-# dolphin
-if pkg_installed dolphin && pkg_installed xdg-utils; then
-    print_log -c "[FILEMANAGER] " -b "detected :: " "dolphin"
+# thunar
+if pkg_installed thunar && pkg_installed xdg-utils; then
+    print_log -c "[FILEMANAGER] " -b "detected :: " "thunar"
     xdg-mime default thunar.desktop inode/directory
     print_log -g "[FILEMANAGER] " -b " :: " "setting $(xdg-mime query default "inode/directory") as default file explorer..."
 

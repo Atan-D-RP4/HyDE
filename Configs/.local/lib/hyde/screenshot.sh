@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 if [[ "${HYDE_SHELL_INIT}" -ne 1 ]]; then
-    eval "$(hyde-shell init)"
+	eval "$(hyde-shell init)"
 else
-    export_hyde_config
+	export_hyde_config
 fi
 
 USAGE() {
@@ -123,13 +123,17 @@ ocr_screenshot() {
 				return 1
 			fi
 		done
-		tesseract_languages_prepared=$(IFS=+; echo "${tesseract_languages[*]}")
-		tesseract_output=$(tesseract \
-			--psm 6 \
-			--oem 3 \
-			-l ${tesseract_languages_prepared} \
-			"${temp_screenshot}" \
-			stdout
+		tesseract_languages_prepared=$(
+			IFS=+
+			echo "${tesseract_languages[*]}"
+		)
+		tesseract_output=$(
+			tesseract \
+				--psm 6 \
+				--oem 3 \
+				-l ${tesseract_languages_prepared} \
+				"${temp_screenshot}" \
+				stdout
 			2>/dev/null
 		)
 		printf "%s" "$tesseract_output" | wl-copy

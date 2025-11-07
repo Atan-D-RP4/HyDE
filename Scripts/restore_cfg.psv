@@ -86,6 +86,7 @@ L|${HOME}/.config/kitty|hyde.conf theme.conf|kitty
 # P|${HOME}/.config/starship|starship.toml|starship
 
  Vim 
+
 # P|${HOME}/.config/vim|vimrc|vim
 # S|${HOME}/.config/vim/colors|wallbash.vim|vim
 # S|${HOME}/.config/vim|hyde.vim|vim
@@ -94,7 +95,7 @@ L|${HOME}/.config/kitty|hyde.conf theme.conf|kitty
  TODO: Add stuff for Thunar 
 
  Input 
-P|${HOME}/.config|libinput-gestures.conf|libinput-gestures
+L|${HOME}/.config|libinput-gestures.conf|libinput-gestures
 
  Wayland 
 L|${HOME}/.config|spotify-flags.conf|spotify

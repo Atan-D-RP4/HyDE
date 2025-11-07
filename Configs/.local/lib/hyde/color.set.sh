@@ -313,7 +313,7 @@ if [ "${enableWallDcol}" -eq 0 ] && [[ "${reload_flag}" -eq 1 ]]; then
 elif [ "${enableWallDcol}" -gt 0 ]; then
     print_log -sec "wallbash" -stat "apply ${dcol_mode} colors" "Wallbash theme"
     # This is the reason we avoid SPACES for the wallbash template names
-    find -H "${wallbashDirs[@]}" -type f -path "*/theme*" -name "*.dcol" 2>/dev/null | awk '!seen[substr($0, match($0, /[^/]+$/))]++' | parallel fn_wallbash {} "${wallbashDirs[@]}" || true
+    find -L "${wallbashDirs[@]}" -type f -path "*/theme*" -name "*.dcol" 2>/dev/null | awk '!seen[substr($0, match($0, /[^/]+$/))]++' | parallel fn_wallbash {} "${wallbashDirs[@]}" || true
 fi
 
 #  Theme mode: detects the color-scheme set in hypr.theme and falls back if nothing is parsed.

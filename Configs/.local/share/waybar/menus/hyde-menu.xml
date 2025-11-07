@@ -220,7 +220,7 @@
             <object class="GtkSeparatorMenuItem" id="delimiter-1" />
         </child>
 
-        
+
         <child>
             <object class="GtkMenuItem" id="keybinds-hint">
                 <property name="label">  Keybinds</property>
