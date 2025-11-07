@@ -33,10 +33,11 @@ B = Backup - Backup the target
 
 
  Hyde core files 
-P|${HOME}/.config/hyde|config.toml|hyprland
+P|${HOME}/.config/hyde|config.toml themes|hyprland
 L|${HOME}/.config/hypr|pyprland.toml shaders.conf workflows.conf animations.conf windowrules.conf keybindings.conf userprefs.conf monitors.conf|hyprland
-P|${HOME}/.config/hypr|nvidia.conf|hyprland nvidia-utils
-L|${HOME}/.config/hypr/themes|theme.conf wallbash.conf colors.conf|hyprland
+P|${HOME}/.config/hypr|shaders.conf workflows.conf animations.conf|hyprland
+L|${HOME}/.config/hypr|nvidia.conf|hyprland nvidia-utils
+P|${HOME}/.config/hypr/themes|theme.conf wallbash.conf colors.conf|hyprland
 S|${HOME}/.config/systemd|user|systemd
 L|${HOME}/.local/state/hyde|hyprland.conf|hyprland
 
@@ -97,7 +98,7 @@ L|${HOME}/.config|spotify-flags.conf|spotify
 L|${HOME}/.config|electron-flags.conf|electron
 
  Notifications 
-L|${HOME}/.config|dunst|dunst
+P|${HOME}/.config|dunst|dunst
 
  Gaming 
 L|${HOME}/.config|MangoHud|mangohud
