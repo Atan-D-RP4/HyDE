@@ -15,18 +15,22 @@ Flags:
 P = Populate/Preserved - Copy the target to the specified path
                           - ONLY if the target do not exist
                           - Preserved the target
+
 S = Sync - Copy the target to the specified path
             - Overwrite the target
               - Ignore other targets that is not from the list
               - Ignore other targets that is not from the ./Configs
+
 L = Link - Create symlinks to the target at the specified path
            - Create symlinks only if the target does not exist
            - Preserve existing files/symlinks (similar to P flag behavior)
            - Backup existing targets before linking
+
 O = Overwrite - Copy the target to the specified path
                 - Overwrite the target target
                 - If Target is a directory, Overwrite EVERYTHING in the directory
                 - If Target is a file, Overwrite the file
+
 B = Backup - Backup the target
               - All P,S,O flags will also backup the target file/directory
 
@@ -34,10 +38,9 @@ B = Backup - Backup the target
 
  Hyde core files 
 P|${HOME}/.config/hyde|config.toml themes|hyprland
-L|${HOME}/.config/hypr|pyprland.toml shaders.conf workflows.conf animations.conf windowrules.conf keybindings.conf userprefs.conf monitors.conf|hyprland
+L|${HOME}/.config/hypr|pyprland.toml windowrules.conf keybindings.conf userprefs.conf monitors.conf|hyprland
 P|${HOME}/.config/hypr|shaders.conf workflows.conf animations.conf|hyprland
 L|${HOME}/.config/hypr|nvidia.conf|hyprland nvidia-utils
-P|${HOME}/.config/hypr/themes|theme.conf wallbash.conf colors.conf|hyprland
 S|${HOME}/.config/systemd|user|systemd
 L|${HOME}/.local/state/hyde|hyprland.conf|hyprland
 
@@ -67,8 +70,8 @@ L|${HOME}/.local/lib|hyde|hyprland
 L|${HOME}/.local/share|wallbash|bash imagemagick
 
  Bar 
-L|${HOME}/.config/waybar|user-style.css config.jsonc theme.css style.css|waybar
-L|${HOME}/.config/waybar|modules styles layouts menus|waybar
+P|${HOME}/.config/waybar|config.jsonc style.css theme.css|waybar
+L|${HOME}/.config/waybar|modules styles layouts menus user-style.css|waybar
 L|${HOME}/.local/share|waybar|waybar
 
  Terminal 
