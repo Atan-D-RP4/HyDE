@@ -91,7 +91,7 @@ for sysMon in "${!pkgChk[@]}"; do
     case "$term" in
       *kitty*)
         # Use kitty with single-instance flag
-        if kitty --single-instance "${pkgChk[sysMon]}" &; then
+        if (kitty --single-instance "${pkgChk[sysMon]}" &); then
           # Wait a moment for the process to start, then find the actual monitor process
           sleep 0.5
           pid=$(pgrep -n -f "${pkgChk[sysMon]}")
@@ -107,7 +107,7 @@ for sysMon in "${!pkgChk[@]}"; do
         ;;
       *)
         # Use standard terminal execution for other terminals
-        if "$term" "${pkgChk[sysMon]}" &; then
+        if ("$term" "${pkgChk[sysMon]}" &); then
           pid=$!
           echo "${pid}:::${pkgChk[sysMon]}" >"$pidFile" # Save the PID to the file
           disown
