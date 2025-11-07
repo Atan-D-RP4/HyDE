@@ -29,7 +29,7 @@ hyprland                                               # wlroots-based wayland c
 hyprsunset                                             # blue light filter
 hyprpicker                                             # color picker
 hyprlock                                               # lock screen
-dunst                                                  # notification daemon
+swaync                                                 # notification daemon
 rofi                                                   # application launcher
 waybar                                                 # system bar
 swww                                                   # wallpaper
