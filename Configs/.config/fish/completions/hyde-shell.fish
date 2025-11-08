@@ -15,7 +15,7 @@ release-notes
 --list-script
 --list-script-path
 --completions"
-    
+
     # Get hyde scripts
     if command -v hyde-shell >/dev/null 2>&1
         hyde-shell --list-script 2>/dev/null | sed 's/\.[^.]*$//'

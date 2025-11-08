@@ -21,12 +21,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Audio volume control: use `wpctl` instead of `pamixer` for managing audio volume when PipeWire server is running.
 - Fish: `config.fish` is now user defined config
-- Fish: `confi.d/hyde.fish` is used for HyDE only stuff. To override this create a separate file or use `config.fish` 
+- Fish: `confi.d/hyde.fish` is used for HyDE only stuff. To override this create a separate file or use `config.fish`
 
 
 ### Migration
 
-For fish shell users: 
+For fish shell users:
 Please empty your `~/.config/fish/config.fish` and use it to modify fish configurations.
 
 ## v25.9.3
@@ -52,7 +52,7 @@ Please empty your `~/.config/fish/config.fish` and use it to modify fish configu
 ### Fixed
 
 - Hyprlock: fix hyprlock crashing by handling it as a systemd scope unit
-- Hyprland: Backport Fix installation/update errors 
+- Hyprland: Backport Fix installation/update errors
 
 ## v25.9.1
 
@@ -144,8 +144,8 @@ In SDDM, please choose `Hyprland (UWSM Managed)` as your session. Or else you wi
 
 We use a dedicated Python environment to keep HyDE clean and dependency-free. Just run your scripts with `hyde-shell`— this handles the environment for you.
 
-Examples:  
- `hyde-shell mediaplayer.py`  
+Examples:
+ `hyde-shell mediaplayer.py`
  `hyde-shell waybar`
 
 ### Added

@@ -188,7 +188,7 @@ ${layout_items}"
       -theme-str "$(get_rofi_pos)" \
       -on-selection-changed "hyde-shell hyprlock.sh --test-preview  \"{entry}\"" \
       -theme "${ROFI_HYPRLOCK_STYLE:-clipboard}" )
-  
+
   if [ -z "$selected_layout" ]; then
     echo "No selection made"
     exit 0
@@ -280,14 +280,14 @@ layout_test() {
   fi
   sleep 2
   local temp_path="${XDG_RUNTIME_DIR}/hyde/hyprlock-test.conf"
-  generate_conf "${hyprlock_conf_path}" "${temp_path}" 
+  generate_conf "${hyprlock_conf_path}" "${temp_path}"
   append_label_to_file "${temp_path}"
   app2unit.sh -S both -u "${HYPRLOCK_SCOPE_NAME}" -t scope -- hyprlock --no-fade-in --immediate-render --grace 99999999 -c "${temp_path}"
   rm -f "${temp_path}"
 }
 
 rofi_test_preview() {
-#? this function provides an anti spam mechanism for the rofi preview 
+#? this function provides an anti spam mechanism for the rofi preview
 local hyprlock_conf_name="${*:-${1}}"
 if [[ "${hyprlock_conf_name}" == "Theme Preference" ]]; then
   hyprlock_conf_name="theme"
@@ -298,7 +298,8 @@ check_and_sanitize_process "${unit_name}"
     -i "system-lock-screen" -t 3000 \
     -r 9
 app2unit.sh -S both -u "${unit_name}" -t scope -- hyprlock.sh --test "${hyprlock_conf_name}"
-  
+
+
 
 }
 
@@ -358,7 +359,7 @@ source = ${hyde_hyprlock_conf}
 #│ - Alternatively, you can statically source the layout in                   │
 #│          '~/.config/hypr/hyde.conf'.                                       │
 #│ - This will take precedence over the variable in                           │
-#│            '~/.config/hypr/hyprlock.conf'.                                 │ 
+#│            '~/.config/hypr/hyprlock.conf'.                                 │
 #│                                                                            │
 #└────────────────────────────────────────────────────────────────────────────┘
 

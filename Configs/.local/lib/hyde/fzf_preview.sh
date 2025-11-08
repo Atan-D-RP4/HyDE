@@ -16,7 +16,7 @@ img_preview() {
             kitty icat --clear --transfer-mode=memory --stdin=no "$image_url"
     else
         if command -v jp2a &>/dev/null; then
-            find "${image_url}" -name "*" -exec jp2a --colors --color-depth=24 --chars=' .:-=+*#%@' --fill --term-fit --background=dark {} \; 2>/dev/null
+            find -L "${image_url}" -name "*" -exec jp2a --colors --color-depth=24 --chars=' .:-=+*#%@' --fill --term-fit --background=dark {} \; 2>/dev/null
         else
             cat <<EOF
           ░▒▒▒░░░░░▓▓          ___________
