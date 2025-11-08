@@ -168,7 +168,6 @@ fn_wallbash() {
         mv "${temp_target_file}" "${target_file}"
     fi
     [ -z "${exec_command}" ] || {
-        [[ "${LOG_LEVEL}" == "debug" ]] && print_log -sec "wallbash" -stat "Exec command:" " ${exec_command} from ${WALLBASH_SCRIPTS}"
         bash -c "${exec_command}" &
         disown
     }
