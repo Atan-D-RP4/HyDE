@@ -116,8 +116,7 @@ fn_wallbash() {
         local template_name
         template_name="${template##*/}"
         template_name="${template_name%.*}"
-        dcolTemplate=$(find -L "${wallbash_dirs_array[@]}" -type f -path "*/theme*" -name "${template_name}.dcol" 2>/dev/null | awk '!seen[substr($0, match($0, /[^/]+$/))]++')
-        # dcolTemplate="$(find "${wallbash_dirs_array[@]}" -H -type f -path "*/theme*" -name "${template_name}.dcol" -print -quit)"
+        dcolTemplate=$(find -L "${wallbashDirs[@]}" -type f -path "*/theme*" -name "${template_name}.dcol" 2>/dev/null | awk '!seen[substr($0, match($0, /[^/]+$/))]++')
         if [[ -n "${dcolTemplate}" ]]; then
             eval target_file="$(head -1 "${dcolTemplate}" | awk -F '|' '{print $1}')"
             exec_command="$(head -1 "${dcolTemplate}" | awk -F '|' '{print $2}')"
@@ -318,5 +317,10 @@ elif [ "${enableWallDcol}" -gt 0 ]; then
     find -L "${wallbashDirs[@]}" -type f -path "*/theme*" -name "*.dcol" 2>/dev/null | awk '!seen[substr($0, match($0, /[^/]+$/))]++' | parallel fn_wallbash {} "${wallbashDirs[@]}" || true
 fi
 
+#  Theme mode: detects the color-scheme set in hypr.theme and falls back if nothing is parsed.
+revert_colors=0
+[ "${enableWallDcol}" -eq 0 ] && { grep -q "${dcol_mode}" <<<"$(get_hyprConf "COLOR_SCHEME")" || revert_colors=1; }
+export revert_colors
+
 # Process "always" templates in parallel
-find -L "${wallbashDirs[@]}" -type f -path "*/always*" -name "*.dcol" 2>/dev/null | awk '!seen[substr($0, match($0, /[^/]+$/))]++' | parallel fn_wallbash {} "${wallbashDirs[@]}" || true
+find -L "${wallbashDirs[@]}" -type f -path "*/always*" -name "*.dcol" 2>/dev/null | sort | awk '!seen[substr($0, match($0, /[^/]+$/))]++' | parallel fn_wallbash {} || true

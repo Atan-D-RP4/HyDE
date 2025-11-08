@@ -10,8 +10,6 @@ if ! source "$(command -v hyde-shell)"; then
     exit 1
 fi
 
-# [[ "${HYDE_SHELL_INIT}" -ne 1 ]] && eval "$(hyde-shell init)"
-
 RECORDER="wl-screenrec"
 command -v "$RECORDER" &>/dev/null || RECORDER="wf-recorder"
 if ! command -v "$RECORDER" &>/dev/null; then
@@ -101,7 +99,7 @@ handle_recording() {
         fi
         # Start recording with the combined audio source
         if [ "$RECORDER" = "wl-screenrec" ]; then
-            parameters+=("--audio --audio-device" "all_sinks.monitor")
+            parameters+=("--audio-device" "all_sinks.monitor")
         elif [ "$RECORDER" = "wf-recorder" ]; then
             parameters+=("--audio=all_sinks.monitor")
         fi

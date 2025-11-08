@@ -17,15 +17,15 @@ P = Populate/Preserved - Copy the target to the specified path
                           - ONLY if the target do not exist
                           - Preserved the target
 
-L = Link - Create symlinks to the target at the specified path
-           - Create symlinks only if the target does not exist
-           - Preserve existing files/symlinks \(similar to P flag behavior\)
-           - Backup existing targets before linking
-
 S = Sync - Copy the target to the specified path
             - Overwrite the target
               - Ignore other targets that is not from the list
               - Ignore other targets that is not from the ./Configs
+
+L = Link - Create symlinks to the target at the specified path
+           - Create symlinks only if the target does not exist
+           - Preserve existing files/symlinks (similar to P flag behavior)
+           - Backup existing targets before linking
 
 O = Overwrite - Copy the target to the specified path
                 - Overwrite the target target
@@ -38,23 +38,22 @@ COMMENT
 
 
  Hyde core files 
-P|${HOME}/.config/hyde|config.toml|hyprland
-L|${HOME}/.config/hypr|pyprland.toml base.conf windowrules.conf keybindings.conf userprefs.conf monitors.conf|hyprland
+P|${HOME}/.config/hyde|config.toml themes|hyprland
+L|${HOME}/.config/hypr|pyprland.toml windowrules.conf keybindings.conf userprefs.conf monitors.conf|hyprland
 P|${HOME}/.config/hypr|shaders.conf workflows.conf animations.conf|hyprland
 L|${HOME}/.config/hypr|nvidia.conf|hyprland nvidia-utils
-P|${HOME}/.config/hypr/themes|theme.conf wallbash.conf colors.conf|hyprland
 S|${HOME}/.config/systemd|user|systemd
 L|${HOME}/.local/state/hyde|hyprland.conf|hyprland
 
  Hyde core files -- uwsm 
-S|${HOME}/.config/uwsm|env env-hyprland env.d env-hyprland.d|systemd hyprland uwsm
+P|${HOME}/.config/uwsm|env env-hyprland env.d env-hyprland.d|systemd hyprland uwsm
 
  Hyde core files -- xdg-terminal-exec 
 P|${HOME}/.config|xdg-terminals.list|xdg-utils
 
 L|${HOME}/.config/hypr|hyprland.conf|hyprland
 L|${HOME}/.local/share|hypr|hyprland
-L|${HOME}/.local/bin|hyde-shell hydectl|hyprland
+O|${HOME}/.local/bin|hyde-shell hydectl|hyprland
 S|${HOME}/.config|gtk-3.0|nwg-look
 S|${HOME}/.config|nwg-look|nwg-look
 S|${HOME}/.config|xsettingsd|nwg-look
@@ -69,8 +68,7 @@ L|${HOME}/.config/hypr|shaders|hyprland
 
 L|${HOME}/.local/share|hyde|hyprland
 L|${HOME}/.local/lib|hyde|hyprland
-O|${HOME}/.local/share|wallbash|bash imagemagick
-
+L|${HOME}/.local/share|wallbash|bash imagemagick
 
  Bar 
 P|${HOME}/.config/waybar|config.jsonc style.css theme.css|waybar
@@ -78,29 +76,25 @@ L|${HOME}/.config/waybar|modules styles layouts menus user-style.css|waybar
 L|${HOME}/.local/share|waybar|waybar
 
  Terminal 
-#P|${HOME}/.config|fastfetch|fastfetch
-#O|${HOME}/.local/share/fastfetch/presets|hyde|fastfetch
+# P|${HOME}/.config|fastfetch|fastfetch
+# O|${HOME}/.local/share/fastfetch/presets|hyde|fastfetch
 
-# L|${HOME}/.config/kitty|theme.conf|kitty
 
-# Shell 
-L|${HOME}/.config/starship|starship.toml|starship
+L|${HOME}/.config/kitty|hyde.conf theme.conf|kitty
 
-#  Vim 
+ Shell 
+# S|${HOME}/.config/fish|conf.d functions completions|fish
+# P|${HOME}/.config/fish|config.fish|fish
+# P|${HOME}/.config/starship|starship.toml|starship
+
+ Vim 
+
 # P|${HOME}/.config/vim|vimrc|vim
 # S|${HOME}/.config/vim/colors|wallbash.vim|vim
 # S|${HOME}/.config/vim|hyde.vim|vim
 
  File Explorer 
  TODO: Add stuff for Thunar 
-# P|${HOME}/.local/state|dolphinstaterc|dolphin
-# P|${HOME}/.config|baloofilerc|dolphin
-# S|${HOME}/.config/menus|applications.menu|dolphin
-# S|${HOME}/.config|dolphinrc|dolphin
-# S|${HOME}/.config|kdeglobals|dolphin
-# S|${HOME}/.local/share/kio/servicemenus|hydewallpaper.desktop|dolphin
-# S|${HOME}/.local/share/kxmlgui5|dolphin|dolphin
-# S|${HOME}/.local/share|dolphin|dolphin
 
  Input 
 L|${HOME}/.config|libinput-gestures.conf|libinput-gestures

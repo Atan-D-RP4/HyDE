@@ -25,7 +25,6 @@ qt5-quickcontrols2                                     # for sddm theme ui eleme
 qt5-graphicaleffects                                   # for sddm theme effects
 
 # --------------------------------------------------- // Window Manager
-uwsm                                                   # hyprland - systemd integration
 hyprland                                               # wlroots-based wayland compositor
 hyprsunset                                             # blue light filter
 hyprpicker                                             # color picker
@@ -38,9 +37,9 @@ wlogout                                                # logout menu
 grim                                                   # screenshot tool
 slurp                                                  # region select for screenshot/screenshare
 satty                                                  # Modern Screenshot Annotation
-wf-recorder                                            # wayland screen-recorder
-wl-clip-persist                                        # Keep Wayland clipboard even after programs close (avoids crashes)
 cliphist                                               # clipboard manager
+wl-clip-persist                                        # Keep Wayland clipboard even after programs close (avoids crashes)
+wf-recorder                                            # screen recorder for wlroots-based compositors such as sway
 
 # --------------------------------------------------- // Dependencies
 polkit-gnome                                           # authentication agent
@@ -51,6 +50,8 @@ pacman-contrib                                         # for system update check
 parallel                                               # for parallel processing
 jq                                                     # for json processing
 imagemagick                                            # for image processing
+qt5-imageformats                                       # for dolphin image thumbnails
+ffmpegthumbs                                           # for dolphin video thumbnails
 libnotify                                              # for notifications
 noto-fonts-emoji                                       # emoji font
 
