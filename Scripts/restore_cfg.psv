@@ -69,7 +69,7 @@ L|${HOME}/.config/hypr|shaders|hyprland
 
 L|${HOME}/.local/share|hyde|hyprland
 L|${HOME}/.local/lib|hyde|hyprland
-O|${HOME}/.local/share|wallbash|bash imagemagick
+L|${HOME}/.local/share|wallbash|bash imagemagick
 
 
  Bar 
@@ -111,6 +111,7 @@ L|${HOME}/.config|electron-flags.conf|electron
 
  Notifications 
 P|${HOME}/.config|dunst|dunst
+P|${HOME}/.config|swaync|swaync
 
  Gaming 
 L|${HOME}/.config|MangoHud|mangohud

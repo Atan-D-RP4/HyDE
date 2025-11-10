@@ -1,0 +1,313 @@
+${cacheDir}/wallbash/swaync-style.css|${WALLBASH_SCRIPTS}/swaync.sh
+
+.notification-row {
+  outline: none;
+  margin: 0px;
+  padding: 0px;
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 0 2px transparent;
+  background-color: <wallbash_pry1_rgba(0.9)>;
+  color: #<wallbash_txt1>;
+  border: 1px solid <wallbash_1xa5_rgba(0.3)>;
+}
+
+.notification-row:hover {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 0 0 2px transparent;
+  background-color: <wallbash_1xa1_rgba(0.9)>;
+}
+
+.notification-row:focus {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 0 0 2px transparent;
+  background-color: <wallbash_1xa1_rgba(0.9)>;
+}
+
+.notification {
+  background: transparent;
+  padding: 0px;
+  margin: 0px;
+  border-radius: 10px;
+}
+
+.notification-content {
+  background: transparent;
+  padding: 10px;
+  margin: 0px;
+  border-radius: 10px;
+}
+
+.close-button {
+  background: <wallbash_2xa5_rgba(0.8)>;
+  color: #<wallbash_txt2>;
+  text-shadow: none;
+  padding: 5px;
+  border-radius: 10px;
+  margin-top: 5px;
+  margin-right: 5px;
+  border: none;
+  box-shadow: none;
+  font-size: 12px;
+}
+
+.close-button:hover {
+  background: <wallbash_2xa7_rgba(0.9)>;
+  color: #<wallbash_txt2>;
+}
+
+.notification-default-action,
+.notification-action {
+  margin: 0px;
+  padding: 5px;
+  border-radius: 10px;
+  background: <wallbash_3xa5_rgba(0.8)>;
+  color: #<wallbash_txt3>;
+  font-size: 12px;
+  border: none;
+  box-shadow: none;
+}
+
+.notification-default-action:hover,
+.notification-action:hover {
+  background: <wallbash_3xa7_rgba(0.9)>;
+  color: #<wallbash_txt3>;
+}
+
+.notification-default-action {
+  margin: 0px 0px 5px 0px;
+}
+
+.inline-reply {
+  margin-top: 8px;
+}
+
+.inline-reply-entry {
+  background: <wallbash_pry2_rgba(0.8)>;
+  color: #<wallbash_txt2>;
+  caret-color: #<wallbash_txt2>;
+  border: 1px solid <wallbash_2xa5_rgba(0.5)>;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 0px;
+}
+
+.inline-reply-entry:focus {
+  background: <wallbash_2xa1_rgba(0.9)>;
+  border: 1px solid <wallbash_2xa7_rgba(0.7)>;
+}
+
+.inline-reply-button {
+  margin-left: 4px;
+  background: <wallbash_2xa5_rgba(0.8)>;
+  border: none;
+  color: #<wallbash_txt2>;
+  border-radius: 10px;
+  padding: 5px;
+  font-size: 12px;
+}
+
+.inline-reply-button:hover {
+  background: <wallbash_2xa7_rgba(0.9)>;
+}
+
+.inline-reply-button:disabled {
+  background: <wallbash_pry3_rgba(0.6)>;
+  color: <wallbash_txt3_rgba(0.5)>;
+}
+
+.body {
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.summary {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.time {
+  font-size: 10px;
+  color: <wallbash_txt1_rgba(0.7)>;
+}
+
+.control-center {
+  background: <wallbash_pry1_rgba(0.95)>;
+  color: #<wallbash_txt1>;
+  border: 1px solid <wallbash_1xa5_rgba(0.3)>;
+  border-radius: 12px;
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 0 2px transparent;
+}
+
+.control-center-list {
+  background: transparent;
+  padding: 0px;
+  margin: 0px;
+}
+
+.control-center-list-placeholder {
+  opacity: 0.5;
+}
+
+.floating-notifications {
+  background: transparent;
+}
+
+.blank-window {
+  background: <wallbash_pry1_rgba(0.1)>;
+}
+
+.widget-title {
+  color: #<wallbash_txt1>;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.widget-title:dir(rtl) {
+  margin-left: 10px;
+  margin-right: 0px;
+}
+
+.widget-dnd {
+  margin-bottom: 10px;
+}
+
+.widget-dnd-switch {
+  border-radius: 10px;
+  background: <wallbash_4xa5_rgba(0.8)>;
+  border: 1px solid <wallbash_4xa7_rgba(0.5)>;
+}
+
+.widget-dnd-switch:checked {
+  background: <wallbash_4xa7_rgba(0.9)>;
+}
+
+.widget-dnd-switch slider {
+  border-radius: 10px;
+  background: <wallbash_4xa9_rgba(0.8)>;
+}
+
+.widget-dnd-switch:checked slider {
+  background: <wallbash_4xa9_rgba(0.9)>;
+}
+
+.widget-dnd-label {
+  color: #<wallbash_txt4>;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.widget-buttons-grid {
+  padding-top: 10px;
+}
+
+.widget-button {
+  background: <wallbash_2xa5_rgba(0.8)>;
+  color: #<wallbash_txt2>;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 14px;
+  margin: 2px;
+}
+
+.widget-button:hover {
+  background: <wallbash_2xa7_rgba(0.9)>;
+}
+
+.widget-button:active {
+  background: <wallbash_2xa9_rgba(0.9)>;
+}
+
+.widget-mpris {
+  margin-top: 10px;
+}
+
+.widget-mpris-player {
+  background: <wallbash_pry3_rgba(0.8)>;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.widget-mpris-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #<wallbash_txt3>;
+}
+
+.widget-mpris-subtitle {
+  font-size: 12px;
+  color: <wallbash_txt3_rgba(0.7)>;
+}
+
+.widget-mpris-album-art {
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.widget-mpris-album-art:dir(rtl) {
+  margin-left: 10px;
+  margin-right: 0px;
+}
+
+.progress-bar {
+  background: <wallbash_1xa5_rgba(0.5)>;
+  border-radius: 10px;
+  height: 6px;
+  margin: 6px 0px;
+}
+
+.progress-bar trough {
+  background: <wallbash_1xa3_rgba(0.5)>;
+  border-radius: 10px;
+}
+
+.progress-bar progress {
+  background: <wallbash_1xa7_rgba(0.8)>;
+  border-radius: 10px;
+  min-width: 6px;
+}
+
+.backlight-scale trough {
+  background: <wallbash_1xa5_rgba(0.5)>;
+  border-radius: 10px;
+  min-height: 6px;
+}
+
+.backlight-scale progress {
+  background: <wallbash_1xa7_rgba(0.8)>;
+  border-radius: 10px;
+  min-width: 6px;
+}
+
+.volume-scale trough {
+  background: <wallbash_2xa5_rgba(0.5)>;
+  border-radius: 10px;
+  min-height: 6px;
+}
+
+.volume-scale progress {
+  background: <wallbash_2xa7_rgba(0.8)>;
+  border-radius: 10px;
+  min-width: 6px;
+}
+
+.low-notification {
+  background: <wallbash_3xa5_rgba(0.9)>;
+  color: #<wallbash_txt3>;
+  border: 1px solid <wallbash_3xa7_rgba(0.5)>;
+}
+
+.normal-notification {
+  background: <wallbash_2xa5_rgba(0.9)>;
+  color: #<wallbash_txt2>;
+  border: 1px solid <wallbash_2xa7_rgba(0.5)>;
+}
+
+.critical-notification {
+  background: <wallbash_4xa5_rgba(0.9)>;
+  color: #<wallbash_txt4>;
+  border: 1px solid <wallbash_4xa9_rgba(0.5)>;
+}

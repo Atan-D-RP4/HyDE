@@ -1,0 +1,6 @@
+${confDir}/kitty/hyde.conf|
+# HyDE generated kitty configuration
+# This file contains theme-specific settings and is included from kitty.conf
+
+# Include the theme-specific colors
+include theme.conf
