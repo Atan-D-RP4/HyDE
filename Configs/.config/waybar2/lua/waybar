@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Wrapper script for HyDE Waybar Lua configuration manager
+# This script sets up the environment and calls the Lua implementation
+
+set -e
+
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/waybar2"
+LUA_DIR="$CONFIG_DIR/lua"
+
+# Ensure Lua can find the modules
+export LUA_PATH="$LUA_DIR/?.lua;$LUA_PATH"
+
+# Run the Lua manager with all arguments passed through
+exec lua5.1 "$LUA_DIR/waybar_manager.lua" "$@"
