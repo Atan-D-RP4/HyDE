@@ -165,12 +165,21 @@ deploy_psv() {
                     fi
                     ;;
                 esac
-            else
-                if [ "${ctlFlag}" != "B" ]; then
-                    [ "${flg_DryRun}" -ne 1 ] && cp -r "${CfgDir}${tgt}/${cfg_chk}" "${pth}"
-                    print_log -y "[*populate*]" -b " :: " "${pth}" -r " <--  " "${CfgDir}${tgt}/${cfg_chk}"
-                fi
-            fi
+             else
+                 if [ "${ctlFlag}" != "B" ]; then
+                     if [ "${ctlFlag}" == "L" ]; then
+                         [ "${flg_DryRun}" -ne 1 ] && ln -sf "${CfgDir}${tgt}/${cfg_chk}" "${pth}/${cfg_chk}"
+                         if [ -L "${pth}/${cfg_chk}" ]; then
+                             print_log -y "[*link*]" -b " :: " "${pth}" -r " <--  " "${CfgDir}${tgt}/${cfg_chk}"
+                         else
+                             print_log -y "[*link-failed*]" -b " :: " "${pth}" -r " <--  " "${CfgDir}${tgt}/${cfg_chk}"
+                         fi
+                     else
+                         [ "${flg_DryRun}" -ne 1 ] && cp -r "${CfgDir}${tgt}/${cfg_chk}" "${pth}"
+                         print_log -y "[*populate*]" -b " :: " "${pth}" -r " <--  " "${CfgDir}${tgt}/${cfg_chk}"
+                     fi
+                 fi
+             fi
 
         done
 

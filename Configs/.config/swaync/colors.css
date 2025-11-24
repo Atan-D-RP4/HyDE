@@ -1,0 +1,30 @@
+/* Wallbash-based color palette for swaync notifications */
+:root {
+  --wallbash-pry1-rgb: <wallbash_pry1_rgb>;
+  --wallbash-pry2-rgb: <wallbash_pry2_rgb>;
+  --wallbash-pry3-rgb: <wallbash_pry3_rgb>;
+  
+  --wallbash-1xa1-rgb: <wallbash_1xa1_rgb>;
+  --wallbash-1xa3-rgb: <wallbash_1xa3_rgb>;
+  --wallbash-1xa5-rgb: <wallbash_1xa5_rgb>;
+  --wallbash-1xa7-rgb: <wallbash_1xa7_rgb>;
+  
+  --wallbash-2xa5-rgb: <wallbash_2xa5_rgb>;
+  --wallbash-2xa7-rgb: <wallbash_2xa7_rgb>;
+  --wallbash-2xa9-rgb: <wallbash_2xa9_rgb>;
+  
+  --wallbash-3xa5-rgb: <wallbash_3xa5_rgb>;
+  --wallbash-3xa7-rgb: <wallbash_3xa7_rgb>;
+  
+  --wallbash-4xa5-rgb: <wallbash_4xa5_rgb>;
+  --wallbash-4xa7-rgb: <wallbash_4xa7_rgb>;
+  --wallbash-4xa9-rgb: <wallbash_4xa9_rgb>;
+  
+  --wallbash-txt1: #<wallbash_txt1>;
+  --wallbash-txt2: #<wallbash_txt2>;
+  --wallbash-txt3: #<wallbash_txt3>;
+  --wallbash-txt4: #<wallbash_txt4>;
+  
+  --wallbash-txt1-rgb: <wallbash_txt1_rgb>;
+  --wallbash-txt3-rgb: <wallbash_txt3_rgb>;
+}
