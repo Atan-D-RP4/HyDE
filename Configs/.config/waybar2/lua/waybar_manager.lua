@@ -458,6 +458,92 @@ function WaybarManager:write_style_file(style_path)
 end
 
 -- ============================================================================
+-- FILE OPERATIONS
+-- ============================================================================
+
+--- Update config from external file
+---@param config_path string
+---@return boolean success
+function WaybarManager:update_config(config_path)
+	if not Utils.file_exists(config_path) then
+		Utils.error("Config file not found: " .. config_path)
+		return false
+	end
+
+	local content, err = Utils.read_file(config_path)
+	if err then
+		Utils.error("Cannot read config: " .. err)
+		return false
+	end
+
+	local config_dir = StateManager.CONFIG_JSONC:match("^(.*/)") 
+	local success, mkdir_err = Utils.mkdir_p(config_dir)
+	if not success then
+		Utils.error("Cannot create config directory: " .. mkdir_err)
+		return false
+	end
+
+	success, err = Utils.write_file(StateManager.CONFIG_JSONC, content)
+	if not success then
+		Utils.error("Cannot write config: " .. err)
+		return false
+	end
+
+	Utils.info("Successfully copied config from " .. config_path)
+	return true
+end
+
+--- Update style from external file
+---@param style_path string
+---@return boolean success
+function WaybarManager:update_style(style_path)
+	if not Utils.file_exists(style_path) then
+		Utils.error("Style file not found: " .. style_path)
+		return false
+	end
+
+	local config_dir = self.config_dir
+	local user_style_filepath = config_dir .. "/user-style.css"
+	local theme_style_filepath = config_dir .. "/theme.css"
+
+	-- Ensure directory exists
+	local success, mkdir_err = Utils.mkdir_p(config_dir)
+	if not success then
+		Utils.error("Cannot create config directory: " .. mkdir_err)
+		return false
+	end
+
+	-- Create user-style.css if it doesn't exist
+	if not Utils.file_exists(user_style_filepath) then
+		local _, write_err = Utils.write_file(user_style_filepath, "/* User custom styles */\n")
+		if write_err then
+			Utils.warn("Cannot create user-style.css: " .. write_err)
+		end
+	end
+
+	-- Check for theme.css
+	if not Utils.file_exists(theme_style_filepath) then
+		Utils.warn("Missing theme.css - please run 'hyde-shell reload' to generate it")
+	end
+
+	-- Write style.css with import
+	self:write_style_file(style_path)
+
+	-- Update state
+	StateManager.set_state_value("WAYBAR_STYLE_PATH", style_path)
+
+	-- Regenerate configuration
+	self:update_icon_size()
+	self:update_border_radius()
+	self:generate_includes()
+	self:update_global_css()
+
+	Utils.info("Updated style from " .. style_path)
+	self:restart_waybar()
+	return true
+end
+
+-- ============================================================================
 -- COMMAND HANDLERS
 -- ============================================================================
 
@@ -646,6 +732,18 @@ local function main()
 		manager:handle_layout_navigation("prev")
 	elseif cmd == "--set" then
 		manager:set_layout(arg[2])
+	elseif cmd == "--config" or cmd == "-c" then
+		if not arg[2] then
+			Utils.error("Config file path required")
+			os.exit(1)
+		end
+		manager:update_config(arg[2])
+	elseif cmd == "--style" or cmd == "-s" then
+		if not arg[2] then
+			Utils.error("Style file path required")
+			os.exit(1)
+		end
+		manager:update_style(arg[2])
 	elseif cmd == "--update" or cmd == "-u" then
 		manager:update_icon_size()
 		manager:update_border_radius()
