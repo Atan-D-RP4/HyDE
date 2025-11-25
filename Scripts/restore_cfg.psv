@@ -111,8 +111,8 @@ L|${HOME}/.config|electron-flags.conf|electron
 
  Notifications 
 P|${HOME}/.config|dunst|dunst
+L|${HOME}/.config/swaync|config.json style.css css|swaync
 P|${HOME}/.config/swaync|colors.css|swaync
-L|${HOME}/.config/swaync|config.json style.css|swaync
 
  Gaming 
 L|${HOME}/.config|MangoHud|mangohud

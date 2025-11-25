@@ -5,19 +5,19 @@
   padding: 0px;
   border-radius: 10px;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 0 2px transparent;
-  background-color: rgba(26,27,38,0.9);
+  background-color: rgba(18,14,50,0.9);
   color: #FFFFFF;
-  border: 1px solid rgba(101,106,163,0.3);
+  border: 1px solid rgba(108,101,163,0.3);
 }
 
 .notification-row:hover {
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 0 0 2px transparent;
-  background-color: rgba(41,44,82,0.9);
+  background-color: rgba(45,41,82,0.9);
 }
 
 .notification-row:focus {
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 0 0 2px transparent;
-  background-color: rgba(41,44,82,0.9);
+  background-color: rgba(45,41,82,0.9);
 }
 
 .notification {
@@ -35,7 +35,7 @@
 }
 
 .close-button {
-  background: rgba(112,101,163,0.8);
+  background: rgba(115,101,163,0.8);
   color: #FFFFFF;
   text-shadow: none;
   padding: 5px;
@@ -48,7 +48,7 @@
 }
 
 .close-button:hover {
-  background: rgba(167,154,230,0.9);
+  background: rgba(171,154,230,0.9);
   color: #FFFFFF;
 }
 
@@ -57,8 +57,8 @@
   margin: 0px;
   padding: 5px;
   border-radius: 10px;
-  background: rgba(101,103,163,0.8);
-  color: #FFFFFF;
+  background: rgba(101,108,163,0.8);
+  color: #BFBFB9;
   font-size: 12px;
   border: none;
   box-shadow: none;
@@ -66,8 +66,8 @@
 
 .notification-default-action:hover,
 .notification-action:hover {
-  background: rgba(154,156,230,0.9);
-  color: #FFFFFF;
+  background: rgba(154,163,230,0.9);
+  color: #BFBFB9;
 }
 
 .notification-default-action {
@@ -79,23 +79,23 @@
 }
 
 .inline-reply-entry {
-  background: rgba(61,57,80,0.8);
+  background: rgba(63,48,114,0.8);
   color: #FFFFFF;
   caret-color: #FFFFFF;
-  border: 1px solid rgba(112,101,163,0.5);
+  border: 1px solid rgba(115,101,163,0.5);
   border-radius: 10px;
   padding: 5px;
   margin: 0px;
 }
 
 .inline-reply-entry:focus {
-  background: rgba(48,41,82,0.9);
-  border: 1px solid rgba(167,154,230,0.7);
+  background: rgba(50,41,82,0.9);
+  border: 1px solid rgba(171,154,230,0.7);
 }
 
 .inline-reply-button {
   margin-left: 4px;
-  background: rgba(112,101,163,0.8);
+  background: rgba(115,101,163,0.8);
   border: none;
   color: #FFFFFF;
   border-radius: 10px;
@@ -104,12 +104,12 @@
 }
 
 .inline-reply-button:hover {
-  background: rgba(167,154,230,0.9);
+  background: rgba(171,154,230,0.9);
 }
 
 .inline-reply-button:disabled {
-  background: rgba(92,93,130,0.6);
-  color: rgba(255,255,255,0.5);
+  background: rgba(104,116,206,0.6);
+  color: rgba(191,191,185,0.5);
 }
 
 .body {
@@ -129,9 +129,9 @@
 }
 
 .control-center {
-  background: rgba(26,27,38,0.95);
+  background: rgba(18,14,50,0.95);
   color: #FFFFFF;
-  border: 1px solid rgba(101,106,163,0.3);
+  border: 1px solid rgba(108,101,163,0.3);
   border-radius: 12px;
   margin: 10px;
   padding: 10px;
@@ -153,7 +153,7 @@
 }
 
 .blank-window {
-  background: rgba(26,27,38,0.1);
+  background: rgba(18,14,50,0.1);
 }
 
 .widget-title {
@@ -174,25 +174,25 @@
 
 .widget-dnd-switch {
   border-radius: 10px;
-  background: rgba(163,101,136,0.8);
-  border: 1px solid rgba(230,154,196,0.5);
+  background: rgba(163,101,156,0.8);
+  border: 1px solid rgba(230,154,221,0.5);
 }
 
 .widget-dnd-switch:checked {
-  background: rgba(230,154,196,0.9);
+  background: rgba(230,154,221,0.9);
 }
 
 .widget-dnd-switch slider {
   border-radius: 10px;
-  background: rgba(255,204,232,0.8);
+  background: rgba(255,204,249,0.8);
 }
 
 .widget-dnd-switch:checked slider {
-  background: rgba(255,204,232,0.9);
+  background: rgba(255,204,249,0.9);
 }
 
 .widget-dnd-label {
-  color: #0E0F0F;
+  color: #0D0E0D;
   font-size: 14px;
   margin-left: 10px;
 }
@@ -202,7 +202,7 @@
 }
 
 .widget-button {
-  background: rgba(112,101,163,0.8);
+  background: rgba(115,101,163,0.8);
   color: #FFFFFF;
   border: none;
   border-radius: 10px;
@@ -212,11 +212,11 @@
 }
 
 .widget-button:hover {
-  background: rgba(167,154,230,0.9);
+  background: rgba(171,154,230,0.9);
 }
 
 .widget-button:active {
-  background: rgba(213,204,255,0.9);
+  background: rgba(216,204,255,0.9);
 }
 
 .widget-mpris {
@@ -224,7 +224,7 @@
 }
 
 .widget-mpris-player {
-  background: rgba(92,93,130,0.8);
+  background: rgba(104,116,206,0.8);
   border-radius: 10px;
   padding: 10px;
   margin-bottom: 10px;
@@ -233,12 +233,12 @@
 .widget-mpris-title {
   font-size: 14px;
   font-weight: bold;
-  color: #FFFFFF;
+  color: #BFBFB9;
 }
 
 .widget-mpris-subtitle {
   font-size: 12px;
-  color: rgba(255,255,255,0.7);
+  color: rgba(191,191,185,0.7);
 }
 
 .widget-mpris-album-art {
@@ -252,61 +252,61 @@
 }
 
 .progress-bar {
-  background: rgba(101,106,163,0.5);
+  background: rgba(108,101,163,0.5);
   border-radius: 10px;
   height: 6px;
   margin: 6px 0px;
 }
 
 .progress-bar trough {
-  background: rgba(75,79,125,0.5);
+  background: rgba(81,75,125,0.5);
   border-radius: 10px;
 }
 
 .progress-bar progress {
-  background: rgba(154,160,230,0.8);
+  background: rgba(162,154,230,0.8);
   border-radius: 10px;
   min-width: 6px;
 }
 
 .backlight-scale trough {
-  background: rgba(101,106,163,0.5);
+  background: rgba(108,101,163,0.5);
   border-radius: 10px;
   min-height: 6px;
 }
 
 .backlight-scale progress {
-  background: rgba(154,160,230,0.8);
+  background: rgba(162,154,230,0.8);
   border-radius: 10px;
   min-width: 6px;
 }
 
 .volume-scale trough {
-  background: rgba(112,101,163,0.5);
+  background: rgba(115,101,163,0.5);
   border-radius: 10px;
   min-height: 6px;
 }
 
 .volume-scale progress {
-  background: rgba(167,154,230,0.8);
+  background: rgba(171,154,230,0.8);
   border-radius: 10px;
   min-width: 6px;
 }
 
 .low-notification {
-  background: rgba(101,103,163,0.9);
-  color: #FFFFFF;
-  border: 1px solid rgba(154,156,230,0.5);
+  background: rgba(101,108,163,0.9);
+  color: #BFBFB9;
+  border: 1px solid rgba(154,163,230,0.5);
 }
 
 .normal-notification {
-  background: rgba(112,101,163,0.9);
+  background: rgba(115,101,163,0.9);
   color: #FFFFFF;
-  border: 1px solid rgba(167,154,230,0.5);
+  border: 1px solid rgba(171,154,230,0.5);
 }
 
 .critical-notification {
-  background: rgba(163,101,136,0.9);
-  color: #0E0F0F;
-  border: 1px solid rgba(255,204,232,0.5);
+  background: rgba(163,101,156,0.9);
+  color: #0D0E0D;
+  border: 1px solid rgba(255,204,249,0.5);
 }
