@@ -130,6 +130,7 @@ local function set_zoom(zoom_level, immediate)
 		state.target_zoom = zoom_level
 		state.current_zoom = zoom_level
 	else
+		state.target_zoom = zoom_level
 		state.current_zoom = smooth_step(state.current_zoom, state.target_zoom, config.smoothing_factor)
 	end
 
@@ -292,15 +293,16 @@ local function cleanup()
 		state.libinput_process = nil
 	end
 
-	-- Remove lock file
-	uv.fs_unlink(LOCK_FILE, function(err)
-		if not err then
-			debug_print("Removed lockfile %s", LOCK_FILE)
-		end
-	end)
+	-- Remove lock file synchronously
+	os.remove(LOCK_FILE)
+	debug_print("Removed lockfile %s", LOCK_FILE)
 
-	reset_zoom()
-	log_print("Cleanup complete")
+	-- Reset zoom using async IPC
+	debug_print("Resetting zoom to 1.0")
+	send_hypr_command("keyword cursor:zoom_factor 1", function(ok, resp)
+		debug_print("Zoom reset response: %s", tostring(resp))
+		log_print("Cleanup complete")
+	end)
 end
 
 -- Signal handlers (libuv)
@@ -309,11 +311,16 @@ local function setup_signals()
 		log_print("Received signal %s, exiting...", tostring(signame))
 		state.should_exit = true
 
-		-- run cleanup and stop the loop
+		-- run cleanup (async zoom reset)
 		cleanup()
 
-		-- stop loop after cleanup
-		uv.stop()
+		-- Give the async IPC time to complete before stopping the loop
+		local shutdown_timer = uv.new_timer()
+		shutdown_timer:start(150, 0, function()
+			shutdown_timer:stop()
+			shutdown_timer:close()
+			uv.stop()
+		end)
 	end
 
 	-- SIGINT, SIGTERM, SIGHUP
@@ -348,13 +355,20 @@ local function ensure_single_instance()
 			old_pid = content:match("^%s*(%d+)")
 
 			if old_pid then
-				log_print("Another instance (PID %s) is running. Killing it...", old_pid)
-				os.execute(string.format("kill -9 %d 2>/dev/null", tonumber(old_pid)))
-				log_print("Killed existing instance PID %s", old_pid)
+				log_print("Another instance (PID %s) is running. Stopping it...", old_pid)
+				-- Use SIGTERM instead of SIGKILL to allow cleanup (zoom reset)
+				os.execute(string.format("kill -15 %d 2>/dev/null", tonumber(old_pid)))
+				-- Brief delay to allow the process to cleanup
+				os.execute("sleep 0.1")
+				log_print("Stopped existing instance PID %s", old_pid)
+				-- Remove lock file and exit - toggle behavior (don't start a new instance)
+				os.remove(LOCK_FILE)
+				log_print("Zoom disabled (toggle off)")
+				os.exit(0)
 			end
 		end
 
-		-- Remove old lock file
+		-- Remove stale lock file (process not found)
 		os.remove(LOCK_FILE)
 	end
 
@@ -374,26 +388,15 @@ local function ensure_single_instance()
 end
 
 local function start_libinput_monitor()
-	-- Check if libinput exists using spawn
-	local found = false
+	-- Check if libinput exists using spawn, then start monitor in callback
+	-- This avoids race condition with timer-based approach
 	uv.spawn("sh", {
 		args = { "-c", "command -v libinput >/dev/null 2>&1" },
 		stdio = { nil, nil, nil },
 	}, function(code, sig)
-		found = (code == 0)
+		local found = (code == 0)
 		if not found then
 			log_print("ERROR: libinput not found in PATH")
-		end
-	end)
-
-	-- Small delay to allow the check to complete
-	local timer = uv.new_timer()
-	assert(timer, "Failed to create timer")
-	timer:start(100, 0, function()
-		timer:stop()
-		timer:close()
-
-		if not found then
 			return
 		end
 
