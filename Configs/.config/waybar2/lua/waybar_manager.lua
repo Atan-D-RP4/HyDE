@@ -1,11 +1,17 @@
-#!/usr/bin/env lua5.1
+#!/usr/bin/env luajit
 --[[
   HyDE Waybar Configuration Manager in Lua with libuv
-  
+
   Main module that replaces waybar.py - manages waybar configuration,
   layouts, styles, and process lifecycle using libuv for async I/O
   and process management.
 ]]
+
+package.path = package.path .. ";/usr/share/lua/5.1/?.lua;/usr/share/lua/5.1/?/init.lua"
+package.path = package.path .. ";/usr/share/lua/5.2/?.lua;/usr/share/lua/5.2/?/init.lua"
+package.cpath = package.cpath .. ";/usr/lib/lib?.so"
+local conf_dir = os.getenv("PWD") or os.getenv("XDG_CONFIG_HOME") or (os.getenv("HOME") .. "/.config")
+package.path = package.path .. ";" .. conf_dir .. "/?.lua;" .. conf_dir .. "/?/init.lua"
 
 local json = require("dkjson")
 local uv = require("luv") or require("luvit.uv")
@@ -56,7 +62,7 @@ function WaybarManager:run_waybar()
 	end
 
 	Utils.debug("Starting waybar")
-	
+
 	-- Try using hyde-shell if available
 	local _, _, code = Utils.run_command("which", { "hyde-shell" })
 	if code == 0 then
@@ -65,7 +71,7 @@ function WaybarManager:run_waybar()
 		-- Fallback to direct execution
 		Utils.spawn_async("waybar", {})
 	end
-	
+
 	return true
 end
 
@@ -476,7 +482,7 @@ function WaybarManager:update_config(config_path)
 		return false
 	end
 
-	local config_dir = StateManager.CONFIG_JSONC:match("^(.*/)") 
+	local config_dir = StateManager.CONFIG_JSONC:match("^(.*/)")
 	local success, mkdir_err = Utils.mkdir_p(config_dir)
 	if not success then
 		Utils.error("Cannot create config directory: " .. mkdir_err)

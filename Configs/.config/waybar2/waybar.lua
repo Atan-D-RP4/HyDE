@@ -1,11 +1,14 @@
-#!/usr/bin/env lua5.1
+#!/usr/bin/env luajit
+
+package.path = package.path .. ";/usr/share/lua/5.1/?.lua;/usr/share/lua/5.1/?/init.lua"
+package.path = package.path .. ";/usr/share/lua/5.2/?.lua;/usr/share/lua/5.2/?/init.lua"
 
 local json = require("dkjson")
 
 -- Dynamically set package.path to include ~/.config/waybar/lua/
+-- I want to load ~/.config/waybar/lua/wb_modules.lua
 local conf_dir = os.getenv("XDG_CONFIG_HOME") or (os.getenv("HOME") .. "/.config")
-local lua_module_path = conf_dir .. "/waybar/lua/?.lua"
-package.path = lua_module_path .. ";" .. package.path
+package.path = package.path .. ";" .. conf_dir .. "/lua/?.lua;" .. conf_dir .. "/lua/?/init.lua"
 
 -- Waybar Config Builder
 local WaybarBuilder = {}
@@ -209,10 +212,10 @@ function WaybarBuilder:generate_style()
 	-- Build environment string for the command
 	local env_string = ""
 	for key, value in pairs(env_vars) do
-		vim.print(value)
+		print(value)
 		env_string = env_string .. key .. "=" .. string:format(value) .. " "
 	end
-	vim.print("Environment variables for style generation: " .. env_string)
+	print("Environment variables for style generation: " .. env_string)
 
 	-- Get script directory (assuming it's in the same location as wbarconfgen.sh)
 	local script_dir = os.getenv("HOME") .. "/.local/lib/hyde"
@@ -349,7 +352,7 @@ end
 
 local builder = WaybarBuilder:from_preset(require("wb_presets")[2])
 builder:generate_style()
-vim.print(builder)
+print(builder)
 
 return {
 	WaybarBuilder = WaybarBuilder,
